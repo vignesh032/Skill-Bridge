@@ -943,4 +943,3 @@ window.loadContent = loadContent;
 // Initialize
 loadUserProfile();
 window.onload = () => loadContent("dashboard", null);
-
