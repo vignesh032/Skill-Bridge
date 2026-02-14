@@ -19,24 +19,18 @@
 
   <div class="app">
 
-    <!-- Sidebar -->
+    <!-- Sidebar: 5 sections (same on all pages) -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2 class="logo">SkillBridge</h2>
         <button class="close-btn" onclick="closeSidebar()">✖</button>
       </div>
-
       <nav>
-        <button onclick="window.location.href='index.html'"
-          title="Get an overview of your career progress and key metrics">📊 Dashboard</button>
-        <button onclick="window.location.href='skills-analysis.html'"
-          title="Analyze your skills with interactive charts and industry comparisons">🧠 Skill Analysis</button>
-        <button class="active" onclick="window.location.href='roadmap.html'"
-          title="Explore personalized career paths with guidance and connections">🛣️ Career Roadmap</button>
-        <button onclick="window.location.href='internships.html'"
-          title="Find internships and project opportunities to build experience">🚀 Internships & Projects</button>
-        <button onclick="window.location.href='resume.html'"
-          title="Track and optimize your resume for better job prospects">📄 Resume Tracker</button>
+        <button onclick="window.location.href='index.html'" title="Dashboard">📊 Dashboard</button>
+        <button onclick="window.location.href='skills-analysis.html'" title="Skill Analysis">🧠 Skill Analysis</button>
+        <button class="active" onclick="window.location.href='roadmap.html'" title="Career Roadmap">🛣️ Career Roadmap</button>
+        <button onclick="window.location.href='internships.html'" title="Internships & Projects">🚀 Internships & Projects</button>
+        <button onclick="window.location.href='resume.html'" title="Resume Tracker">📄 Resume Tracker</button>
       </nav>
     </aside>
 
@@ -52,112 +46,17 @@
       </header>
 
       <main class="content" id="content">
-        <div class="roadmap-grid">
-          <div class="roadmap-guide">
-            <h3>Frontend Developer</h3>
-            <div class="guide-block"><span>Effective Path</span>Design → Build → Deploy</div>
-            <div class="guide-block"><span>Outcome</span>Frontend Intern / UI Engineer</div>
-            <div class="guidance-info">
-              <p><strong>Guidance:</strong> Follow structured learning paths, practice with real projects, and seek
-                mentorship to excel in this career.</p>
-            </div>
-            <div class="guide-block"><span>Effective Tips</span>Build portfolios, network actively, and stay updated
-              with industry trends for success.</div>
-            <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=frontend'">View
-              Detailed Roadmap</button>
-            <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
-          </div>
-          <div class="roadmap-guide">
-            <h3>Data Analyst</h3>
-            <div class="guide-block"><span>Effective Path</span>Analyze → Visualize → Decide</div>
-            <div class="guide-block"><span>Outcome</span>Data Analyst</div>
-            <div class="guidance-info">
-              <p><strong>Guidance:</strong> Follow structured learning paths, practice with real projects, and seek
-                mentorship to excel in this career.</p>
-            </div>
-            <div class="guide-block"><span>Effective Tips</span>Build portfolios, network actively, and stay updated
-              with industry trends for success.</div>
-            <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=data'">View Detailed
-              Roadmap</button>
-            <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
-          </div>
-          <div class="roadmap-guide">
-            <h3>App Developer</h3>
-            <div class="guide-block"><span>Effective Path</span>Build → Integrate → Publish</div>
-            <div class="guide-block"><span>Outcome</span>Mobile App Developer</div>
-            <div class="guidance-info">
-              <p><strong>Guidance:</strong> Follow structured learning paths, practice with real projects, and seek
-                mentorship to excel in this career.</p>
-            </div>
-            <div class="guide-block"><span>Effective Tips</span>Build portfolios, network actively, and stay updated
-              with industry trends for success.</div>
-            <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=mobile'">View
-              Detailed Roadmap</button>
-            <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
-          </div>
-          <div class="roadmap-guide">
-            <h3>Industry Project Engineer</h3>
-            <div class="guide-block"><span>Effective Path</span>Industry Projects → Teams → Delivery</div>
-            <div class="guide-block"><span>Outcome</span>Software Engineer</div>
-            <div class="guidance-info">
-              <p><strong>Guidance:</strong> Follow structured learning paths, practice with real projects, and seek
-                mentorship to excel in this career.</p>
-            </div>
-            <div class="guide-block"><span>Effective Tips</span>Build portfolios, network actively, and stay updated
-              with industry trends for success.</div>
-            <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=software'">View
-              Detailed Roadmap</button>
-            <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
-          </div>
-          <div class="roadmap-guide">
-            <h3>AI/ML Engineer</h3>
-            <div class="guide-block"><span>Effective Path</span>Mathematics → Algorithms → Models → Deployment</div>
-            <div class="guide-block"><span>Outcome</span>Machine Learning Engineer</div>
-            <div class="guidance-info">
-              <p><strong>Guidance:</strong> Master mathematical foundations, learn algorithms, and build real-world ML
-                projects.</p>
-            </div>
-            <div class="guide-block"><span>Effective Tips</span>Contribute to open-source ML projects and stay updated
-              with latest research.</div>
-            <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=ai'">View Detailed
-              Roadmap</button>
-            <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
-          </div>
-          <div class="roadmap-guide">
-            <h3>Cybersecurity Analyst</h3>
-            <div class="guide-block"><span>Effective Path</span>Networking → Security Fundamentals → Tools → Ethical
-              Hacking</div>
-            <div class="guide-block"><span>Outcome</span>Security Analyst</div>
-            <div class="guidance-info">
-              <p><strong>Guidance:</strong> Learn network fundamentals, security principles, and practical tools for
-                threat detection.</p>
-            </div>
-            <div class="guide-block"><span>Effective Tips</span>Obtain certifications like CEH, CompTIA Security+, and
-              participate in CTF challenges.</div>
-            <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=cyber'">View Detailed
-              Roadmap</button>
-            <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
-          </div>
-          <div class="roadmap-guide">
-            <h3>DevOps Engineer</h3>
-            <div class="guide-block"><span>Effective Path</span>Development → Automation → Cloud → Monitoring</div>
-            <div class="guide-block"><span>Outcome</span>DevOps Specialist</div>
-            <div class="guidance-info">
-              <p><strong>Guidance:</strong> Learn development practices, automation tools, cloud platforms, and
-                monitoring systems.</p>
-            </div>
-            <div class="guide-block"><span>Effective Tips</span>Master CI/CD pipelines, containerization, and
-              infrastructure as code.</div>
-            <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=devops'">View
-              Detailed Roadmap</button>
-            <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
-          </div>
+        <div class="content-section" style="margin-bottom: 24px;">
+          <h2 style="margin-bottom: 8px; border: none; padding: 0;">Career Roadmap</h2>
+          <p style="color: #8b949e; margin-bottom: 0;">All roles (same as Profile and Skill Analysis). Pick a role to see its detailed roadmap.</p>
         </div>
+        <div class="roadmap-grid" id="roadmapGrid"></div>
       </main>
     </div>
 
   </div>
 
+  <script src="roles-config.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
@@ -210,6 +109,24 @@
     window.openSidebar = openSidebar;
     window.closeSidebar = closeSidebar;
     window.logout = logout;
+
+    (function renderRoadmapCards() {
+      const grid = document.getElementById('roadmapGrid');
+      if (!grid || typeof ALL_ROLES === 'undefined') return;
+      grid.innerHTML = ALL_ROLES.map(r => `
+        <div class="roadmap-guide">
+          <h3>${r.title}</h3>
+          <div class="guide-block"><span>Effective Path</span>${r.path}</div>
+          <div class="guide-block"><span>Outcome</span>${r.outcome}</div>
+          <div class="guidance-info">
+            <p><strong>Guidance:</strong> Follow structured learning paths, practice with real projects, and seek mentorship to excel in this career.</p>
+          </div>
+          <div class="guide-block"><span>Effective Tips</span>Build portfolios, network actively, and stay updated with industry trends.</div>
+          <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=${r.id}'">View Detailed Roadmap</button>
+          <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
+        </div>
+      `).join('');
+    })();
   </script>
 </body>
 

@@ -19,24 +19,18 @@
 
   <div class="app">
 
-    <!-- Sidebar -->
+    <!-- Sidebar: 5 sections (same on all pages) -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2 class="logo">SkillBridge</h2>
         <button class="close-btn" onclick="closeSidebar()">✖</button>
       </div>
-
       <nav>
-        <button onclick="window.location.href='index.html'"
-          title="Get an overview of your career progress and key metrics">📊 Dashboard</button>
-        <button onclick="window.location.href='skills-analysis.html'"
-          title="Analyze your skills with interactive charts and industry comparisons">🧠 Skill Analysis</button>
-        <button onclick="window.location.href='roadmap.html'"
-          title="Explore personalized career paths with guidance and connections">🛣️ Career Roadmap</button>
-        <button class="active" onclick="window.location.href='internships.html'"
-          title="Find internships and project opportunities to build experience">🚀 Internships & Projects</button>
-        <button onclick="window.location.href='resume.html'"
-          title="Track and optimize your resume for better job prospects">📄 Resume Tracker</button>
+        <button onclick="window.location.href='index.html'" title="Dashboard">📊 Dashboard</button>
+        <button onclick="window.location.href='skills-analysis.html'" title="Skill Analysis">🧠 Skill Analysis</button>
+        <button onclick="window.location.href='roadmap.html'" title="Career Roadmap">🛣️ Career Roadmap</button>
+        <button class="active" onclick="window.location.href='internships.html'" title="Internships & Projects">🚀 Internships & Projects</button>
+        <button onclick="window.location.href='resume.html'" title="Resume Tracker">📄 Resume Tracker</button>
       </nav>
     </aside>
 
@@ -52,6 +46,10 @@
       </header>
 
       <main class="content" id="content">
+        <div class="content-section" style="margin-bottom: 24px;">
+          <h2 style="margin-bottom: 8px; border: none; padding: 0;">Internships & Projects</h2>
+          <p style="color: #8b949e; margin-bottom: 0;">Explore opportunities to build experience.</p>
+        </div>
         <div class="internship-grid">
           <div class="internship-card"
             onclick="window.open('https://www.linkedin.com/jobs/search/?keywords=frontend%20internship', '_blank')">

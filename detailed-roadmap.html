@@ -27,16 +27,11 @@
       </div>
 
       <nav>
-        <button onclick="window.location.href='index.html'"
-          title="Get an overview of your career progress and key metrics">📊 Dashboard</button>
-        <button onclick="window.location.href='skills-analysis.html'"
-          title="Analyze your skills with interactive charts and industry comparisons">🧠 Skill Analysis</button>
-        <button onclick="window.location.href='roadmap.html'"
-          title="Explore personalized career paths with guidance and connections">🛣️ Career Roadmap</button>
-        <button onclick="window.location.href='internships.html'"
-          title="Find internships and project opportunities to build experience">🚀 Internships & Projects</button>
-        <button onclick="window.location.href='resume.html'"
-          title="Track and optimize your resume for better job prospects">📄 Resume Tracker</button>
+        <button onclick="window.location.href='index.html'" title="Dashboard">📊 Dashboard</button>
+        <button onclick="window.location.href='skills-analysis.html'" title="Skill Analysis">🧠 Skill Analysis</button>
+        <button class="active" onclick="window.location.href='roadmap.html'" title="Career Roadmap">🛣️ Career Roadmap</button>
+        <button onclick="window.location.href='internships.html'" title="Internships & Projects">🚀 Internships & Projects</button>
+        <button onclick="window.location.href='resume.html'" title="Resume Tracker">📄 Resume Tracker</button>
       </nav>
     </aside>
 
@@ -498,6 +493,75 @@
             description: "Apply for DevOps engineering positions and internships.",
             youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ"
           }
+        ]
+      },
+      backend: {
+        title: "Backend Developer Roadmap",
+        steps: [
+          { title: "Programming (Node.js/Python/Java)", description: "Master one backend language and its ecosystem.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" },
+          { title: "REST API Design", description: "Learn API design, HTTP methods, and status codes.", youtube: "https://www.youtube.com/watch?v=Q-BpqyOT3a8" },
+          { title: "Database & SQL", description: "Learn SQL, database design, and query optimization.", youtube: "https://www.youtube.com/watch?v=HXV3zeQKqGY" },
+          { title: "NoSQL & Caching", description: "Use MongoDB, Redis for data and caching.", youtube: "https://www.youtube.com/watch?v=-56x56UppqQ" },
+          { title: "Authentication & Security", description: "Implement JWT, OAuth, and secure practices.", youtube: "https://www.youtube.com/watch?v=2PPSXonhIck" },
+          { title: "Testing & Debugging", description: "Unit tests, integration tests, and debugging tools.", youtube: "https://www.youtube.com/watch?v=Corf0Y91hKQ" },
+          { title: "Deployment & Cloud", description: "Deploy on AWS, Heroku, or similar platforms.", youtube: "https://www.youtube.com/watch?v=4qNwoAAfnNk" },
+          { title: "Industry Ready", description: "Apply for backend developer roles and internships.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" }
+        ]
+      },
+      fullstack: {
+        title: "Full-Stack Developer Roadmap",
+        steps: [
+          { title: "HTML, CSS & JavaScript", description: "Master frontend fundamentals.", youtube: "https://www.youtube.com/watch?v=W6NZfCO5SIk" },
+          { title: "React or Vue", description: "Build dynamic UIs with a modern framework.", youtube: "https://www.youtube.com/watch?v=bMknfKXIFA8" },
+          { title: "Node.js or Backend Language", description: "Build APIs and server logic.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" },
+          { title: "Databases (SQL + NoSQL)", description: "Use PostgreSQL/MongoDB for data persistence.", youtube: "https://www.youtube.com/watch?v=HXV3zeQKqGY" },
+          { title: "Git & Collaboration", description: "Version control and team workflows.", youtube: "https://www.youtube.com/watch?v=SWYqp7iY_Tc" },
+          { title: "Deploy Full-Stack Apps", description: "Deploy frontend and backend together.", youtube: "https://www.youtube.com/watch?v=4qNwoAAfnNk" },
+          { title: "Industry Ready", description: "Apply for full-stack roles and internships.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" }
+        ]
+      },
+      datascientist: {
+        title: "Data Scientist Roadmap",
+        steps: [
+          { title: "Python & Pandas", description: "Data manipulation and analysis with Python.", youtube: "https://www.youtube.com/watch?v=vmEHCJofslg" },
+          { title: "Statistics & Probability", description: "Foundations for ML and inference.", youtube: "https://www.youtube.com/watch?v=xxpc-HPKRUo" },
+          { title: "Machine Learning Basics", description: "Supervised and unsupervised learning.", youtube: "https://www.youtube.com/watch?v=ukzFI9rgwfU" },
+          { title: "Deep Learning", description: "Neural networks with TensorFlow/PyTorch.", youtube: "https://www.youtube.com/watch?v=5tvmMX8r_OM" },
+          { title: "NLP & Computer Vision", description: "Text and image applications.", youtube: "https://www.youtube.com/watch?v=5ctbvkAMQO4" },
+          { title: "MLOps & Deployment", description: "Deploy and monitor models in production.", youtube: "https://www.youtube.com/watch?v=4qNwoAAfnNk" },
+          { title: "Industry Ready", description: "Apply for data scientist roles.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" }
+        ]
+      },
+      blockchain: {
+        title: "Blockchain Developer Roadmap",
+        steps: [
+          { title: "JavaScript & Web Basics", description: "Solid foundation for Web3 development.", youtube: "https://www.youtube.com/watch?v=W6NZfCO5SIk" },
+          { title: "Blockchain Fundamentals", description: "How blockchains and consensus work.", youtube: "https://www.youtube.com/watch?v=SSo_EIwHSd4" },
+          { title: "Solidity & Smart Contracts", description: "Write and test smart contracts.", youtube: "https://www.youtube.com/watch?v=ipwxYa-F1uY" },
+          { title: "Web3 & DApps", description: "Connect frontends to blockchain with Web3.js.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" },
+          { title: "Deploy & Test", description: "Use testnets and deploy to mainnet.", youtube: "https://www.youtube.com/watch?v=4qNwoAAfnNk" },
+          { title: "Industry Ready", description: "Apply for blockchain developer roles.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" }
+        ]
+      },
+      uiux: {
+        title: "UI/UX Designer Roadmap",
+        steps: [
+          { title: "Design Principles", description: "Layout, typography, color, and hierarchy.", youtube: "https://www.youtube.com/watch?v=c9Wg6Cb_YlU" },
+          { title: "Figma Basics", description: "Create wireframes and high-fidelity mockups.", youtube: "https://www.youtube.com/watch?v=FTFaQWZBqQ8" },
+          { title: "User Research", description: "Interviews, personas, and usability testing.", youtube: "https://www.youtube.com/watch?v=ArPaAX_PhIs" },
+          { title: "Prototyping", description: "Interactive prototypes and flows.", youtube: "https://www.youtube.com/watch?v=0ohtVzCSHqs" },
+          { title: "Design Systems", description: "Components and consistency at scale.", youtube: "https://www.youtube.com/watch?v=0fYi8SGA20k" },
+          { title: "Industry Ready", description: "Build portfolio and apply for UI/UX roles.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" }
+        ]
+      },
+      qa: {
+        title: "QA Engineer Roadmap",
+        steps: [
+          { title: "Testing Fundamentals", description: "Manual testing, test cases, and bug reporting.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" },
+          { title: "API Testing", description: "Test REST APIs with Postman or similar.", youtube: "https://www.youtube.com/watch?v=4UZrsTqkcW4" },
+          { title: "Selenium & Automation", description: "Automate UI tests with Selenium.", youtube: "https://www.youtube.com/watch?v=Corf0Y91hKQ" },
+          { title: "CI/CD & Test Integration", description: "Run tests in pipelines.", youtube: "https://www.youtube.com/watch?v=1ZCt3w6Kv0g" },
+          { title: "Industry Ready", description: "Apply for QA engineer roles and internships.", youtube: "https://www.youtube.com/watch?v=8aGhZQkoFbQ" }
         ]
       }
     };

@@ -67,8 +67,9 @@ let userProfile = {
   graduationYear: "2024",
   gpa: "3.8",
 
-  // Career preferences
+  // Career preferences (role ids from ALL_ROLES in roles-config.js)
   interestedDomains: ["Web Development"],
+  interestedRoles: ["frontend", "fullstack"],
   careerGoal: "Full-Stack Developer",
 
   // Skills (user-provided)
@@ -109,6 +110,9 @@ function loadUserProfile() {
   const saved = localStorage.getItem('userProfile');
   if (saved) {
     userProfile = JSON.parse(saved);
+    if (!Array.isArray(userProfile.interestedRoles) && userProfile.interestedDomains) {
+      userProfile.interestedRoles = ["frontend", "fullstack"];
+    }
   }
   calculateProfileCompletion();
 }
@@ -373,11 +377,11 @@ function loadContent(section, btn) {
           <p class="small-text">Based on your skills & interests</p>
         </div>
 
-        <div class="dashboard-card card-career" onclick="loadContent('roadmap'); closeSidebar();">
-          <h3>🛣️ Personalized Roadmap</h3>
-          <div class="metric">Domain: ${userProfile.interestedDomains[0] || "Select domain"}</div>
-          <div class="metric">Duration: 12 weeks</div>
-          <p class="small-text">Customized learning path</p>
+        <div class="dashboard-card card-career" onclick="window.location.href='roadmap.html';">
+          <h3>🛣️ Career Roadmap</h3>
+          <div class="metric">Roles: ${(userProfile.interestedRoles || []).length || "Select in profile"}</div>
+          <div class="metric">All roles available</div>
+          <p class="small-text">Same roles as profile & skill analysis</p>
         </div>
 
         <div class="dashboard-card card-resume" onclick="window.location.href='resume.html';">
@@ -465,21 +469,17 @@ function loadContent(section, btn) {
             </div>
           </div>
 
-          <!-- Section 3: Career Preferences -->
+          <!-- Section 3: Career Preferences (all roles – same list as Skill Analysis & Roadmap) -->
           <div class="form-section">
-            <h3>🎯 Career Preferences</h3>
-            <div class="form-group">
-              <label>Interested Domains (Select at least one) *</label>
-              <div class="checkbox-group">
-                <label><input type="checkbox" class="domain-check" value="Web Development" ${userProfile.interestedDomains.includes("Web Development") ? "checked" : ""}> 💻 Web Development</label>
-                <label><input type="checkbox" class="domain-check" value="Data Science" ${userProfile.interestedDomains.includes("Data Science") ? "checked" : ""}> 📊 Data Science</label>
-                <label><input type="checkbox" class="domain-check" value="Mobile Development" ${userProfile.interestedDomains.includes("Mobile Development") ? "checked" : ""}> 📱 Mobile Development</label>
-                <label><input type="checkbox" class="domain-check" value="AI/ML" ${userProfile.interestedDomains.includes("AI/ML") ? "checked" : ""}> 🤖 AI/ML</label>
-                <label><input type="checkbox" class="domain-check" value="DevOps" ${userProfile.interestedDomains.includes("DevOps") ? "checked" : ""}> ⚙️ DevOps</label>
-              </div>
+            <h3>🎯 Interested Roles</h3>
+            <p style="color: #9CA3AF; font-size: 13px;">Select the roles you're interested in. These appear in Skill Analysis and Career Roadmap.</p>
+            <div class="checkbox-group" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+              ${(typeof ALL_ROLES !== 'undefined' ? ALL_ROLES : []).map(r => `
+                <label><input type="checkbox" class="role-check" value="${r.id}" ${(userProfile.interestedRoles || []).includes(r.id) ? "checked" : ""}> ${r.title}</label>
+              `).join('')}
             </div>
-            <div class="form-group">
-              <label>Career Goal</label>
+            <div class="form-group" style="margin-top: 16px;">
+              <label>Career Goal (optional)</label>
               <input type="text" id="careerGoal" value="${userProfile.careerGoal}" placeholder="e.g., Full-Stack Developer, Data Scientist">
             </div>
           </div>
@@ -694,12 +694,15 @@ function loadContent(section, btn) {
 
     const roadmapData = generateRoadmap();
     const { stages, coursePath } = roadmapData;
+    const firstRoleTitle = (typeof ALL_ROLES !== 'undefined' && userProfile.interestedRoles && userProfile.interestedRoles[0])
+      ? (ALL_ROLES.find(r => r.id === userProfile.interestedRoles[0])?.title || userProfile.interestedDomains?.[0]) : (userProfile.interestedDomains?.[0] || "Web Development");
 
     content.innerHTML = `
       <div class="roadmap-section">
         <div class="roadmap-intro">
           <h3>🎯 Your 12-Week Path to Industry-Ready</h3>
-          <p>Domain: <strong>${userProfile.interestedDomains[0]}</strong> | Commitment: 8-10 hours/week | Goal: Internship-ready in 12 weeks</p>
+          <p>Domain: <strong>${firstRoleTitle}</strong> | Commitment: 8-10 hours/week | Goal: Internship-ready in 12 weeks</p>
+          <p style="margin-top: 12px;"><a href="roadmap.html" style="color: #22D3EE;">View all ${typeof ALL_ROLES !== 'undefined' ? ALL_ROLES.length : 7} roles in Career Roadmap →</a></p>
         </div>
 
         <div class="roadmap-stages">
@@ -818,12 +821,16 @@ function saveProfileData() {
   userProfile.careerGoal = document.getElementById("careerGoal").value;
   userProfile.experience = document.getElementById("experience").value;
 
-  // Collect domains
-  const selectedDomains = [];
-  document.querySelectorAll(".domain-check:checked").forEach(checkbox => {
-    selectedDomains.push(checkbox.value);
+  // Collect interested role ids (same roles as Skill Analysis & Career Roadmap)
+  const selectedRoles = [];
+  document.querySelectorAll(".role-check:checked").forEach(checkbox => {
+    selectedRoles.push(checkbox.value);
   });
-  userProfile.interestedDomains = selectedDomains.length > 0 ? selectedDomains : ["Web Development"];
+  userProfile.interestedRoles = selectedRoles.length > 0 ? selectedRoles : (userProfile.interestedRoles || ["frontend"]);
+  // Keep first role for legacy dashboard domain display
+  userProfile.interestedDomains = selectedRoles.length > 0 && typeof ALL_ROLES !== 'undefined'
+    ? [ALL_ROLES.find(r => r.id === selectedRoles[0])?.title || "Web Development"]
+    : ["Web Development"];
 
   // Collect skills
   const newSkills = {};

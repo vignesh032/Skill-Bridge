@@ -185,24 +185,25 @@
    margin-left: 5px;
  }
 
- /* ===== BASE STYLES ===== */
- body {
-   background: linear-gradient(135deg, #0a0e27 0%, #1a0f3e 25%, #0d0620 50%, #0a0e27 75%, #000000 100%);
-   background-attachment: fixed;
-   min-height: 100vh;
-   position: relative;
-   overflow-x: hidden;
-   line-height: 1.6;
-   color: #E5E7EB;
-   font-family: 'Outfit', sans-serif;
- }
+/* ===== BASE STYLES – Clean theme with clear sections ===== */
+body {
+  background: #0f1419;
+  background-image: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(34, 211, 238, 0.06) 0%, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.6;
+  color: #e6edf3;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
 
- .app {
-   display: flex;
-   min-height: 100vh;
-   position: relative;
-   margin-left: 260px;
- }
+.app {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  margin-left: 260px;
+}
 
  /* ===== INTRO SIDEBAR ===== */
  .intro-sidebar {
@@ -349,26 +350,25 @@
  }
 
 
- .sidebar {
-   width: 260px;
-   /* DARK SIDEBAR for contrast */
-   background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-   border-right: 1px solid rgba(255, 255, 255, 0.1);
-   color: #9CA3AF;
-   padding: 25px 15px;
-   transition: all 0.3s ease;
-   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
-   position: fixed;
-   top: 0;
-   left: 0;
-   height: 100vh;
-   z-index: 1000;
-   display: flex !important;
-   flex-direction: column !important;
-   visibility: visible !important;
-   opacity: 1 !important;
-   overflow-y: auto;
- }
+.sidebar {
+  width: 260px;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  color: #8b949e;
+  padding: 24px 16px;
+  transition: all 0.3s ease;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1000;
+  display: flex !important;
+  flex-direction: column !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow-y: auto;
+}
 
  .sidebar.hide {
    transform: translateX(-100%) !important;
@@ -440,78 +440,76 @@
    padding-right: 8px;
  }
 
- .sidebar nav button {
-   width: 100%;
-   padding: 12px 14px;
-   background: rgba(34, 211, 238, 0.08);
-   border: 1px solid rgba(34, 211, 238, 0.12);
-   color: #9CA3AF;
-   text-align: left;
-   border-radius: 10px;
-   font-size: 14px;
-   font-weight: 500;
-   cursor: pointer;
-   transition: all 0.3s ease;
-   position: relative;
-   overflow: hidden;
-   white-space: nowrap;
-   opacity: 0;
-   visibility: hidden;
-   transform: translateY(-10px);
- }
+.sidebar nav button {
+  width: 100%;
+  padding: 12px 16px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
+  text-align: left;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  margin-bottom: 6px;
+}
 
- .sidebar nav button.hidden {
-   opacity: 0;
-   visibility: hidden;
-   transform: translateY(-10px);
- }
+.sidebar nav button.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+}
 
- .sidebar nav button.unlocked {
-   opacity: 1;
-   visibility: visible;
-   transform: translateY(0);
- }
+.sidebar nav button.unlocked {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
 
- .sidebar nav button:hover {
-   background: rgba(139, 92, 246, 0.25);
-   color: #C4B5FD;
-   border-color: rgba(139, 92, 246, 0.5);
-   box-shadow: 0 0 15px rgba(139, 92, 246, 0.3), inset 0 0 15px rgba(139, 92, 246, 0.1);
-   transform: translateX(5px);
- }
+.sidebar nav button:hover {
+  background: #30363d;
+  color: #58a6ff;
+  border-color: #388bfd;
+}
 
- .sidebar nav button.active {
-   background: linear-gradient(90deg, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.15) 100%);
-   color: #C4B5FD;
-   border-color: #A78BFA;
-   box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-   font-weight: 600;
- }
+.sidebar nav button.active {
+  background: rgba(34, 211, 238, 0.15);
+  color: #22D3EE;
+  border-color: #22D3EE;
+  font-weight: 600;
+}
 
- /* ===== MAIN CONTENT ===== */
- .main {
-   flex: 1;
-   display: flex;
-   flex-direction: column;
-   background: transparent;
- }
+/* ===== MAIN CONTENT ===== */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0d1117;
+  min-height: 100vh;
+  border-left: 1px solid #21262d;
+}
 
- /* ===== NAVBAR ===== */
- .navbar {
-   background: rgba(15, 23, 42, 0.95);
-   /* Dark Slate */
-   backdrop-filter: blur(10px);
-   padding: 16px 30px;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-   position: sticky;
-   top: 0;
-   z-index: 900;
-   color: #fff;
- }
+/* ===== NAVBAR ===== */
+.navbar {
+  background: #161b22;
+  backdrop-filter: blur(8px);
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #30363d;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  color: #e6edf3;
+}
 
  .menu-btn {
    display: none;
@@ -571,31 +569,29 @@
  }
 
  #pageTitle {
-   font-size: 26px;
+   font-size: 1.4rem;
    font-weight: 700;
-   color: #ffffff;
+   color: #e6edf3;
    letter-spacing: 0;
    text-transform: capitalize;
  }
 
  .profile {
-   background: rgba(139, 92, 246, 0.12);
-   border: 1px solid rgba(139, 92, 246, 0.4);
-   color: #C4B5FD;
+   background: #21262d;
+   border: 1px solid #30363d;
+   color: #58a6ff;
    padding: 10px 18px;
-   border-radius: 10px;
+   border-radius: 8px;
    font-weight: 600;
    font-size: 14px;
    cursor: pointer;
    transition: all 0.2s ease;
-   box-shadow: 0 0 12px rgba(139, 92, 246, 0.25);
    position: relative;
  }
 
  .profile:hover {
-   background: rgba(139, 92, 246, 0.25);
-   box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-   border-color: rgba(139, 92, 246, 0.6);
+   background: #30363d;
+   border-color: #58a6ff;
  }
 
  .profile:hover::before {
@@ -611,48 +607,75 @@
 
  /* ===== CONTENT ===== */
  .content {
-   padding: 40px 30px;
+   padding: 32px 28px;
    flex: 1;
    overflow-y: auto;
+   background: #0d1117;
    scrollbar-width: thin;
-   scrollbar-color: rgba(34, 211, 238, 0.3) transparent;
+   scrollbar-color: rgba(34, 211, 238, 0.25) transparent;
  }
 
  .content::-webkit-scrollbar {
-   width: 6px;
+   width: 8px;
  }
 
  .content::-webkit-scrollbar-track {
-   background: transparent;
+   background: rgba(0, 0, 0, 0.15);
+   border-radius: 4px;
  }
 
  .content::-webkit-scrollbar-thumb {
-   background: rgba(34, 211, 238, 0.3);
-   border-radius: 3px;
+   background: rgba(34, 211, 238, 0.25);
+   border-radius: 4px;
  }
 
  .content::-webkit-scrollbar-thumb:hover {
-   background: rgba(34, 211, 238, 0.5);
+   background: rgba(34, 211, 238, 0.4);
+ }
+
+ /* Content sections: clear division between blocks */
+ .content-section {
+   background: #161b22;
+   border: 1px solid #30363d;
+   border-radius: 12px;
+   padding: 24px 28px;
+   margin-bottom: 24px;
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+ }
+
+ .content-section h2,
+ .content-section h3 {
+   color: #e6edf3;
+   margin-bottom: 16px;
+   padding-bottom: 12px;
+   border-bottom: 1px solid #30363d;
+   font-size: 1.25rem;
+   font-weight: 700;
+ }
+
+ .content-section p,
+ .content-section li {
+   color: #8b949e;
+   line-height: 1.65;
  }
 
  /* ===== CARDS ===== */
  .card {
-   background: rgba(10, 20, 50, 0.6);
-   backdrop-filter: blur(16px);
-   padding: 28px;
-   border-radius: 16px;
-   margin-bottom: 20px;
-   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px rgba(34, 211, 238, 0.15);
-   border: 1px solid rgba(34, 211, 238, 0.25);
-   transition: all 0.3s ease;
-   color: #E5E7EB;
+   background: #1a2433;
+   backdrop-filter: blur(12px);
+   padding: 24px 28px;
+   border-radius: 12px;
+   margin-bottom: 24px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+   border: 1px solid rgba(255, 255, 255, 0.08);
+   transition: all 0.25s ease;
+   color: #e2e8f0;
  }
 
  .card:hover {
-   transform: translateY(-4px);
-   box-shadow: 0 16px 48px rgba(34, 211, 238, 0.3), inset 0 1px rgba(34, 211, 238, 0.25);
-   border-color: rgba(34, 211, 238, 0.4);
-   background: rgba(10, 20, 50, 0.8);
+   transform: translateY(-2px);
+   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+   border-color: rgba(34, 211, 238, 0.2);
  }
 
  /* ===== BUTTONS ===== */
@@ -705,18 +728,17 @@
  }
 
  .dashboard-card {
-   padding: 28px;
-   border-radius: 16px;
-   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px rgba(34, 211, 238, 0.15);
-   transition: all 0.3s ease;
+   padding: 24px 28px;
+   border-radius: 12px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+   transition: all 0.25s ease;
    text-align: center;
-   color: #E5E7EB;
+   color: #e6edf3;
    position: relative;
    overflow: hidden;
-   background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(34, 211, 238, 0.08));
-   backdrop-filter: blur(16px);
-   border: 1px solid rgba(34, 211, 238, 0.25);
-   min-height: 200px;
+   background: #161b22;
+   border: 1px solid #30363d;
+   min-height: 180px;
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -838,18 +860,39 @@
    background: linear-gradient(135deg, rgba(0, 110, 255, 0.08), rgba(34, 211, 238, 0.05));
  }
 
+ /* ===== PAGE CONTENT WRAPPER (Skill Analysis, Roadmap, Internships, Resume) ===== */
+ .page-content-wrapper {
+   background: #161b22;
+   border: 1px solid #30363d;
+   border-radius: 12px;
+   padding: 28px 32px;
+   margin-bottom: 24px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+ }
+
+ .page-content-wrapper h1,
+ .page-content-wrapper h2 {
+   color: #e6edf3;
+   margin-bottom: 8px;
+   padding-bottom: 12px;
+   border-bottom: 1px solid #30363d;
+   font-size: 1.5rem;
+   font-weight: 700;
+ }
+
  /* ===== ROADMAP ===== */
  .roadmap-grid {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
    gap: 20px;
-   padding: 25px;
-   background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.04));
-   border-radius: 20px;
-   margin: 20px 0;
+   padding: 24px;
+   background: #161b22;
+   border-radius: 12px;
+   margin: 24px 0;
    position: relative;
    overflow: hidden;
-   border: 1px solid rgba(139, 92, 246, 0.15);
+   border: 1px solid #30363d;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
  }
 
  .roadmap-grid::before {
@@ -865,15 +908,14 @@
  }
 
  .roadmap-grid .roadmap-guide {
-   background: linear-gradient(135deg, rgba(30, 15, 70, 0.8), rgba(45, 25, 90, 0.7));
-   border: 1px solid rgba(139, 92, 246, 0.3);
-   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2), inset 0 1px rgba(139, 92, 246, 0.15);
-   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+   background: #21262d;
+   border: 1px solid #30363d;
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+   transition: all 0.25s ease;
    position: relative;
    overflow: hidden;
-   backdrop-filter: blur(10px);
    padding: 24px;
-   border-radius: 14px;
+   border-radius: 12px;
  }
 
  .roadmap-grid .roadmap-guide::before {
@@ -888,9 +930,9 @@
  }
 
  .roadmap-grid .roadmap-guide:hover {
-   transform: translateY(-6px) scale(1.02);
-   box-shadow: 0 20px 48px rgba(139, 92, 246, 0.35), inset 0 1px rgba(139, 92, 246, 0.2);
-   border-color: rgba(139, 92, 246, 0.5);
+   transform: translateY(-4px);
+   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+   border-color: #58a6ff;
  }
 
  .roadmap-grid .roadmap-guide:hover::before {
@@ -899,14 +941,14 @@
  }
 
  .roadmap-grid .roadmap-guide h3 {
-   color: #C4B5FD;
-   font-size: 1.4em;
+   color: #e6edf3;
+   font-size: 1.25rem;
    font-weight: 700;
    margin-bottom: 16px;
    margin-top: 0;
    text-align: center;
    position: relative;
-   letter-spacing: 0.5px;
+   letter-spacing: 0.3px;
  }
 
  .roadmap-grid .roadmap-guide h3::after {
@@ -922,17 +964,16 @@
  }
 
  .roadmap-grid .guide-block {
-   background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.06));
-   border: 1px solid rgba(139, 92, 246, 0.25);
-   padding: 16px 20px;
-   border-radius: 10px;
+   background: #0d1117;
+   border: 1px solid #30363d;
+   padding: 14px 18px;
+   border-radius: 8px;
    margin-bottom: 12px;
    font-size: 14px;
-   transition: all 0.3s ease;
-   box-shadow: 0 2px 8px rgba(139, 92, 246, 0.1);
+   transition: all 0.2s ease;
    position: relative;
-   color: #D1D5DB;
-   border-left: 3px solid rgba(139, 92, 246, 0.5);
+   color: #c9d1d9;
+   border-left: 3px solid #58a6ff;
  }
 
  .roadmap-grid .guide-block::before {
@@ -1139,19 +1180,23 @@
  /* ===== INTERNSHIPS ===== */
  .internship-grid {
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-   gap: 22px;
-   padding: 0;
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+   gap: 20px;
+   padding: 24px;
+   background: #161b22;
+   border: 1px solid #30363d;
+   border-radius: 12px;
+   margin: 24px 0;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
  }
 
  .internship-card {
-   background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(34, 211, 238, 0.06));
-   backdrop-filter: blur(16px);
+   background: #21262d;
    padding: 24px;
-   border-radius: 14px;
-   box-shadow: 0 12px 36px rgba(34, 211, 238, 0.18), inset 0 1px rgba(34, 211, 238, 0.12);
-   border: 1px solid rgba(34, 211, 238, 0.25);
-   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+   border-radius: 12px;
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+   border: 1px solid #30363d;
+   transition: all 0.25s ease;
    cursor: pointer;
    position: relative;
    overflow: hidden;
@@ -1174,23 +1219,22 @@
  }
 
  .internship-card:hover {
-   transform: translateY(-6px) scale(1.02);
-   box-shadow: 0 24px 48px rgba(34, 211, 238, 0.28), inset 0 1px rgba(34, 211, 238, 0.18);
-   border-color: rgba(34, 211, 238, 0.4);
-   background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(34, 211, 238, 0.1));
+   transform: translateY(-4px);
+   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+   border-color: #58a6ff;
  }
 
  .internship-card h3 {
-   color: #22D3EE;
+   color: #e6edf3;
    margin-bottom: 12px;
    margin-top: 0;
-   font-size: 1.3em;
+   font-size: 1.2rem;
    font-weight: 700;
    letter-spacing: 0.3px;
  }
 
  .internship-card p {
-   color: #9CA3AF;
+   color: #8b949e;
    font-size: 14px;
    line-height: 1.5;
    margin-bottom: 12px;
@@ -1492,22 +1536,23 @@
  .resume-sections-container {
    max-width: 1200px;
    margin: 0 auto;
-   padding: 20px 0;
+   padding: 24px 0;
  }
 
  .resume-card {
-   background: linear-gradient(135deg, rgba(30, 15, 70, 0.8), rgba(45, 25, 90, 0.7));
-   border: 2px solid rgba(139, 92, 246, 0.3);
-   border-radius: 16px;
-   margin-bottom: 30px;
+   background: #161b22;
+   border: 1px solid #30363d;
+   border-radius: 12px;
+   margin-bottom: 24px;
    overflow: hidden;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
    box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15), inset 0 1px rgba(139, 92, 246, 0.1);
    transition: all 0.3s ease;
  }
 
  .resume-card:hover {
-   border-color: rgba(139, 92, 246, 0.5);
-   box-shadow: 0 30px 60px rgba(139, 92, 246, 0.25), inset 0 1px rgba(139, 92, 246, 0.15);
+   border-color: #58a6ff;
+   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
  }
 
  .card-header {
