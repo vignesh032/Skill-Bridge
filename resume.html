@@ -162,45 +162,6 @@
             </div>
           </div>
 
-          <div class="resume-card modern-resume-card">
-            <div class="card-header">
-              <h2>Application Tracker</h2>
-              <p>Track where you applied and your current stage.</p>
-            </div>
-            <div class="card-body">
-              <div class="application-tracker-form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>Company *</label>
-                    <input type="text" id="appCompany" placeholder="Google">
-                  </div>
-                  <div class="form-group">
-                    <label>Role *</label>
-                    <input type="text" id="appRole" placeholder="Software Engineer Intern">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>Status</label>
-                    <select id="appStatus">
-                      <option value="Applied">Applied</option>
-                      <option value="Shortlisted">Shortlisted</option>
-                      <option value="Interview Scheduled">Interview Scheduled</option>
-                      <option value="Offer">Offer</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Date</label>
-                    <input type="date" id="appDate">
-                  </div>
-                </div>
-                <button class="card-btn" type="button" onclick="addApplication()">Add Application</button>
-              </div>
-              <div id="applicationList" class="application-list"></div>
-            </div>
-          </div>
-
           <div class="resume-card modern-resume-card" id="resumeOutput" style="display: none;">
             <div class="card-header">
               <h2>Generated Resume Preview</h2>
@@ -549,60 +510,6 @@
       }
     }
 
-    function renderApplications() {
-      const container = document.getElementById('applicationList');
-      const data = loadResumeTrackerData();
-      const applications = Array.isArray(data.applications) ? data.applications : [];
-
-      if (applications.length === 0) {
-        container.innerHTML = '<p style="color:#a8bbcf; margin:0;">No applications tracked yet.</p>';
-        return;
-      }
-
-      container.innerHTML = applications.map((a, idx) => `
-        <div class="application-item">
-          <div>
-            <strong>${escapeHtml(a.company)}</strong>
-            <p>${escapeHtml(a.role)}</p>
-          </div>
-          <div>
-            <span class="app-status">${escapeHtml(a.status)}</span>
-            <p>${escapeHtml(a.date || 'No date')}</p>
-          </div>
-          <button class="btn-small" type="button" onclick="removeApplication(${idx})">Remove</button>
-        </div>
-      `).join('');
-    }
-
-    function addApplication() {
-      const company = document.getElementById('appCompany').value.trim();
-      const role = document.getElementById('appRole').value.trim();
-      const status = document.getElementById('appStatus').value;
-      const date = document.getElementById('appDate').value;
-      if (!company || !role) {
-        alert('Enter company and role before adding application.');
-        return;
-      }
-
-      const data = loadResumeTrackerData();
-      const applications = Array.isArray(data.applications) ? data.applications : [];
-      applications.unshift({ company, role, status, date });
-      localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify({ ...data, applications }));
-
-      document.getElementById('appCompany').value = '';
-      document.getElementById('appRole').value = '';
-      document.getElementById('appDate').value = '';
-      renderApplications();
-    }
-
-    function removeApplication(index) {
-      const data = loadResumeTrackerData();
-      const applications = Array.isArray(data.applications) ? data.applications : [];
-      applications.splice(index, 1);
-      localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify({ ...data, applications }));
-      renderApplications();
-    }
-
     async function extractTextFromPdf(file) {
       if (!window.pdfjsLib) return '';
       if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
@@ -765,8 +672,6 @@
     window.uploadResume = uploadResume;
     window.applyTemplate = applyTemplate;
     window.downloadTemplatePdf = downloadTemplatePdf;
-    window.addApplication = addApplication;
-    window.removeApplication = removeApplication;
 
     window.addEventListener('load', () => {
       if (sidebar) sidebar.classList.remove('hide');
@@ -774,7 +679,6 @@
       loadSavedResumeData();
       prefillFromUserProfile();
       wireLiveUpdates();
-      renderApplications();
       updateResumeHealth();
     });
   </script>

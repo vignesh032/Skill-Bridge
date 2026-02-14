@@ -635,6 +635,129 @@
       ]
     };
 
+    const ROADMAP_BOOKS = {
+      frontend: [
+        { title: "HTML and CSS: Design and Build Websites", author: "Jon Duckett" },
+        { title: "Eloquent JavaScript", author: "Marijn Haverbeke" },
+        { title: "Learning React", author: "Alex Banks & Eve Porcello" }
+      ],
+      data: [
+        { title: "Practical Statistics for Data Scientists", author: "Peter Bruce, Andrew Bruce, Peter Gedeck" },
+        { title: "Storytelling with Data", author: "Cole Nussbaumer Knaflic" },
+        { title: "SQL Queries for Mere Mortals", author: "John L. Viescas, Michael J. Hernandez" }
+      ],
+      mobile: [
+        { title: "Flutter in Action", author: "Eric Windmill" },
+        { title: "iOS Programming: The Big Nerd Ranch Guide", author: "Christian Keur, Aaron Hillegass" },
+        { title: "Android Programming: The Big Nerd Ranch Guide", author: "Bill Phillips, Chris Stewart" }
+      ],
+      software: [
+        { title: "Clean Code", author: "Robert C. Martin" },
+        { title: "Design Patterns", author: "Erich Gamma et al." },
+        { title: "Cracking the Coding Interview", author: "Gayle Laakmann McDowell" }
+      ],
+      ai: [
+        { title: "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow", author: "Aurelien Geron" },
+        { title: "Deep Learning", author: "Ian Goodfellow, Yoshua Bengio, Aaron Courville" },
+        { title: "Pattern Recognition and Machine Learning", author: "Christopher M. Bishop" }
+      ],
+      cyber: [
+        { title: "The Web Application Hacker's Handbook", author: "Dafydd Stuttard, Marcus Pinto" },
+        { title: "Practical Malware Analysis", author: "Michael Sikorski, Andrew Honig" },
+        { title: "Security Engineering", author: "Ross Anderson" }
+      ],
+      devops: [
+        { title: "The DevOps Handbook", author: "Gene Kim, Jez Humble, Patrick Debois, John Willis" },
+        { title: "Site Reliability Engineering", author: "Betsy Beyer et al." },
+        { title: "Accelerate", author: "Nicole Forsgren, Jez Humble, Gene Kim" }
+      ],
+      backend: [
+        { title: "Designing Data-Intensive Applications", author: "Martin Kleppmann" },
+        { title: "Node.js Design Patterns", author: "Mario Casciaro, Luciano Mammino" },
+        { title: "RESTful Web APIs", author: "Leonard Richardson, Mike Amundsen, Sam Ruby" }
+      ],
+      fullstack: [
+        { title: "Fullstack React", author: "Anthony Accomazzo et al." },
+        { title: "MERN Quick Start Guide", author: "Ethan Brown" },
+        { title: "Web Development with Node and Express", author: "Ethan Brown" }
+      ],
+      datascientist: [
+        { title: "An Introduction to Statistical Learning", author: "James, Witten, Hastie, Tibshirani" },
+        { title: "Python for Data Analysis", author: "Wes McKinney" },
+        { title: "Feature Engineering for Machine Learning", author: "Alice Zheng, Amanda Casari" }
+      ],
+      blockchain: [
+        { title: "Mastering Ethereum", author: "Andreas M. Antonopoulos, Gavin Wood" },
+        { title: "Mastering Blockchain", author: "Imran Bashir" },
+        { title: "Blockchain Basics", author: "Daniel Drescher" }
+      ],
+      uiux: [
+        { title: "Don't Make Me Think", author: "Steve Krug" },
+        { title: "The Design of Everyday Things", author: "Don Norman" },
+        { title: "Refactoring UI", author: "Adam Wathan, Steve Schoger" }
+      ],
+      qa: [
+        { title: "Lessons Learned in Software Testing", author: "Cem Kaner, James Bach, Bret Pettichord" },
+        { title: "Agile Testing", author: "Lisa Crispin, Janet Gregory" },
+        { title: "Foundations of Software Testing", author: "Dorothy Graham et al." }
+      ]
+    };
+
+    const ROADMAP_HACKATHONS = {
+      frontend: [
+        { title: "Frontend Challenge by Frontend Mentor", platform: "Frontend Mentor", mode: "Remote", prize: "Community recognition", url: "https://www.frontendmentor.io/challenges" },
+        { title: "Devpost Web UI Hackathons", platform: "Devpost", mode: "Remote/Hybrid", prize: "Varies by event", url: "https://devpost.com/hackathons?challenge_type[]=online&themes[]=Design" }
+      ],
+      data: [
+        { title: "Kaggle Data Science Competitions", platform: "Kaggle", mode: "Remote", prize: "Cash + rank points", url: "https://www.kaggle.com/competitions" },
+        { title: "Analytics Vidhya DataHack", platform: "Analytics Vidhya", mode: "Remote", prize: "Varies by challenge", url: "https://datahack.analyticsvidhya.com/" }
+      ],
+      mobile: [
+        { title: "Flutter Global Gamers Challenge", platform: "Flutter Community", mode: "Remote", prize: "Swag + features", url: "https://flutter.dev/community" },
+        { title: "Android Dev Challenges", platform: "Google Developers", mode: "Remote", prize: "Recognition + goodies", url: "https://developers.google.com/community" }
+      ],
+      software: [
+        { title: "Major League Hacking (MLH) Events", platform: "MLH", mode: "Remote/On-site", prize: "Sponsor prizes", url: "https://mlh.io/seasons/2026/events" },
+        { title: "Devpost General Software Hackathons", platform: "Devpost", mode: "Remote/Hybrid", prize: "Varies by event", url: "https://devpost.com/hackathons" }
+      ],
+      ai: [
+        { title: "AI + ML Hackathons on Devpost", platform: "Devpost", mode: "Remote/Hybrid", prize: "Varies by event", url: "https://devpost.com/hackathons?themes[]=Machine%20Learning%2FAI" },
+        { title: "Hugging Face Community Challenges", platform: "Hugging Face", mode: "Remote", prize: "Community grants/recognition", url: "https://huggingface.co/challenges" }
+      ],
+      cyber: [
+        { title: "CTFtime Security Competitions", platform: "CTFtime", mode: "Remote/On-site", prize: "Points + prizes", url: "https://ctftime.org/event/list/upcoming" },
+        { title: "Hack The Box CTF Events", platform: "Hack The Box", mode: "Remote", prize: "Rank + rewards", url: "https://www.hackthebox.com/events" }
+      ],
+      devops: [
+        { title: "Cloud Native Hackathons", platform: "CNCF Community", mode: "Remote/Hybrid", prize: "Varies by event", url: "https://community.cncf.io/" },
+        { title: "AWS Jam and Builder Challenges", platform: "AWS", mode: "Remote/On-site", prize: "Badges + recognition", url: "https://aws.amazon.com/events/" }
+      ],
+      backend: [
+        { title: "API and Backend Hackathons", platform: "Devpost", mode: "Remote/Hybrid", prize: "Varies by event", url: "https://devpost.com/hackathons?themes[]=Open%20Ended" },
+        { title: "Postman API Challenge", platform: "Postman", mode: "Remote", prize: "Community rewards", url: "https://www.postman.com/events/" }
+      ],
+      fullstack: [
+        { title: "Full Stack Open Build Challenges", platform: "Open Source Community", mode: "Remote", prize: "Portfolio impact", url: "https://fullstackopen.com/en/" },
+        { title: "MLH Full-Stack Friendly Events", platform: "MLH", mode: "Remote/On-site", prize: "Sponsor prizes", url: "https://mlh.io/seasons/2026/events" }
+      ],
+      datascientist: [
+        { title: "DrivenData Data Science Competitions", platform: "DrivenData", mode: "Remote", prize: "Cash + impact projects", url: "https://www.drivendata.org/competitions/" },
+        { title: "Kaggle Research Challenges", platform: "Kaggle", mode: "Remote", prize: "Cash + medals", url: "https://www.kaggle.com/competitions" }
+      ],
+      blockchain: [
+        { title: "ETHGlobal Hackathons", platform: "ETHGlobal", mode: "Remote/On-site", prize: "Large sponsor bounties", url: "https://ethglobal.com/events" },
+        { title: "Solana Global Hackathon", platform: "Solana", mode: "Remote", prize: "Grant + funding opportunities", url: "https://solana.com/hackathon" }
+      ],
+      uiux: [
+        { title: "Design Hackathons on Devpost", platform: "Devpost", mode: "Remote/Hybrid", prize: "Varies by event", url: "https://devpost.com/hackathons?themes[]=Design" },
+        { title: "UX Challenge Events", platform: "UX Tools", mode: "Remote", prize: "Recognition + portfolio boost", url: "https://uxtools.co/challenges/" }
+      ],
+      qa: [
+        { title: "Testing and QA Challenges", platform: "Ministry of Testing", mode: "Remote", prize: "Community rewards", url: "https://www.ministryoftesting.com/events" },
+        { title: "Bug Bounty Practice Events", platform: "HackerOne", mode: "Remote", prize: "Bounty payouts", url: "https://www.hackerone.com/hackers/hacker-101" }
+      ]
+    };
+
     const ROADMAP_FAQS = {
       frontend: [
         { q: "What is the difference between controlled and uncontrolled components in React?", a: "Controlled components store input state in React state, while uncontrolled components keep state in the DOM using refs. Controlled is preferred for validation and predictable behavior." },
@@ -770,6 +893,70 @@
 
     window.toggleRoadmapStep = toggleRoadmapStep;
 
+    function getOfficialDoc(domainId, stepTitle) {
+      const title = String(stepTitle || '').toLowerCase();
+
+      const roleDefaults = {
+        frontend: { label: "MDN Web Docs", url: "https://developer.mozilla.org/en-US/docs/Learn" },
+        data: { label: "Microsoft Learn Data", url: "https://learn.microsoft.com/en-us/training/browse/?products=power-bi" },
+        mobile: { label: "Android Developers", url: "https://developer.android.com/guide" },
+        software: { label: "GeeksforGeeks DSA", url: "https://www.geeksforgeeks.org/data-structures/" },
+        ai: { label: "PyTorch Docs", url: "https://pytorch.org/docs/stable/index.html" },
+        cyber: { label: "OWASP Docs", url: "https://owasp.org/www-project-top-ten/" },
+        devops: { label: "Docker Docs", url: "https://docs.docker.com/get-started/" },
+        backend: { label: "Node.js Docs", url: "https://nodejs.org/en/docs" },
+        fullstack: { label: "React Docs", url: "https://react.dev/learn" },
+        datascientist: { label: "scikit-learn Docs", url: "https://scikit-learn.org/stable/user_guide.html" },
+        blockchain: { label: "Solidity Docs", url: "https://docs.soliditylang.org/en/latest/" },
+        uiux: { label: "Figma Help", url: "https://help.figma.com/hc/en-us" },
+        qa: { label: "Selenium Docs", url: "https://www.selenium.dev/documentation/" }
+      };
+
+      const keywordDocs = [
+        { keys: ["html", "css"], label: "MDN HTML/CSS", url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core" },
+        { keys: ["javascript"], label: "MDN JavaScript", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" },
+        { keys: ["responsive"], label: "MDN Responsive Design", url: "https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design" },
+        { keys: ["git", "version control"], label: "Git Official Docs", url: "https://git-scm.com/doc" },
+        { keys: ["react"], label: "React Docs", url: "https://react.dev/learn" },
+        { keys: ["redux", "state management"], label: "Redux Docs", url: "https://redux.js.org/introduction/getting-started" },
+        { keys: ["api"], label: "REST API Guide", url: "https://developer.mozilla.org/en-US/docs/Glossary/REST" },
+        { keys: ["sql"], label: "PostgreSQL Docs", url: "https://www.postgresql.org/docs/" },
+        { keys: ["excel"], label: "Microsoft Excel Help", url: "https://support.microsoft.com/excel" },
+        { keys: ["python"], label: "Python Docs", url: "https://docs.python.org/3/tutorial/" },
+        { keys: ["pandas"], label: "Pandas Docs", url: "https://pandas.pydata.org/docs/" },
+        { keys: ["numpy"], label: "NumPy Docs", url: "https://numpy.org/doc/stable/" },
+        { keys: ["tableau"], label: "Tableau Help", url: "https://help.tableau.com/current/pro/desktop/en-us/default.htm" },
+        { keys: ["power bi"], label: "Power BI Docs", url: "https://learn.microsoft.com/en-us/power-bi/" },
+        { keys: ["statistics", "probability"], label: "Khan Academy Statistics", url: "https://www.khanacademy.org/math/statistics-probability" },
+        { keys: ["machine learning"], label: "scikit-learn", url: "https://scikit-learn.org/stable/user_guide.html" },
+        { keys: ["deep learning"], label: "TensorFlow Guide", url: "https://www.tensorflow.org/guide" },
+        { keys: ["nlp"], label: "Hugging Face Course", url: "https://huggingface.co/learn/nlp-course/chapter1/1" },
+        { keys: ["computer vision"], label: "OpenCV Docs", url: "https://docs.opencv.org/" },
+        { keys: ["linux", "operating systems"], label: "Linux Docs", url: "https://www.kernel.org/doc/html/latest/" },
+        { keys: ["network", "networking"], label: "Cisco Networking Basics", url: "https://skillsforall.com/course/networking-basics" },
+        { keys: ["security principles"], label: "NIST Cybersecurity", url: "https://www.nist.gov/cyberframework" },
+        { keys: ["owasp", "web application security"], label: "OWASP Top 10", url: "https://owasp.org/www-project-top-ten/" },
+        { keys: ["cryptography"], label: "NIST Cryptography", url: "https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines" },
+        { keys: ["docker", "containerization"], label: "Docker Docs", url: "https://docs.docker.com/get-started/" },
+        { keys: ["kubernetes", "orchestration"], label: "Kubernetes Docs", url: "https://kubernetes.io/docs/home/" },
+        { keys: ["ci/cd", "pipeline"], label: "GitHub Actions Docs", url: "https://docs.github.com/en/actions" },
+        { keys: ["aws", "cloud"], label: "AWS Docs", url: "https://docs.aws.amazon.com/" },
+        { keys: ["testing"], label: "Jest Docs", url: "https://jestjs.io/docs/getting-started" },
+        { keys: ["authentication"], label: "OAuth 2.0 Guide", url: "https://oauth.net/2/" },
+        { keys: ["figma"], label: "Figma Help", url: "https://help.figma.com/hc/en-us" },
+        { keys: ["user research"], label: "NN/g Research", url: "https://www.nngroup.com/topic/user-research/" },
+        { keys: ["design system"], label: "Material Design", url: "https://m3.material.io/" },
+        { keys: ["selenium"], label: "Selenium Docs", url: "https://www.selenium.dev/documentation/" },
+        { keys: ["postman", "api testing"], label: "Postman Learning", url: "https://learning.postman.com/docs/getting-started/introduction/" },
+        { keys: ["solidity"], label: "Solidity Docs", url: "https://docs.soliditylang.org/en/latest/" },
+        { keys: ["web3"], label: "Web3.js Docs", url: "https://docs.web3js.org/" }
+      ];
+
+      const match = keywordDocs.find(item => item.keys.some(k => title.includes(k)));
+      if (match) return { label: match.label, url: match.url };
+      return roleDefaults[domainId] || { label: "Official Docs", url: "https://developer.mozilla.org/" };
+    }
+
     function toggleProjectGuide(guideId, btnEl) {
       const guideEl = document.getElementById(guideId);
       if (!guideEl) return;
@@ -807,6 +994,7 @@
         <p>${step.description}</p>
         <div class="step-actions">
           <button class="action-btn" onclick="window.open('${step.youtube}', '_blank')">Watch Tutorial</button>
+          <button class="action-btn docs-btn" onclick="window.open('${getOfficialDoc(domain, step.title).url}', '_blank')">Docs: ${getOfficialDoc(domain, step.title).label}</button>
           <button class="action-btn complete-btn ${roleProgress.completed[index] ? 'completed' : ''}" onclick="window.toggleRoadmapStep(${index})">
             ${roleProgress.completed[index] ? 'Completed' : 'Mark as Completed'}
           </button>
@@ -815,6 +1003,8 @@
     `).join('');
 
       const projects = ROADMAP_PROJECTS[domain] || [];
+      const books = ROADMAP_BOOKS[domain] || [];
+      const hackathons = ROADMAP_HACKATHONS[domain] || [];
       const faqs = ROADMAP_FAQS[domain] || [];
       const projectsContent = projects.length > 0 ? `
         <div class="related-projects-block">
@@ -839,6 +1029,21 @@
         </div>
       ` : '';
 
+      const booksContent = books.length > 0 ? `
+        <div class="reference-books-block">
+          <h3>Reference Books for ${roadmap.title}</h3>
+          <p>After completing all tutorials, use these books to strengthen fundamentals and interview depth.</p>
+          <div class="reference-books-grid">
+            ${books.map((book, index) => `
+              <div class="reference-book-card">
+                <h4>Book ${index + 1}: ${book.title}</h4>
+                <p><strong>Author:</strong> ${book.author}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
       const faqContent = faqs.length > 0 ? `
         <div class="role-faq-block">
           <h3>Interview FAQs for ${roadmap.title}</h3>
@@ -857,6 +1062,26 @@
         </div>
       ` : '';
 
+      const hackathonContent = hackathons.length > 0 ? `
+        <div class="hackathons-block">
+          <h3>Role-Specific Hackathons</h3>
+          <p>Join these curated hackathons to practice real-world problem solving for ${roadmap.title}.</p>
+          <div class="hackathons-grid">
+            ${hackathons.map((hackathon) => `
+              <div class="hackathon-card">
+                <h4>${hackathon.title}</h4>
+                <p><strong>Platform:</strong> ${hackathon.platform}</p>
+                <div class="hackathon-meta">
+                  <span>${hackathon.mode}</span>
+                  <span>${hackathon.prize}</span>
+                </div>
+                <button class="project-brief-btn hackathon-link-btn" onclick="window.open('${hackathon.url}', '_blank')">Open Hackathon</button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
       const content = `
         <div class="roadmap-progress-block detailed-progress-block">
           <div class="roadmap-progress-meta">
@@ -869,6 +1094,8 @@
           <p>${completedCount}/${totalSteps} tutorial steps completed</p>
         </div>
         ${stepsContent}
+        ${booksContent}
+        ${hackathonContent}
         ${projectsContent}
         ${faqContent}
       `;

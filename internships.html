@@ -58,15 +58,6 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Mode</label>
-              <select id="modeFilter" onchange="renderOpportunities()">
-                <option value="all">All modes</option>
-                <option value="Remote">Remote</option>
-                <option value="Hybrid">Hybrid</option>
-                <option value="On-site">On-site</option>
-              </select>
-            </div>
-            <div class="form-group">
               <label>Minimum Match</label>
               <select id="minMatchFilter" onchange="renderOpportunities()">
                 <option value="0">0%</option>
@@ -271,7 +262,6 @@
       const userSkills = getUserSkillEntries(profile);
       renderRoleProgressSlots(profile);
       const categoryFilter = document.getElementById('categoryFilter').value;
-      const modeFilter = document.getElementById('modeFilter').value;
       const minMatch = Number(document.getElementById('minMatchFilter').value || 0);
 
       const scored = OPPORTUNITIES.map((opportunity) => {
@@ -281,7 +271,6 @@
 
       const filtered = scored
         .filter(item => categoryFilter === 'all' || item.category === categoryFilter)
-        .filter(item => modeFilter === 'all' || item.mode === modeFilter)
         .filter(item => item.finalScore >= minMatch)
         .sort((a, b) => b.finalScore - a.finalScore);
 

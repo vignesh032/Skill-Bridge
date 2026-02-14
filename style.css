@@ -1250,12 +1250,24 @@ body {
    box-shadow: 0 8px 24px rgba(34, 211, 238, 0.3);
  }
 
- .complete-btn.completed {
-   border-color: rgba(52, 245, 197, 0.8);
-   color: #34F5C5;
-   background: linear-gradient(135deg, rgba(52, 245, 197, 0.25), rgba(34, 211, 238, 0.2));
-   box-shadow: 0 0 18px rgba(52, 245, 197, 0.25);
- }
+.complete-btn.completed {
+  border-color: rgba(52, 245, 197, 0.8);
+  color: #34F5C5;
+  background: linear-gradient(135deg, rgba(52, 245, 197, 0.25), rgba(34, 211, 238, 0.2));
+  box-shadow: 0 0 18px rgba(52, 245, 197, 0.25);
+}
+
+.docs-btn {
+  border-color: rgba(147, 197, 253, 0.6);
+  color: #dbeafe;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.2));
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.2);
+}
+
+.docs-btn:hover {
+  border-color: rgba(147, 197, 253, 0.9);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.45), rgba(30, 64, 175, 0.3));
+}
 
  /* ===== INTERNSHIPS ===== */
  .internship-grid {
@@ -2008,6 +2020,8 @@ body {
      padding: 20px;
    }
  }
+
+ #resumeOutput {
    background: linear-gradient(145deg, rgba(10, 14, 39, 0.7), rgba(13, 27, 42, 0.65), rgba(15, 21, 53, 0.6));
    backdrop-filter: blur(16px);
    border-radius: 14px;
@@ -4816,7 +4830,6 @@ body {
      text-align: center;
    }
  }
- }
 
 /* ===== Theme Refresh: Dashboard Profile + Career Roadmap ===== */
 .dashboard-card {
@@ -5129,6 +5142,27 @@ body {
   margin-bottom: 16px;
 }
 
+.opportunity-control-panel .form-group label {
+  color: #e5f2ff;
+  font-weight: 700;
+}
+
+.opportunity-control-panel select {
+  background: #0b1320;
+  color: #f3f9ff;
+  border: 1px solid #4b6b8b;
+}
+
+.opportunity-control-panel select:focus {
+  border-color: #7dd3fc;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+.opportunity-control-panel select option {
+  background: #0b1320;
+  color: #f3f9ff;
+}
+
 .opportunity-summary {
   margin-bottom: 4px;
 }
@@ -5226,6 +5260,49 @@ body {
   font-size: 13px;
 }
 
+.reference-books-block {
+  margin-top: 18px;
+  background: #101a29;
+  border: 1px solid #35506b;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.reference-books-block h3 {
+  color: #f3f9ff;
+  margin: 0 0 8px;
+}
+
+.reference-books-block p {
+  color: #b8cbe0;
+  margin: 0 0 12px;
+}
+
+.reference-books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.reference-book-card {
+  background: #0b1320;
+  border: 1px solid #30455e;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.reference-book-card h4 {
+  color: #e8f4ff;
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.reference-book-card p {
+  margin: 4px 0;
+  color: #c8d9ea;
+  font-size: 13px;
+}
+
 .project-brief-btn {
   margin-top: 8px;
   padding: 8px 12px;
@@ -5306,4 +5383,147 @@ body {
   color: #c8d9ea;
   font-size: 13px;
   line-height: 1.5;
+}
+
+.hackathons-block {
+  margin-top: 18px;
+  background: linear-gradient(160deg, #0f1a2a 0%, #132238 100%);
+  border: 2px solid #38bdf8;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.2), 0 16px 34px rgba(3, 16, 34, 0.5), inset 0 1px 0 rgba(125, 211, 252, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hackathons-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #7dd3fc, transparent);
+  animation: hackathonShine 3s linear infinite;
+}
+
+@keyframes hackathonShine {
+  0% {
+    left: -120%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+
+.hackathons-block h3 {
+  color: #f3f9ff;
+  margin: 0 0 8px;
+}
+
+.hackathons-block p {
+  color: #b8cbe0;
+  margin: 0 0 12px;
+}
+
+.hackathons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.hackathon-card {
+  background: linear-gradient(160deg, #0b1320 0%, #111d2c 100%);
+  border: 1px solid #30455e;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.hackathon-card h4 {
+  margin: 0 0 8px;
+  color: #e8f4ff;
+  font-size: 15px;
+}
+
+.hackathon-card p {
+  margin: 4px 0;
+  color: #c8d9ea;
+  font-size: 13px;
+}
+
+.hackathon-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.hackathon-meta span {
+  display: inline-block;
+  border: 1px solid #5ea4de;
+  color: #d6f0ff;
+  background: rgba(14, 165, 233, 0.2);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.hackathon-link-btn {
+  margin-top: 10px;
+  background: linear-gradient(135deg, #06b6d4, #2563eb);
+  border: 1px solid #7dd3fc;
+  color: #f8fbff;
+  box-shadow: 0 0 0 1px rgba(125, 211, 252, 0.2), 0 8px 20px rgba(14, 165, 233, 0.35);
+  animation: hackathonBtnPulse 1.8s ease-in-out infinite;
+}
+
+.hackathon-link-btn:hover {
+  background: linear-gradient(135deg, #0891b2, #1d4ed8);
+  border-color: #bae6fd;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 0 1px rgba(186, 230, 253, 0.35), 0 12px 28px rgba(14, 165, 233, 0.45);
+}
+
+@keyframes hackathonBtnPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 1px rgba(125, 211, 252, 0.2), 0 8px 20px rgba(14, 165, 233, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(186, 230, 253, 0.35), 0 12px 28px rgba(14, 165, 233, 0.5);
+  }
+}
+
+/* Hide legacy application tracker total block if present */
+#applicationTrackerTotal,
+.application-tracker-total {
+  display: none !important;
+}
+
+/* ===== Global Responsive Adjustments ===== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app {
+    margin-left: 220px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .dashboard-hero,
+  .profile-header,
+  .resume-section,
+  .resume-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content,
+  .content-section,
+  .card,
+  .page-content-wrapper {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .step-actions .action-btn {
+    min-width: 140px;
+  }
 }
