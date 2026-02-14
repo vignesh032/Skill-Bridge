@@ -1,21 +1,27 @@
-# TODO: Dashboard Links & Theme Update
+# Theme Improvement Plan
 
-## Changes Required:
-1. [ ] Update script.js - Change dashboard card links to navigate to HTML pages
-2. [ ] Update index.html - Change sidebar navigation to link to HTML pages
-3. [ ] Update style.css - Change color theme from cyan/blue to orange
+## Information Gathered:
+- Current theme: Dark background (#0B0F1A) with orange/blue animated shapes
+- Primary accent: cyan (#22D3EE), blue (#3B82F6)
+- Text colors: #E5E7EB (light gray), #9CA3AF (gray)
+- Issue: Text visibility and visual appeal not satisfactory
 
-## Detailed Changes:
+## Plan:
+- [ ] Update style.css with a new modern theme:
+  - [ ] Change background to a softer gradient (purple to blue or deep navy)
+  - [ ] Improve text contrast for better readability
+  - [ ] Simplify animated background shapes (reduce number and opacity)
+  - [ ] Update card styles with better shadows and borders
+  - [ ] Improve button styles with better hover effects
+  - [ ] Update sidebar and navbar styling
+  - [ ] Ensure all text is clearly visible
 
-### 1. script.js
-- Change Skill Analysis card from `loadContent('skills')` to navigate to `skills-analysis.html`
-- Change Resume Builder card from `loadContent('resume')` to navigate to `resume.html`
+## New Theme Design:
+- Background: Deep navy gradient with subtle purple undertones
+- Primary color: Vibrant purple (#8B5CF6) or Blue (#3B82F6)
+- Text: Pure white (#FFFFFF) for headings, light gray (#E5E7EB) for body
+- Cards: Semi-transparent dark with subtle borders
+- Better contrast ratios for accessibility
 
-### 2. index.html  
-- Update sidebar buttons to use window.location.href instead of loadContent for Skill Analysis and Resume Tracker
-
-### 3. style.css
-- Change primary color from #22D3EE (cyan) to #FF8C00 (orange)
-- Change secondary color from #3B82F6 (blue) to #FF6B00 (darker orange)
-- Update all gradient backgrounds to use orange tones
-- Update all text highlights and accents to orange
+## Files to Edit:
+- style.css (main theme file)

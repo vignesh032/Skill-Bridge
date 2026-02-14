@@ -14,30 +14,63 @@ function updateSidebarProfile() {
   }
 }
 
+// ===== UPDATE USER FROM LOGIN =====
+function updateCurrentUser(name, email) {
+  if (name) userProfile.fullName = name;
+  if (email) userProfile.email = email;
+  updateSidebarProfile();
+
+  // If on dashboard, refresh the welcome message
+  const pageTitle = document.getElementById("pageTitle");
+  if (pageTitle && pageTitle.innerText === "Dashboard") {
+    loadContent('dashboard');
+  }
+}
+window.updateCurrentUser = updateCurrentUser;
+
 
 /* Sidebar */
-function openSidebar(){ sidebar.classList.add("show"); }
-function closeSidebar(){ sidebar.classList.remove("show"); }
+function openSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  if (sidebar) sidebar.classList.remove("hide");
+}
+function closeSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  if (sidebar) sidebar.classList.add("hide");
+}
+
+/* Back Button Navigation */
+function goBack() {
+  const currentPage = window.location.pathname.toLowerCase();
+
+  // If on dashboard/index page, reload to show intro
+  if (currentPage.includes('index.html') || currentPage.endsWith('/')) {
+    location.reload();
+  } else {
+    // On other pages, use browser history
+    window.history.back();
+  }
+}
 
 // ===== USER PROFILE MANAGEMENT =====
 let userProfile = {
   // Personal
-  fullName: "Vignesh",
-  email: "vignesh@example.com",
-  phone: "+91-XXXXXX",
+  fullName: "",
+  email: "",
+  phone: "",
   linkedin: "",
-  
+
   // Education
   college: "XYZ Institute of Technology",
   degree: "B.Tech",
   branch: "Computer Science",
   graduationYear: "2024",
   gpa: "3.8",
-  
+
   // Career preferences
   interestedDomains: ["Web Development"],
   careerGoal: "Full-Stack Developer",
-  
+
   // Skills (user-provided)
   skills: {
     "HTML/CSS": 75,
@@ -47,7 +80,7 @@ let userProfile = {
     "MongoDB": 55,
     "Git": 80
   },
-  
+
   // Experience
   experience: "No professional experience",
   projects: [
@@ -57,16 +90,16 @@ let userProfile = {
     { name: "React Basics", issuer: "Coursera", date: "2024-01" },
     { name: "JavaScript Advanced", issuer: "Udemy", date: "2024-02" }
   ],
-  
+
   // Resume data
   resumeExperience: [],
   resumeProjects: [],
-  
+
   // Tracking
   appliedInternships: [],
   savedOpportunities: [],
   completedCourses: [],
-  
+
   // Profile completion
   profileCompletion: 0
 };
@@ -74,7 +107,7 @@ let userProfile = {
 // Load from localStorage
 function loadUserProfile() {
   const saved = localStorage.getItem('userProfile');
-  if(saved) {
+  if (saved) {
     userProfile = JSON.parse(saved);
   }
   calculateProfileCompletion();
@@ -91,19 +124,19 @@ function saveUserProfile() {
 function calculateProfileCompletion() {
   let completed = 0;
   let total = 0;
-  
+
   // Check each section
-  if(userProfile.fullName && userProfile.fullName !== "") completed++;
-  if(userProfile.email && userProfile.email !== "") completed++;
-  if(userProfile.phone && userProfile.phone !== "") completed++;
-  if(userProfile.college && userProfile.college !== "") completed++;
-  if(userProfile.degree && userProfile.degree !== "") completed++;
-  if(userProfile.gpa && userProfile.gpa !== "") completed++;
-  if(userProfile.interestedDomains && userProfile.interestedDomains.length > 0) completed++;
-  if(userProfile.skills && Object.keys(userProfile.skills).length > 3) completed++;
-  if(userProfile.projects && userProfile.projects.length > 0) completed++;
-  if(userProfile.certifications && userProfile.certifications.length > 0) completed++;
-  
+  if (userProfile.fullName && userProfile.fullName !== "") completed++;
+  if (userProfile.email && userProfile.email !== "") completed++;
+  if (userProfile.phone && userProfile.phone !== "") completed++;
+  if (userProfile.college && userProfile.college !== "") completed++;
+  if (userProfile.degree && userProfile.degree !== "") completed++;
+  if (userProfile.gpa && userProfile.gpa !== "") completed++;
+  if (userProfile.interestedDomains && userProfile.interestedDomains.length > 0) completed++;
+  if (userProfile.skills && Object.keys(userProfile.skills).length > 3) completed++;
+  if (userProfile.projects && userProfile.projects.length > 0) completed++;
+  if (userProfile.certifications && userProfile.certifications.length > 0) completed++;
+
   total = 10;
   userProfile.profileCompletion = Math.round((completed / total) * 100);
   updateSidebarProfile();
@@ -154,19 +187,19 @@ const ALL_EVENTS = [
 
 // ===== SKILL MATCHING ALGORITHM =====
 function calculateSkillMatch(opportunitySkills) {
-  if(!opportunitySkills || opportunitySkills.length === 0) return 0;
-  
+  if (!opportunitySkills || opportunitySkills.length === 0) return 0;
+
   let matchedSkills = 0;
   opportunitySkills.forEach(skill => {
     // Check if user has the skill
-    for(let [userSkill, level] of Object.entries(userProfile.skills)) {
-      if(userSkill.toLowerCase().includes(skill.toLowerCase()) || 
-         skill.toLowerCase().includes(userSkill.toLowerCase())) {
-        if(level >= 50) matchedSkills++;
+    for (let [userSkill, level] of Object.entries(userProfile.skills)) {
+      if (userSkill.toLowerCase().includes(skill.toLowerCase()) ||
+        skill.toLowerCase().includes(userSkill.toLowerCase())) {
+        if (level >= 50) matchedSkills++;
       }
     }
   });
-  
+
   return Math.round((matchedSkills / opportunitySkills.length) * 100);
 }
 
@@ -174,11 +207,11 @@ function calculateSkillMatch(opportunitySkills) {
 function generateRoadmap() {
   const domains = userProfile.interestedDomains || ["Web Development"];
   const domain = domains[0];
-  
+
   let stages = [];
   let coursePath = [];
-  
-  if(domain === "Web Development") {
+
+  if (domain === "Web Development") {
     stages = [
       {
         icon: "📚",
@@ -212,7 +245,7 @@ function generateRoadmap() {
       { week: "8-10", focus: "Full-Stack", hours: 16, deliverable: "CRUD app with backend" },
       { week: "11-12", focus: "Interview Prep", hours: 8, deliverable: "Portfolio + practice" }
     ];
-  } else if(domain === "Data Science") {
+  } else if (domain === "Data Science") {
     stages = [
       {
         icon: "📊",
@@ -240,46 +273,46 @@ function generateRoadmap() {
       }
     ];
   }
-  
+
   return { stages, coursePath };
 }
 
 // ===== GENERATE ATS SCORE =====
 function generateATSScore(resumeData) {
   let score = 0;
-  
+
   // Check sections (20 points each)
-  if(resumeData.name && resumeData.name.trim()) score += 5;
-  if(resumeData.email && resumeData.email.trim()) score += 5;
-  if(resumeData.phone && resumeData.phone.trim()) score += 5;
-  if(resumeData.education && resumeData.education.trim()) score += 5;
-  
+  if (resumeData.name && resumeData.name.trim()) score += 5;
+  if (resumeData.email && resumeData.email.trim()) score += 5;
+  if (resumeData.phone && resumeData.phone.trim()) score += 5;
+  if (resumeData.education && resumeData.education.trim()) score += 5;
+
   // Check for action verbs (+5)
   const actionVerbs = ["developed", "built", "created", "designed", "implemented", "led", "managed"];
   const hasActionVerbs = actionVerbs.some(v => resumeData.experience && resumeData.experience.toLowerCase().includes(v));
-  if(hasActionVerbs) score += 5;
-  
+  if (hasActionVerbs) score += 5;
+
   // Check for quantified achievements (+5)
   const hasQuantified = /\d+(%|x|L|thousand|million|hours|days)/i.test(resumeData.experience || "");
-  if(hasQuantified) score += 5;
-  
+  if (hasQuantified) score += 5;
+
   // Check technical skills section (+10)
-  if(resumeData.skills && resumeData.skills.trim()) score += 10;
-  
+  if (resumeData.skills && resumeData.skills.trim()) score += 10;
+
   // Check projects section (+10)
-  if(resumeData.projects && resumeData.projects.trim()) score += 10;
-  
+  if (resumeData.projects && resumeData.projects.trim()) score += 10;
+
   // Check certifications (+10)
-  if(resumeData.certifications && resumeData.certifications.trim()) score += 10;
-  
+  if (resumeData.certifications && resumeData.certifications.trim()) score += 10;
+
   // Keyword matching (+20)
   const keywords = ["experience", "project", "skill", "achievement", "responsibility", "result"];
   let keywordCount = 0;
   keywords.forEach(kw => {
-    if((resumeData.experience || "").toLowerCase().includes(kw)) keywordCount++;
+    if ((resumeData.experience || "").toLowerCase().includes(kw)) keywordCount++;
   });
   score += keywordCount * 3;
-  
+
   return Math.min(100, score);
 }
 
@@ -292,21 +325,21 @@ window.loadUserProfile = loadUserProfile;
 // ===== MAIN CONTENT LOADER =====
 function loadContent(section, btn) {
   document.querySelectorAll(".sidebar button").forEach(b => b.classList.remove("active"));
-  if(btn) btn.classList.add("active");
+  if (btn) btn.classList.add("active");
   closeSidebar();
 
   const content = document.getElementById("content");
   const title = document.getElementById("pageTitle");
 
   /* DASHBOARD */
-  if(section === "dashboard") {
+  if (section === "dashboard") {
     title.innerText = "Dashboard";
     const avgSkill = Object.values(userProfile.skills).reduce((a, b) => a + b, 0) / Object.keys(userProfile.skills).length || 0;
-    
+
     content.innerHTML = `
       <div class="dashboard-hero">
         <div class="hero-content">
-          <h2>Welcome, ${userProfile.fullName}! 🚀</h2>
+          <h2>Welcome, ${userProfile.fullName || "Student"}! 🚀</h2>
           <p class="hero-tagline">Your Personalized Career Intelligence Platform</p>
           <p class="hero-description">Transform your skills into opportunities based on YOUR profile. Complete your profile to unlock personalized internships, projects, and career guidance.</p>
           <div class="hero-buttons">
@@ -365,9 +398,9 @@ function loadContent(section, btn) {
   }
 
   /* ENHANCED PROFILE FORM */
-  if(section === "profile") {
+  if (section === "profile") {
     title.innerText = "Your Complete Career Profile";
-    
+
     content.innerHTML = `
       <div class="profile-container">
         <div class="profile-header">
@@ -485,21 +518,21 @@ function loadContent(section, btn) {
         </div>
       </div>
     `;
-    
+
     // Render skills input
     renderSkillsInput();
   }
 
   /* INTERNSHIPS & PROJECTS */
-  if(section === "internships") {
+  if (section === "internships") {
     title.innerText = "🚀 Matched Internships & Projects (Based on Your Profile)";
-    
+
     // Filter and rank opportunities by skill match
     const rankedOpps = ALL_INTERNSHIPS.map(opp => ({
       ...opp,
       matchPercentage: calculateSkillMatch(opp.skills)
     })).filter(opp => opp.matchPercentage >= 30).sort((a, b) => b.matchPercentage - a.matchPercentage);
-    
+
     content.innerHTML = `
       <div class="opportunities-section">
         <p style="color: #9CA3AF; margin-bottom: 20px;">Showing <strong>${rankedOpps.length}</strong> internships ranked by match with your profile</p>
@@ -531,9 +564,9 @@ function loadContent(section, btn) {
   }
 
   /* RESUME BUILDER WITH ATS */
-  if(section === "resume") {
+  if (section === "resume") {
     title.innerText = "📄 AI-Powered Resume Builder with ATS Tracking";
-    
+
     content.innerHTML = `
       <div class="resume-builder-section">
         <div class="resume-grid">
@@ -606,11 +639,11 @@ function loadContent(section, btn) {
   }
 
   /* SKILL ANALYSIS */
-  if(section === "skills") {
+  if (section === "skills") {
     title.innerText = "📊 Your Skill Analysis & Growth Plan";
-    
+
     const avgSkill = Object.values(userProfile.skills).reduce((a, b) => a + b, 0) / Object.keys(userProfile.skills).length || 0;
-    
+
     content.innerHTML = `
       <div class="skills-container">
         <div class="card">
@@ -651,17 +684,17 @@ function loadContent(section, btn) {
         </div>
       </div>
     `;
-    
+
     generateSkillAnalysis();
   }
 
   /* CAREER ROADMAP */
-  if(section === "roadmap") {
+  if (section === "roadmap") {
     title.innerText = "🛣️ Your Personalized Career Roadmap";
-    
+
     const roadmapData = generateRoadmap();
     const { stages, coursePath } = roadmapData;
-    
+
     content.innerHTML = `
       <div class="roadmap-section">
         <div class="roadmap-intro">
@@ -712,15 +745,15 @@ function loadContent(section, btn) {
   }
 
   /* OPPORTUNITIES HUB */
-  if(section === "opportunities") {
+  if (section === "opportunities") {
     title.innerText = "💡 Complete Opportunities Hub";
-    
+
     const allOpps = [...ALL_INTERNSHIPS, ...ALL_PROJECTS, ...ALL_EVENTS];
     const scored = allOpps.map(opp => ({
       ...opp,
       score: opp.skills ? calculateSkillMatch(opp.skills) : 50
     })).sort((a, b) => b.score - a.score);
-    
+
     content.innerHTML = `
       <div class="opportunities-hub">
         <div class="hub-intro">
@@ -784,23 +817,23 @@ function saveProfileData() {
   userProfile.gpa = document.getElementById("gpa").value;
   userProfile.careerGoal = document.getElementById("careerGoal").value;
   userProfile.experience = document.getElementById("experience").value;
-  
+
   // Collect domains
   const selectedDomains = [];
   document.querySelectorAll(".domain-check:checked").forEach(checkbox => {
     selectedDomains.push(checkbox.value);
   });
   userProfile.interestedDomains = selectedDomains.length > 0 ? selectedDomains : ["Web Development"];
-  
+
   // Collect skills
   const newSkills = {};
   document.querySelectorAll(".skill-input-item").forEach(item => {
     const name = item.querySelector(".skill-name-input").value;
     const level = parseInt(item.querySelector(".skill-level-input").value) || 0;
-    if(name) newSkills[name] = level;
+    if (name) newSkills[name] = level;
   });
   userProfile.skills = newSkills;
-  
+
   saveUserProfile();
   loadContent("dashboard");
 }
@@ -809,7 +842,7 @@ function generateSkillAnalysis() {
   const { stages } = generateRoadmap();
   const gapDiv = document.getElementById("gapAnalysis");
   const recDiv = document.getElementById("skillRecommendations");
-  
+
   // Gaps
   let gapHTML = "";
   const topSkills = Object.entries(userProfile.skills).sort((a, b) => b[1] - a[1]);
@@ -823,7 +856,7 @@ function generateSkillAnalysis() {
     `;
   });
   gapDiv.innerHTML = gapHTML;
-  
+
   // Recommendations
   recDiv.innerHTML = `
     <div style="padding: 16px; background: rgba(96,165,250,0.1); border-radius: 8px; border-left: 3px solid #3B82F6;">
@@ -849,10 +882,10 @@ function generateResumePreview() {
   const skills = document.getElementById("resSkills").value;
   const projects = document.getElementById("resProjects").value;
   const certs = document.getElementById("resCerts").value;
-  
+
   // Calculate ATS score
   const atsScore = generateATSScore({ name, email, education, experience, skills, projects, certs });
-  
+
   // Generate HTML preview
   const output = document.getElementById("resumeOutput");
   output.innerHTML = `
@@ -925,7 +958,7 @@ function generateResumePreview() {
 }
 
 function applyOpportunity(id, title) {
-  if(!userProfile.appliedInternships.includes(id)) {
+  if (!userProfile.appliedInternships.includes(id)) {
     userProfile.appliedInternships.push(id);
     saveUserProfile();
   }

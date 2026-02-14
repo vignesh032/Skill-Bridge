@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkillBridge - Advanced Skill Analytics</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -70,8 +71,15 @@
     }
 
     @keyframes shimmer {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
     }
 
     .analytics-card:hover {
@@ -258,454 +266,470 @@
     }
   </style>
 </head>
+
 <body>
 
-<div class="app">
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <h2 class="logo">SkillBridge</h2>
-      <button class="close-btn" onclick="closeSidebar()">✖</button>
-    </div>
-    <nav>
-      <button onclick="navigateTo('index.html')" title="Dashboard">📊 Dashboard</button>
-      <button class="active" onclick="navigateTo('skills-analysis.html')" title="Skill Analysis">🧠 Skill Analytics</button>
-      <button onclick="navigateTo('roadmap.html')" title="Career Roadmap">🛣️ Career Roadmap</button>
-      <button onclick="navigateTo('internships.html')" title="Internships">🚀 Internships</button>
-      <button onclick="navigateTo('resume.html')" title="Resume">📄 Resume</button>
-    </nav>
-  </aside>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) sidebar.classList.remove('hide');
+    });
+  </script>
 
-  <div class="main">
-    <header class="navbar">
-      <button class="menu-btn" onclick="openSidebar()">☰</button>
-      <h1 id="pageTitle">Skill Analytics</h1>
-      <div class="profile" onclick="logout()" style="cursor: pointer;">👤 Student</div>
-    </header>
-
-    <main class="content">
-      <div class="skills-analytics">
-        <div class="analytics-hero">
-          <h1>🧠 Skill-to-Career Analytics</h1>
-          <p>Analyze your skills, discover opportunities, and find your perfect career path</p>
-        </div>
-
-        <div class="analytics-container">
-          <!-- Domain Selector -->
-          <div style="text-align: center; margin-bottom: 40px;">
-            <h2 style="color: #3B82F6; margin-bottom: 20px;">Select Your Domain</h2>
-            <div class="domain-selector">
-              <button class="domain-btn active" onclick="selectDomain('web')">💻 Web Dev</button>
-              <button class="domain-btn" onclick="selectDomain('data')">📊 Data Science</button>
-              <button class="domain-btn" onclick="selectDomain('mobile')">📱 Mobile</button>
-              <button class="domain-btn" onclick="selectDomain('ai')">🤖 AI/ML</button>
-            </div>
-          </div>
-
-          <!-- Analytics Charts -->
-          <div class="analytics-grid">
-            <!-- Skill Proficiency Radar -->
-            <div class="analytics-card">
-              <h3>💡 Skill Proficiency Profile</h3>
-              <div class="chart-wrapper">
-                <canvas id="radarChart"></canvas>
-              </div>
-            </div>
-
-            <!-- Career Match Analysis -->
-            <div class="analytics-card">
-              <h3>🎯 Career Match Analysis</h3>
-              <div class="chart-wrapper">
-                <canvas id="careerMatchChart"></canvas>
-              </div>
-            </div>
-
-            <!-- Skill Gap Analysis -->
-            <div class="analytics-card">
-              <h3>📈 Skill Gap vs Industry Standard</h3>
-              <div class="chart-wrapper">
-                <canvas id="skillGapChart"></canvas>
-              </div>
-            </div>
-
-            <!-- Market Demand -->
-            <div class="analytics-card">
-              <h3>🚀 Market Demand Trends</h3>
-              <div class="chart-wrapper">
-                <canvas id="demandChart"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <!-- Insights Section -->
-          <div class="full-width-section">
-            <h2>🔍 Key Insights & Recommendations</h2>
-
-            <div class="insights-card">
-              <h4>📌 Your Current Profile</h4>
-              <div style="margin-bottom: 20px;">
-                <div class="skill-label">
-                  <span>Python</span>
-                  <span id="pythonLevel">0%</span>
-                </div>
-                <div class="skill-meter">
-                  <div class="skill-meter-fill" id="pythonMeter" style="width: 0%"></div>
-                </div>
-
-                <div class="skill-label">
-                  <span>JavaScript/React</span>
-                  <span id="jsLevel">0%</span>
-                </div>
-                <div class="skill-meter">
-                  <div class="skill-meter-fill" id="jsMeter" style="width: 0%"></div>
-                </div>
-
-                <div class="skill-label">
-                  <span>SQL/Databases</span>
-                  <span id="sqlLevel">0%</span>
-                </div>
-                <div class="skill-meter">
-                  <div class="skill-meter-fill" id="sqlMeter" style="width: 0%"></div>
-                </div>
-
-                <div class="skill-label">
-                  <span>Cloud Technologies</span>
-                  <span id="cloudLevel">0%</span>
-                </div>
-                <div class="skill-meter">
-                  <div class="skill-meter-fill" id="cloudMeter" style="width: 0%"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="insights-card">
-              <h4>💼 Top Career Opportunities</h4>
-              <div id="careerOpportunities"></div>
-            </div>
-
-            <div class="insights-card">
-              <h4>🎓 Recommended Learning Path</h4>
-              <p>Based on your current skills and market trends, here's your personalized learning roadmap:</p>
-              <div style="background: rgba(255, 0, 110, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
-                <p style="color: #3B82F6; margin-bottom: 10px;"><strong>Phase 1: Foundation (Weeks 1-4)</strong></p>
-                <p>Focus on core fundamentals and industry-standard tools. Expected time: 40 hours</p>
-                <p style="color: #3B82F6; margin: 15px 0 10px 0;"><strong>Phase 2: Advanced Skills (Weeks 5-10)</strong></p>
-                <p>Build expertise in in-demand technologies. Expected time: 80 hours</p>
-                <p style="color: #3B82F6; margin: 15px 0 10px 0;"><strong>Phase 3: Projects & Portfolio (Weeks 11-16)</strong></p>
-                <p>Build real-world projects to showcase your skills. Expected time: 60 hours</p>
-              </div>
-            </div>
-
-            <!-- Career Pathways -->
-            <div style="margin-top: 40px;">
-              <h3 style="color: #22D3EE; margin-bottom: 25px;">🌟 Your Career Pathways</h3>
-              <div class="career-pathways" id="careerPathways"></div>
-            </div>
-          </div>
-        </div>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2 class="logo">SkillBridge</h2>
+        <button class="close-btn" onclick="closeSidebar()">✖</button>
       </div>
-    </main>
+      <nav>
+        <button onclick="navigateTo('index.html')" title="Dashboard">📊 Dashboard</button>
+        <button class="active" onclick="navigateTo('skills-analysis.html')" title="Skill Analysis">🧠 Skill
+          Analytics</button>
+        <button onclick="navigateTo('roadmap.html')" title="Career Roadmap">🛣️ Career Roadmap</button>
+        <button onclick="navigateTo('internships.html')" title="Internships">🚀 Internships</button>
+        <button onclick="navigateTo('resume.html')" title="Resume">📄 Resume</button>
+      </nav>
+    </aside>
+
+    <div class="main">
+      <header class="navbar">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="back-btn" onclick="window.history.back()" title="Go back">← Back</button>
+          <button class="menu-btn" onclick="openSidebar()">☰</button>
+        </div>
+        <h1 id="pageTitle">Skill Analytics</h1>
+        <div class="profile" onclick="logout()" style="cursor: pointer;">👤 Student</div>
+      </header>
+
+      <main class="content">
+        <div class="skills-analytics">
+          <div class="analytics-hero">
+            <h1>🧠 Skill-to-Career Analytics</h1>
+            <p>Analyze your skills, discover opportunities, and find your perfect career path</p>
+          </div>
+
+          <div class="analytics-container">
+            <!-- Domain Selector -->
+            <div style="text-align: center; margin-bottom: 40px;">
+              <h2 style="color: #3B82F6; margin-bottom: 20px;">Select Your Domain</h2>
+              <div class="domain-selector">
+                <button class="domain-btn active" onclick="selectDomain('web')">💻 Web Dev</button>
+                <button class="domain-btn" onclick="selectDomain('data')">📊 Data Science</button>
+                <button class="domain-btn" onclick="selectDomain('mobile')">📱 Mobile</button>
+                <button class="domain-btn" onclick="selectDomain('ai')">🤖 AI/ML</button>
+              </div>
+            </div>
+
+            <!-- Analytics Charts -->
+            <div class="analytics-grid">
+              <!-- Skill Proficiency Radar -->
+              <div class="analytics-card">
+                <h3>💡 Skill Proficiency Profile</h3>
+                <div class="chart-wrapper">
+                  <canvas id="radarChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Career Match Analysis -->
+              <div class="analytics-card">
+                <h3>🎯 Career Match Analysis</h3>
+                <div class="chart-wrapper">
+                  <canvas id="careerMatchChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Skill Gap Analysis -->
+              <div class="analytics-card">
+                <h3>📈 Skill Gap vs Industry Standard</h3>
+                <div class="chart-wrapper">
+                  <canvas id="skillGapChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Market Demand -->
+              <div class="analytics-card">
+                <h3>🚀 Market Demand Trends</h3>
+                <div class="chart-wrapper">
+                  <canvas id="demandChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Insights Section -->
+            <div class="full-width-section">
+              <h2>🔍 Key Insights & Recommendations</h2>
+
+              <div class="insights-card">
+                <h4>📌 Your Current Profile</h4>
+                <div style="margin-bottom: 20px;">
+                  <div class="skill-label">
+                    <span>Python</span>
+                    <span id="pythonLevel">0%</span>
+                  </div>
+                  <div class="skill-meter">
+                    <div class="skill-meter-fill" id="pythonMeter" style="width: 0%"></div>
+                  </div>
+
+                  <div class="skill-label">
+                    <span>JavaScript/React</span>
+                    <span id="jsLevel">0%</span>
+                  </div>
+                  <div class="skill-meter">
+                    <div class="skill-meter-fill" id="jsMeter" style="width: 0%"></div>
+                  </div>
+
+                  <div class="skill-label">
+                    <span>SQL/Databases</span>
+                    <span id="sqlLevel">0%</span>
+                  </div>
+                  <div class="skill-meter">
+                    <div class="skill-meter-fill" id="sqlMeter" style="width: 0%"></div>
+                  </div>
+
+                  <div class="skill-label">
+                    <span>Cloud Technologies</span>
+                    <span id="cloudLevel">0%</span>
+                  </div>
+                  <div class="skill-meter">
+                    <div class="skill-meter-fill" id="cloudMeter" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="insights-card">
+                <h4>💼 Top Career Opportunities</h4>
+                <div id="careerOpportunities"></div>
+              </div>
+
+              <div class="insights-card">
+                <h4>🎓 Recommended Learning Path</h4>
+                <p>Based on your current skills and market trends, here's your personalized learning roadmap:</p>
+                <div style="background: rgba(255, 0, 110, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                  <p style="color: #3B82F6; margin-bottom: 10px;"><strong>Phase 1: Foundation (Weeks 1-4)</strong></p>
+                  <p>Focus on core fundamentals and industry-standard tools. Expected time: 40 hours</p>
+                  <p style="color: #3B82F6; margin: 15px 0 10px 0;"><strong>Phase 2: Advanced Skills (Weeks
+                      5-10)</strong></p>
+                  <p>Build expertise in in-demand technologies. Expected time: 80 hours</p>
+                  <p style="color: #3B82F6; margin: 15px 0 10px 0;"><strong>Phase 3: Projects & Portfolio (Weeks
+                      11-16)</strong></p>
+                  <p>Build real-world projects to showcase your skills. Expected time: 60 hours</p>
+                </div>
+              </div>
+
+              <!-- Career Pathways -->
+              <div style="margin-top: 40px;">
+                <h3 style="color: #22D3EE; margin-bottom: 25px;">🌟 Your Career Pathways</h3>
+                <div class="career-pathways" id="careerPathways"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
-</div>
 
-<script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCgffF2_yiVYND2pl4j3-JJezYrI0Gzw7I",
-    authDomain: "skill-bridge-92cff.firebaseapp.com",
-    projectId: "skill-bridge-92cff",
-    storageBucket: "skill-bridge-92cff.firebasestorage.app",
-    messagingSenderId: "379886840265",
-    appId: "1:379886840265:web:f73b1fc51080a2b7ace018",
-    measurementId: "G-JKWNG1Y836"
-  };
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgffF2_yiVYND2pl4j3-JJezYrI0Gzw7I",
+      authDomain: "skill-bridge-92cff.firebaseapp.com",
+      projectId: "skill-bridge-92cff",
+      storageBucket: "skill-bridge-92cff.firebasestorage.app",
+      messagingSenderId: "379886840265",
+      appId: "1:379886840265:web:f73b1fc51080a2b7ace018",
+      measurementId: "G-JKWNG1Y836"
+    };
 
-  firebase.initializeApp(firebaseConfig);
-  window.auth = firebase.auth();
-  window.db = firebase.firestore();
+    firebase.initializeApp(firebaseConfig);
+    window.auth = firebase.auth();
+    window.db = firebase.firestore();
 
-  let currentDomain = 'web';
-  let charts = {};
+    let currentDomain = 'web';
+    let charts = {};
 
-  const domainData = {
-    web: {
-      skills: ['JavaScript', 'React', 'CSS', 'Web APIs', 'Node.js'],
-      levels: [75, 70, 85, 65, 60],
-      careers: [
-        { title: 'Frontend Developer', match: 92, salary: '₹8-15L' },
-        { title: 'Full Stack Developer', match: 85, salary: '₹10-18L' },
-        { title: 'Web Architect', match: 75, salary: '₹15-25L' }
-      ],
-      demand: [85, 90, 88, 92, 87]
-    },
-    data: {
-      skills: ['Python', 'SQL', 'Statistics', 'Machine Learning', 'Tableau'],
-      levels: [80, 75, 70, 65, 60],
-      careers: [
-        { title: 'Data Analyst', match: 88, salary: '₹7-12L' },
-        { title: 'Data Scientist', match: 82, salary: '₹12-20L' },
-        { title: 'Analytics Engineer', match: 79, salary: '₹10-16L' }
-      ],
-      demand: [88, 92, 85, 90, 87]
-    },
-    mobile: {
-      skills: ['React Native', 'Kotlin', 'iOS Development', 'Flutter', 'Firebase'],
-      levels: [70, 65, 60, 75, 72],
-      careers: [
-        { title: 'Mobile Developer', match: 85, salary: '₹8-14L' },
-        { title: 'Flutter Developer', match: 88, salary: '₹9-15L' },
-        { title: 'Mobile Architect', match: 78, salary: '₹14-22L' }
-      ],
-      demand: [87, 85, 80, 88, 86]
-    },
-    ai: {
-      skills: ['Python', 'TensorFlow', 'Deep Learning', 'NLP', 'Computer Vision'],
-      levels: [85, 72, 70, 65, 68],
-      careers: [
-        { title: 'ML Engineer', match: 90, salary: '₹12-18L' },
-        { title: 'AI Researcher', match: 87, salary: '₹15-25L' },
-        { title: 'NLP Engineer', match: 85, salary: '₹14-22L' }
-      ],
-      demand: [92, 88, 90, 87, 89]
+    const domainData = {
+      web: {
+        skills: ['JavaScript', 'React', 'CSS', 'Web APIs', 'Node.js'],
+        levels: [75, 70, 85, 65, 60],
+        careers: [
+          { title: 'Frontend Developer', match: 92, salary: '₹8-15L' },
+          { title: 'Full Stack Developer', match: 85, salary: '₹10-18L' },
+          { title: 'Web Architect', match: 75, salary: '₹15-25L' }
+        ],
+        demand: [85, 90, 88, 92, 87]
+      },
+      data: {
+        skills: ['Python', 'SQL', 'Statistics', 'Machine Learning', 'Tableau'],
+        levels: [80, 75, 70, 65, 60],
+        careers: [
+          { title: 'Data Analyst', match: 88, salary: '₹7-12L' },
+          { title: 'Data Scientist', match: 82, salary: '₹12-20L' },
+          { title: 'Analytics Engineer', match: 79, salary: '₹10-16L' }
+        ],
+        demand: [88, 92, 85, 90, 87]
+      },
+      mobile: {
+        skills: ['React Native', 'Kotlin', 'iOS Development', 'Flutter', 'Firebase'],
+        levels: [70, 65, 60, 75, 72],
+        careers: [
+          { title: 'Mobile Developer', match: 85, salary: '₹8-14L' },
+          { title: 'Flutter Developer', match: 88, salary: '₹9-15L' },
+          { title: 'Mobile Architect', match: 78, salary: '₹14-22L' }
+        ],
+        demand: [87, 85, 80, 88, 86]
+      },
+      ai: {
+        skills: ['Python', 'TensorFlow', 'Deep Learning', 'NLP', 'Computer Vision'],
+        levels: [85, 72, 70, 65, 68],
+        careers: [
+          { title: 'ML Engineer', match: 90, salary: '₹12-18L' },
+          { title: 'AI Researcher', match: 87, salary: '₹15-25L' },
+          { title: 'NLP Engineer', match: 85, salary: '₹14-22L' }
+        ],
+        demand: [92, 88, 90, 87, 89]
+      }
+    };
+
+    function selectDomain(domain) {
+      currentDomain = domain;
+      document.querySelectorAll('.domain-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      updateAllCharts();
+      updateInsights();
     }
-  };
 
-  function selectDomain(domain) {
-    currentDomain = domain;
-    document.querySelectorAll('.domain-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    updateAllCharts();
-    updateInsights();
-  }
+    function updateAllCharts() {
+      const data = domainData[currentDomain];
+      updateRadarChart(data);
+      updateCareerMatchChart(data);
+      updateSkillGapChart(data);
+      updateDemandChart(data);
+    }
 
-  function updateAllCharts() {
-    const data = domainData[currentDomain];
-    updateRadarChart(data);
-    updateCareerMatchChart(data);
-    updateSkillGapChart(data);
-    updateDemandChart(data);
-  }
-
-  function updateRadarChart(data) {
-    const ctx = document.getElementById('radarChart');
-    if (charts.radar) charts.radar.destroy();
-    charts.radar = new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: data.skills,
-        datasets: [{
-          label: 'Your Skills',
-          data: data.levels,
-          borderColor: '#22D3EE',
-          backgroundColor: 'rgba(255, 0, 110, 0.15)',
-          borderWidth: 2,
-          fill: true,
-          pointBackgroundColor: '#3B82F6',
-          pointBorderColor: '#22D3EE',
-          pointRadius: 6,
-          pointHoverRadius: 8
-        }, {
-          label: 'Industry Standard',
-          data: [80, 80, 80, 80, 80],
-          borderColor: '#3B82F6',
-          backgroundColor: 'rgba(57, 255, 20, 0.05)',
-          borderWidth: 2,
-          fill: true,
-          pointBackgroundColor: '#22D3EE',
-          borderDash: [5, 5]
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            labels: { color: '#f0f0f0', font: { size: 12 } }
-          }
-        },
-        scales: {
-          r: {
-            grid: { color: 'rgba(255, 0, 110, 0.2)' },
-            ticks: { color: '#f0f0f0', backdropColor: 'transparent' }
-          }
-        }
-      }
-    });
-  }
-
-  function updateCareerMatchChart(data) {
-    const ctx = document.getElementById('careerMatchChart');
-    if (charts.careerMatch) charts.careerMatch.destroy();
-    charts.careerMatch = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: data.careers.map(c => c.title),
-        datasets: [{
-          data: data.careers.map(c => c.match),
-          backgroundColor: ['#22D3EE', '#3B82F6', '#34F5C5'],
-          borderColor: '#0d0d0d',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { labels: { color: '#f0f0f0' } }
-        }
-      }
-    });
-  }
-
-  function updateSkillGapChart(data) {
-    const ctx = document.getElementById('skillGapChart');
-    if (charts.skillGap) charts.skillGap.destroy();
-    charts.skillGap = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: data.skills,
-        datasets: [
-          {
-            label: 'Your Level',
+    function updateRadarChart(data) {
+      const ctx = document.getElementById('radarChart');
+      if (charts.radar) charts.radar.destroy();
+      charts.radar = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: data.skills,
+          datasets: [{
+            label: 'Your Skills',
             data: data.levels,
-            backgroundColor: 'rgba(255, 0, 110, 0.7)',
             borderColor: '#22D3EE',
-            borderWidth: 2
-          },
-          {
+            backgroundColor: 'rgba(255, 0, 110, 0.15)',
+            borderWidth: 2,
+            fill: true,
+            pointBackgroundColor: '#3B82F6',
+            pointBorderColor: '#22D3EE',
+            pointRadius: 6,
+            pointHoverRadius: 8
+          }, {
             label: 'Industry Standard',
             data: [80, 80, 80, 80, 80],
-            backgroundColor: 'rgba(57, 255, 20, 0.7)',
             borderColor: '#3B82F6',
+            backgroundColor: 'rgba(57, 255, 20, 0.05)',
+            borderWidth: 2,
+            fill: true,
+            pointBackgroundColor: '#22D3EE',
+            borderDash: [5, 5]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              labels: { color: '#f0f0f0', font: { size: 12 } }
+            }
+          },
+          scales: {
+            r: {
+              grid: { color: 'rgba(255, 0, 110, 0.2)' },
+              ticks: { color: '#f0f0f0', backdropColor: 'transparent' }
+            }
+          }
+        }
+      });
+    }
+
+    function updateCareerMatchChart(data) {
+      const ctx = document.getElementById('careerMatchChart');
+      if (charts.careerMatch) charts.careerMatch.destroy();
+      charts.careerMatch = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: data.careers.map(c => c.title),
+          datasets: [{
+            data: data.careers.map(c => c.match),
+            backgroundColor: ['#22D3EE', '#3B82F6', '#34F5C5'],
+            borderColor: '#0d0d0d',
             borderWidth: 2
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { labels: { color: '#f0f0f0' } }
+          }]
         },
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 100,
-            ticks: { color: '#f0f0f0' },
-            grid: { color: 'rgba(255, 0, 110, 0.2)' }
-          },
-          x: {
-            ticks: { color: '#f0f0f0' },
-            grid: { color: 'rgba(255, 0, 110, 0.1)' }
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { labels: { color: '#f0f0f0' } }
           }
         }
-      }
-    });
-  }
+      });
+    }
 
-  function updateDemandChart(data) {
-    const ctx = document.getElementById('demandChart');
-    if (charts.demand) charts.demand.destroy();
-    charts.demand = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: data.skills,
-        datasets: [{
-          label: 'Market Demand (%)',
-          data: data.demand,
-          borderColor: '#3B82F6',
-          backgroundColor: 'rgba(57, 255, 20, 0.1)',
-          borderWidth: 3,
-          fill: true,
-          tension: 0.4,
-          pointBackgroundColor: '#22D3EE',
-          pointBorderColor: '#3B82F6',
-          pointRadius: 6,
-          pointHoverRadius: 8
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { labels: { color: '#f0f0f0' } }
+    function updateSkillGapChart(data) {
+      const ctx = document.getElementById('skillGapChart');
+      if (charts.skillGap) charts.skillGap.destroy();
+      charts.skillGap = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.skills,
+          datasets: [
+            {
+              label: 'Your Level',
+              data: data.levels,
+              backgroundColor: 'rgba(255, 0, 110, 0.7)',
+              borderColor: '#22D3EE',
+              borderWidth: 2
+            },
+            {
+              label: 'Industry Standard',
+              data: [80, 80, 80, 80, 80],
+              backgroundColor: 'rgba(57, 255, 20, 0.7)',
+              borderColor: '#3B82F6',
+              borderWidth: 2
+            }
+          ]
         },
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 100,
-            ticks: { color: '#f0f0f0' },
-            grid: { color: 'rgba(57, 255, 20, 0.2)' }
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { labels: { color: '#f0f0f0' } }
           },
-          x: {
-            ticks: { color: '#f0f0f0' },
-            grid: { color: 'rgba(57, 255, 20, 0.1)' }
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: { color: '#f0f0f0' },
+              grid: { color: 'rgba(255, 0, 110, 0.2)' }
+            },
+            x: {
+              ticks: { color: '#f0f0f0' },
+              grid: { color: 'rgba(255, 0, 110, 0.1)' }
+            }
           }
         }
-      }
-    });
-  }
+      });
+    }
 
-  function updateInsights() {
-    const data = domainData[currentDomain];
-    
-    // Update skill meters
-    document.getElementById('pythonLevel').textContent = data.levels[0] + '%';
-    document.getElementById('pythonMeter').style.width = data.levels[0] + '%';
-    document.getElementById('jsLevel').textContent = data.levels[1] + '%';
-    document.getElementById('jsMeter').style.width = data.levels[1] + '%';
-    document.getElementById('sqlLevel').textContent = data.levels[2] + '%';
-    document.getElementById('sqlMeter').style.width = data.levels[2] + '%';
-    document.getElementById('cloudLevel').textContent = data.levels[3] + '%';
-    document.getElementById('cloudMeter').style.width = data.levels[3] + '%';
+    function updateDemandChart(data) {
+      const ctx = document.getElementById('demandChart');
+      if (charts.demand) charts.demand.destroy();
+      charts.demand = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.skills,
+          datasets: [{
+            label: 'Market Demand (%)',
+            data: data.demand,
+            borderColor: '#3B82F6',
+            backgroundColor: 'rgba(57, 255, 20, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#22D3EE',
+            pointBorderColor: '#3B82F6',
+            pointRadius: 6,
+            pointHoverRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { labels: { color: '#f0f0f0' } }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: { color: '#f0f0f0' },
+              grid: { color: 'rgba(57, 255, 20, 0.2)' }
+            },
+            x: {
+              ticks: { color: '#f0f0f0' },
+              grid: { color: 'rgba(57, 255, 20, 0.1)' }
+            }
+          }
+        }
+      });
+    }
 
-    // Update career opportunities
-    const oppHTML = data.careers.map(c =>
-      `<div class="opportunity-badge">${c.title} (${c.match}% Match)</div>`
-    ).join('');
-    document.getElementById('careerOpportunities').innerHTML = oppHTML;
+    function updateInsights() {
+      const data = domainData[currentDomain];
 
-    // Update career pathways
-    const pathways = data.careers.map(c =>
-      `<div class="pathway-card">
+      // Update skill meters
+      document.getElementById('pythonLevel').textContent = data.levels[0] + '%';
+      document.getElementById('pythonMeter').style.width = data.levels[0] + '%';
+      document.getElementById('jsLevel').textContent = data.levels[1] + '%';
+      document.getElementById('jsMeter').style.width = data.levels[1] + '%';
+      document.getElementById('sqlLevel').textContent = data.levels[2] + '%';
+      document.getElementById('sqlMeter').style.width = data.levels[2] + '%';
+      document.getElementById('cloudLevel').textContent = data.levels[3] + '%';
+      document.getElementById('cloudMeter').style.width = data.levels[3] + '%';
+
+      // Update career opportunities
+      const oppHTML = data.careers.map(c =>
+        `<div class="opportunity-badge">${c.title} (${c.match}% Match)</div>`
+      ).join('');
+      document.getElementById('careerOpportunities').innerHTML = oppHTML;
+
+      // Update career pathways
+      const pathways = data.careers.map(c =>
+        `<div class="pathway-card">
         <h5>💼 ${c.title}</h5>
         <p>Average Salary: <strong>${c.salary}</strong></p>
         <p>Career Match: <span class="match-score">${c.match}%</span></p>
         <p style="margin-top: 10px; font-size: 0.85em;">Click to view detailed roadmap and required skills</p>
       </div>`
-    ).join('');
-    document.getElementById('careerPathways').innerHTML = pathways;
-  }
+      ).join('');
+      document.getElementById('careerPathways').innerHTML = pathways;
+    }
 
-  function navigateTo(page) {
-    window.location.href = page;
-  }
+    function navigateTo(page) {
+      window.location.href = page;
+    }
 
-  function openSidebar() {
-    document.getElementById('sidebar').classList.add('show');
-  }
+    function openSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) sidebar.classList.remove('hide');
+    }
 
-  function closeSidebar() {
-    document.getElementById('sidebar').classList.remove('show');
-  }
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) sidebar.classList.add('hide');
+    }
 
-  function logout() {
-    window.auth.signOut().then(() => {
-      window.location.href = 'login.html';
-    });
-  }
-
-  // Initialize on page load
-  window.addEventListener('load', () => {
-    window.auth.onAuthStateChanged(user => {
-      if (user) {
-        updateAllCharts();
-        updateInsights();
-      } else {
+    function logout() {
+      window.auth.signOut().then(() => {
         window.location.href = 'login.html';
-      }
-    });
-  });
-</script>
-</body>
-</html>
+      });
+    }
 
+    // Initialize on page load
+    window.addEventListener('load', () => {
+      window.auth.onAuthStateChanged(user => {
+        if (user) {
+          updateAllCharts();
+          updateInsights();
+        } else {
+          window.location.href = 'login.html';
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

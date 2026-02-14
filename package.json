@@ -3,6 +3,7 @@
     "dev": "npx http-server -p 8080"
   },
   "dependencies": {
-    "firebase": "^12.9.0"
+    "firebase": "^12.9.0",
+    "three": "^0.182.0"
   }
 }
