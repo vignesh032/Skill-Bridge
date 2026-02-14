@@ -1177,6 +1177,86 @@ body {
    font-size: 15px;
  }
 
+ .roadmap-progress-block {
+   background: #0d1117;
+   border: 1px solid #30363d;
+   border-radius: 10px;
+   padding: 12px 14px;
+   margin: 10px 0 14px;
+ }
+
+ .detailed-progress-block {
+   margin-bottom: 20px;
+ }
+
+ .roadmap-progress-meta {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   color: #e6edf3;
+   margin-bottom: 8px;
+   font-size: 13px;
+   font-weight: 600;
+ }
+
+ .roadmap-progress-meta strong {
+   color: #22D3EE;
+   font-size: 14px;
+ }
+
+ .roadmap-progress-track {
+   height: 8px;
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.08);
+   overflow: hidden;
+ }
+
+ .roadmap-progress-fill {
+   height: 100%;
+   width: 0;
+   border-radius: 999px;
+   background: linear-gradient(90deg, #22D3EE, #3B82F6);
+   transition: width 0.3s ease;
+ }
+
+ .roadmap-progress-block p {
+   margin: 8px 0 0;
+   color: #9CA3AF;
+   font-size: 12px;
+ }
+
+ .step-actions {
+   display: flex;
+   gap: 10px;
+   flex-wrap: wrap;
+ }
+
+ .step-actions .action-btn {
+   flex: 1;
+   margin-top: 0;
+   min-width: 180px;
+ }
+
+ .complete-btn {
+   border-color: rgba(34, 211, 238, 0.5);
+   color: #22D3EE;
+   background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(59, 130, 246, 0.15));
+   box-shadow: 0 0 16px rgba(34, 211, 238, 0.2);
+ }
+
+ .complete-btn:hover {
+   background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.25));
+   border-color: rgba(34, 211, 238, 0.8);
+   box-shadow: 0 8px 24px rgba(34, 211, 238, 0.3);
+ }
+
+ .complete-btn.completed {
+   border-color: rgba(52, 245, 197, 0.8);
+   color: #34F5C5;
+   background: linear-gradient(135deg, rgba(52, 245, 197, 0.25), rgba(34, 211, 238, 0.2));
+   box-shadow: 0 0 18px rgba(52, 245, 197, 0.25);
+ }
+
  /* ===== INTERNSHIPS ===== */
  .internship-grid {
    display: grid;
@@ -4737,3 +4817,493 @@ body {
    }
  }
  }
+
+/* ===== Theme Refresh: Dashboard Profile + Career Roadmap ===== */
+.dashboard-card {
+  background: linear-gradient(160deg, #111926 0%, #162235 100%);
+  border: 1px solid #2a3f57;
+  color: #f1f5f9;
+  box-shadow: 0 10px 28px rgba(2, 12, 27, 0.45);
+}
+
+.dashboard-card:hover {
+  background: linear-gradient(160deg, #17263a 0%, #1d3047 100%);
+  border-color: #4a7aa4;
+  box-shadow: 0 16px 34px rgba(8, 20, 40, 0.55);
+}
+
+.dashboard-card h3 {
+  background: none;
+  -webkit-text-fill-color: #f8fbff;
+  color: #f8fbff;
+  text-transform: none;
+  letter-spacing: 0.2px;
+}
+
+.dashboard-card p,
+.dashboard-card li {
+  color: #d8e2ef;
+}
+
+.dashboard-card .metric,
+.dashboard-card .achievement,
+.dashboard-card .stat {
+  background: rgba(34, 211, 238, 0.18);
+  border: 1px solid rgba(125, 211, 252, 0.65);
+  color: #dff7ff;
+  box-shadow: none;
+}
+
+.dashboard-card .small-text,
+.dashboard-card .progress-metric span {
+  color: #b7c9dd;
+}
+
+.dashboard-card.card-profile {
+  background: linear-gradient(160deg, #112032 0%, #193049 100%);
+}
+
+.dashboard-card.card-career {
+  background: linear-gradient(160deg, #101f30 0%, #1a2f45 100%);
+}
+
+.profile-header {
+  background: linear-gradient(160deg, #111f2f 0%, #18283b 100%);
+  border: 1px solid #33506c;
+  box-shadow: 0 10px 24px rgba(6, 18, 34, 0.45);
+}
+
+.profile-header p,
+.profile-container p {
+  color: #d2deec;
+}
+
+.form-section {
+  background: #0f1a28;
+  border: 1px solid #35506b;
+  border-left: 4px solid #38bdf8;
+}
+
+.form-group label,
+.checkbox-group label {
+  color: #d5e3f0;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: #0b1320;
+  border: 1px solid #3c5b78;
+  color: #f1f5f9;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #93aac2;
+}
+
+.roadmap-grid {
+  background: linear-gradient(180deg, #101827 0%, #0f1724 100%);
+  border: 1px solid #2b3f56;
+}
+
+.roadmap-grid .roadmap-guide,
+.roadmap-guide {
+  background: linear-gradient(165deg, #122032 0%, #18293f 100%);
+  border: 1px solid #36506c;
+  box-shadow: 0 10px 26px rgba(6, 17, 35, 0.45);
+}
+
+.roadmap-grid .roadmap-guide h3,
+.roadmap-guide h3 {
+  color: #f8fbff;
+}
+
+.roadmap-grid .guide-block,
+.guide-block {
+  background: #0c1523;
+  border: 1px solid #30455e;
+  color: #d8e2ef;
+}
+
+.roadmap-grid .guide-block span,
+.guide-block span {
+  color: #7dd3fc;
+}
+
+.roadmap-grid .guidance-info,
+.guidance-info {
+  background: #0f1d2e;
+  border: 1px solid #36506c;
+  border-left: 4px solid #38bdf8;
+  color: #dbe7f5;
+}
+
+.roadmap-grid .guidance-info p,
+.guidance-info p {
+  color: #dbe7f5;
+}
+
+.roadmap-grid .roadmap-progress-block {
+  background: #0b1320;
+  border: 1px solid #30455e;
+}
+
+.roadmap-grid .action-btn,
+#roadmapContent .action-btn {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  border: 1px solid #60a5fa;
+  color: #f8fafc;
+  box-shadow: none;
+  text-transform: none;
+}
+
+.roadmap-grid .action-btn:hover,
+#roadmapContent .action-btn:hover {
+  background: linear-gradient(135deg, #0284c7, #1d4ed8);
+  border-color: #93c5fd;
+}
+
+/* ===== Resume Studio Refresh ===== */
+.resume-theme-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.modern-resume-card {
+  background: linear-gradient(165deg, #101b2a 0%, #17263a 100%);
+  border: 1px solid #36506c;
+  box-shadow: 0 10px 26px rgba(6, 17, 35, 0.45);
+}
+
+.modern-resume-card .card-header h2 {
+  color: #f8fbff;
+}
+
+.modern-resume-card .card-header p,
+.modern-resume-card p {
+  color: #cfe0ef;
+}
+
+.resume-templates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.template-item {
+  background: #0c1523;
+  border: 1px solid #30455e;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.template-item h4 {
+  color: #f0f7ff;
+  margin: 0 0 8px;
+}
+
+.template-item p {
+  margin: 0 0 12px;
+  color: #aac1d8;
+}
+
+.modern-resume-form .form-group label {
+  color: #d5e3f0;
+}
+
+.modern-resume-form input,
+.modern-resume-form textarea,
+.modern-resume-form select {
+  background: #0b1320;
+  border: 1px solid #3c5b78;
+  color: #f1f5f9;
+}
+
+.resume-form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.resume-health-block {
+  background: #0b1320;
+  border: 1px solid #30455e;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.application-tracker-form {
+  background: #0f1a28;
+  border: 1px solid #35506b;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.application-list {
+  display: grid;
+  gap: 10px;
+}
+
+.application-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  background: #0c1523;
+  border: 1px solid #30455e;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.application-item strong {
+  color: #f3f9ff;
+}
+
+.application-item p {
+  margin: 2px 0 0;
+  color: #adc2d8;
+  font-size: 12px;
+}
+
+.app-status {
+  display: inline-block;
+  border: 1px solid #5ea4de;
+  color: #d6f0ff;
+  background: rgba(14, 165, 233, 0.2);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.generated-resume-sheet {
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.resume-sheet-header {
+  border-bottom: 2px solid #1d4ed8;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+}
+
+.resume-sheet-header h2 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.resume-sheet-header p {
+  margin: 6px 0 0;
+  color: #334155;
+}
+
+.resume-sheet-section {
+  margin-bottom: 14px;
+}
+
+.resume-sheet-section h4 {
+  margin: 0 0 6px;
+  color: #1d4ed8;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.resume-sheet-section p {
+  margin: 0;
+  color: #1f2937;
+  white-space: pre-wrap;
+}
+
+/* ===== Opportunity Page Refresh ===== */
+.opportunity-control-panel {
+  background: linear-gradient(165deg, #101b2a 0%, #18283d 100%);
+  border: 1px solid #36506c;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.opportunity-summary {
+  margin-bottom: 4px;
+}
+
+.enhanced-opportunity-grid {
+  margin-top: 8px;
+}
+
+.enhanced-card {
+  background: linear-gradient(165deg, #122032 0%, #18293f 100%);
+  border: 1px solid #36506c;
+  color: #dbe7f5;
+}
+
+.opportunity-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.match-badge {
+  display: inline-block;
+  border: 1px solid #62bcff;
+  color: #def4ff;
+  background: rgba(14, 165, 233, 0.25);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.match-breakdown small {
+  color: #a8bfd7;
+}
+
+.role-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.template-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.template-actions .card-btn {
+  flex: 1;
+  min-width: 120px;
+}
+
+.related-projects-block {
+  margin-top: 18px;
+  background: #0f1a28;
+  border: 1px solid #35506b;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.related-projects-block h3 {
+  color: #f3f9ff;
+  margin: 0 0 8px;
+}
+
+.related-projects-block p {
+  color: #b8cbe0;
+  margin: 0 0 12px;
+}
+
+.related-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.related-project-card {
+  background: #0b1320;
+  border: 1px solid #30455e;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.related-project-card h4 {
+  color: #e8f4ff;
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.related-project-card p {
+  margin: 4px 0;
+  color: #c8d9ea;
+  font-size: 13px;
+}
+
+.project-brief-btn {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #5ea4de;
+  background: rgba(14, 165, 233, 0.2);
+  color: #def4ff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.project-guide {
+  margin-top: 10px;
+  background: #111d2c;
+  border: 1px solid #35506b;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.project-guide p {
+  margin: 4px 0;
+  color: #c8d9ea;
+  font-size: 12px;
+}
+
+.role-faq-block {
+  margin-top: 18px;
+  background: #101a29;
+  border: 1px solid #35506b;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.role-faq-block h3 {
+  color: #f3f9ff;
+  margin: 0 0 8px;
+}
+
+.role-faq-block p {
+  color: #b8cbe0;
+  margin: 0 0 12px;
+}
+
+.role-faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.role-faq-item {
+  background: #0b1320;
+  border: 1px solid #30455e;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.role-faq-item h4 {
+  margin: 0;
+  color: #e8f4ff;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.faq-answer-btn {
+  margin-top: 8px;
+}
+
+.faq-answer {
+  margin-top: 10px;
+  background: #111d2c;
+  border: 1px solid #35506b;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.faq-answer p {
+  margin: 0;
+  color: #c8d9ea;
+  font-size: 13px;
+  line-height: 1.5;
+}

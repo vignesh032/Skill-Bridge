@@ -108,6 +108,7 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const domain = urlParams.get('domain');
+    const ROADMAP_PROGRESS_KEY = 'roadmapProgress';
 
     const roadmaps = {
       frontend: {
@@ -566,6 +567,229 @@
       }
     };
 
+    const ROADMAP_PROJECTS = {
+      frontend: [
+        { title: "Responsive Portfolio Website", stack: "HTML, CSS, JavaScript", outcome: "Showcase projects and contact flow" },
+        { title: "E-commerce Frontend", stack: "React, CSS Modules, API Fetch", outcome: "Product listing, cart UI, filters" },
+        { title: "Dashboard UI Clone", stack: "React, Chart.js", outcome: "Data widgets, charts, responsive layout" }
+      ],
+      data: [
+        { title: "Sales Insights Dashboard", stack: "SQL, Excel/Power BI", outcome: "KPI trends and monthly insights" },
+        { title: "Customer Churn Analysis", stack: "Python, Pandas, Matplotlib", outcome: "Identify churn drivers and retention hints" },
+        { title: "Data Cleaning Pipeline", stack: "Python, NumPy", outcome: "Automated cleaning for raw CSV datasets" }
+      ],
+      mobile: [
+        { title: "Habit Tracker App", stack: "Flutter/React Native, Firebase", outcome: "Auth, CRUD, streak tracking" },
+        { title: "Food Delivery UI App", stack: "Kotlin/Swift", outcome: "Navigation, list/detail screens, cart flow" },
+        { title: "Expense Manager App", stack: "Mobile + SQLite", outcome: "Offline storage with charts and reports" }
+      ],
+      software: [
+        { title: "Task Management System", stack: "Java/Python, SQL", outcome: "Roles, assignments, status tracking" },
+        { title: "URL Shortener", stack: "Backend + DB + Caching", outcome: "Short links with analytics" },
+        { title: "Realtime Chat App", stack: "Node.js, WebSocket", outcome: "Multi-user communication and notifications" }
+      ],
+      ai: [
+        { title: "Image Classifier", stack: "Python, TensorFlow/PyTorch", outcome: "Train and evaluate classification model" },
+        { title: "Sentiment Analysis Tool", stack: "Python, NLP", outcome: "Classify reviews into sentiment categories" },
+        { title: "ML Model Deployment API", stack: "FastAPI/Flask, Docker", outcome: "Serve trained model via REST endpoint" }
+      ],
+      cyber: [
+        { title: "Vulnerability Scanner Script", stack: "Python, Networking", outcome: "Port and service scan report" },
+        { title: "Log Analysis SIEM Mini Project", stack: "ELK/Custom Parser", outcome: "Detect suspicious behavior patterns" },
+        { title: "Web Security Test Lab", stack: "OWASP Juice Shop, Burp", outcome: "Document attack vectors and fixes" }
+      ],
+      devops: [
+        { title: "CI/CD Pipeline Setup", stack: "GitHub Actions/Jenkins", outcome: "Build, test, deploy automation" },
+        { title: "Containerized App Deployment", stack: "Docker, Kubernetes", outcome: "Scalable deployment with services" },
+        { title: "Monitoring Stack", stack: "Prometheus, Grafana", outcome: "System metrics and alert dashboards" }
+      ],
+      backend: [
+        { title: "REST API for Blog Platform", stack: "Node.js/Java/Python, SQL", outcome: "Auth, CRUD, pagination" },
+        { title: "Authentication Service", stack: "JWT/OAuth, Redis", outcome: "Secure login and session flow" },
+        { title: "Order Processing Service", stack: "Backend + Queue", outcome: "Reliable async order handling" }
+      ],
+      fullstack: [
+        { title: "MERN Project Management App", stack: "MongoDB, Express, React, Node", outcome: "Complete CRUD with auth" },
+        { title: "Learning Management Platform", stack: "Full-stack + Payments", outcome: "Course catalog and enrollment flow" },
+        { title: "Realtime Collaboration Board", stack: "React, Node.js, WebSocket", outcome: "Live updates and team features" }
+      ],
+      datascientist: [
+        { title: "House Price Prediction", stack: "Python, Scikit-learn", outcome: "Regression model + evaluation" },
+        { title: "Customer Segmentation", stack: "Python, KMeans", outcome: "Cluster insights for marketing strategy" },
+        { title: "NLP Topic Modeling", stack: "Python, NLP", outcome: "Extract themes from text dataset" }
+      ],
+      blockchain: [
+        { title: "ERC-20 Token Project", stack: "Solidity, Hardhat", outcome: "Deploy and test token contract" },
+        { title: "Simple Voting DApp", stack: "Solidity, Web3, React", outcome: "Smart contract with frontend integration" },
+        { title: "NFT Minting Demo", stack: "Solidity, IPFS", outcome: "Mint and display NFT metadata" }
+      ],
+      uiux: [
+        { title: "Mobile Banking App Redesign", stack: "Figma, UX Research", outcome: "User flow improvements and prototypes" },
+        { title: "E-commerce UX Audit", stack: "Heuristic Evaluation", outcome: "Actionable design improvement report" },
+        { title: "Design System Starter Kit", stack: "Figma Components", outcome: "Reusable component library and guidelines" }
+      ],
+      qa: [
+        { title: "Test Case Management Suite", stack: "Manual Testing, Docs", outcome: "Coverage for critical user journeys" },
+        { title: "API Automation Pack", stack: "Postman/Newman", outcome: "Automated API regression collection" },
+        { title: "UI Automation Framework", stack: "Selenium/Cypress", outcome: "Smoke and regression test suite" }
+      ]
+    };
+
+    const ROADMAP_FAQS = {
+      frontend: [
+        { q: "What is the difference between controlled and uncontrolled components in React?", a: "Controlled components store input state in React state, while uncontrolled components keep state in the DOM using refs. Controlled is preferred for validation and predictable behavior." },
+        { q: "How does the virtual DOM improve performance?", a: "React compares the new virtual tree with the previous one and updates only changed DOM nodes, reducing expensive full re-renders." },
+        { q: "How do you optimize frontend bundle size and loading time?", a: "Use code splitting, lazy loading, tree shaking, image optimization, caching, and remove unused dependencies." },
+        { q: "Explain the difference between Flexbox and CSS Grid.", a: "Flexbox is one-dimensional (row or column). Grid is two-dimensional (rows and columns) and better for page-level layouts." }
+      ],
+      data: [
+        { q: "What is the difference between INNER JOIN and LEFT JOIN?", a: "INNER JOIN returns matched rows from both tables. LEFT JOIN returns all rows from left table and matched rows from right (or NULL if no match)." },
+        { q: "How do you handle missing values in a dataset?", a: "Options include dropping rows/columns, imputing with mean/median/mode, forward fill, or model-based imputation depending on context." },
+        { q: "When would you use Tableau vs Power BI?", a: "Both are BI tools; Tableau is often preferred for flexible visual exploration, while Power BI integrates tightly with Microsoft ecosystem and can be cost-effective." },
+        { q: "What is the difference between mean and median in skewed data?", a: "Mean is affected by outliers; median is robust. In skewed distributions, median better represents central tendency." }
+      ],
+      mobile: [
+        { q: "What are common strategies to improve app performance on low-end devices?", a: "Minimize heavy UI rebuilds, reduce image sizes, paginate data, cache API responses, and avoid blocking the main thread." },
+        { q: "How do you manage state in React Native or Flutter apps?", a: "Use local state for simple UI and global/state libraries (Redux, Zustand, Riverpod, Bloc, Provider) for shared and complex app state." },
+        { q: "How do push notifications work in mobile architecture?", a: "App registers device token with FCM/APNs, backend stores token, then sends payload through provider to target devices." },
+        { q: "What is offline-first design and when should you use it?", a: "Offline-first prioritizes local data and syncs later; use it when network is unreliable or user workflow must continue without internet." }
+      ],
+      software: [
+        { q: "What are SOLID principles and where have you used them?", a: "SOLID improves maintainability: single responsibility, open/closed, Liskov, interface segregation, dependency inversion. Use them in service/class design." },
+        { q: "How do you analyze time and space complexity?", a: "Count dominant operations relative to input size and express growth as Big-O; track additional memory used by algorithm." },
+        { q: "What is the difference between multithreading and multiprocessing?", a: "Threads share memory within a process; processes have isolated memory and higher overhead but stronger isolation." },
+        { q: "How do you design a scalable URL shortener?", a: "Use unique ID generation, key-value storage, caching, read replicas, rate limits, and analytics pipeline for clicks." }
+      ],
+      ai: [
+        { q: "What is bias-variance tradeoff?", a: "High bias underfits and high variance overfits. Goal is balanced generalization by model/regularization tuning." },
+        { q: "How do you evaluate a classification model?", a: "Use train/validation split or cross-validation and metrics like precision, recall, F1, ROC-AUC depending on class balance and business cost." },
+        { q: "When would you choose CNN over RNN or Transformer?", a: "CNNs are strong for spatial/image tasks. RNNs handle sequences, while Transformers excel in long-context language and sequence modeling." },
+        { q: "How do you handle data leakage in ML projects?", a: "Separate train/test correctly, fit preprocessing only on train data, remove future information, and validate feature generation pipeline." }
+      ],
+      cyber: [
+        { q: "What is the CIA triad in cybersecurity?", a: "Confidentiality, Integrity, and Availability are core security goals for protecting systems and data." },
+        { q: "What is SQL injection and how do you prevent it?", a: "SQL injection is malicious query input execution. Prevent using parameterized queries, input validation, and least-privilege DB access." },
+        { q: "What is the difference between symmetric and asymmetric encryption?", a: "Symmetric uses one shared key for encrypt/decrypt. Asymmetric uses public/private key pair and supports secure key exchange/signatures." },
+        { q: "How do you perform basic incident response steps?", a: "Identify, contain, eradicate, recover, and document lessons learned with clear communication and timeline evidence." }
+      ],
+      devops: [
+        { q: "What is CI/CD and why is it important?", a: "CI automates build/test for each change; CD automates release/deployment. It improves reliability, speed, and release consistency." },
+        { q: "What is the difference between Docker and Kubernetes?", a: "Docker packages apps into containers. Kubernetes orchestrates containers at scale (scheduling, scaling, self-healing)." },
+        { q: "How do you implement blue-green deployment?", a: "Run two production environments, route traffic to green after validation, and keep blue as rollback option." },
+        { q: "Which metrics do you monitor in production systems?", a: "Latency, error rate, throughput, saturation, CPU/memory, disk, and application business KPIs with alert thresholds." }
+      ],
+      backend: [
+        { q: "What is idempotency in API design?", a: "An idempotent operation can be repeated safely with same result (e.g., PUT). It helps retries without duplicate side effects." },
+        { q: "How do you secure REST APIs?", a: "Use HTTPS, authentication/authorization, input validation, rate limiting, logging, and secure secret management." },
+        { q: "When would you use SQL vs NoSQL?", a: "Use SQL for structured relational data/transactions; NoSQL for flexible schema, high horizontal scale, or specific access patterns." },
+        { q: "How do you handle rate limiting and throttling?", a: "Use token bucket/leaky bucket, per-user/IP limits, quotas, and clear retry headers for client behavior." }
+      ],
+      fullstack: [
+        { q: "How do you structure a full-stack app for maintainability?", a: "Use modular boundaries, clear API contracts, shared types/schemas, layered architecture, and automated tests." },
+        { q: "How do you handle authentication across frontend and backend?", a: "Use secure session/JWT strategy, short-lived tokens, refresh flow, and protected backend middleware checks." },
+        { q: "How do you manage state between client and server?", a: "Keep server truth in backend DB; use client cache/state libs and synchronize via API mutations with invalidation." },
+        { q: "How do you deploy and monitor full-stack apps?", a: "Automate CI/CD, manage env configs, instrument logs/metrics/traces, and set alerts for user-impacting failures." }
+      ],
+      datascientist: [
+        { q: "What is cross-validation and why is it used?", a: "It evaluates model stability across multiple folds, reducing dependence on a single train/test split." },
+        { q: "How do you choose features for a model?", a: "Use domain knowledge, correlation checks, feature importance, regularization, and iterative validation." },
+        { q: "What is overfitting and how do you prevent it?", a: "Overfitting memorizes training data. Prevent with regularization, simpler models, cross-validation, and more data/augmentation." },
+        { q: "How do you explain model results to non-technical stakeholders?", a: "Translate metrics into business impact, show simple visuals, key drivers, risks, and actionable decisions." }
+      ],
+      blockchain: [
+        { q: "What is gas in Ethereum and why does it matter?", a: "Gas is computational cost for transactions; it affects transaction fees and contract execution affordability." },
+        { q: "What are reentrancy attacks and mitigation strategies?", a: "Reentrancy exploits repeated contract callbacks. Mitigate with checks-effects-interactions and reentrancy guards." },
+        { q: "What is the difference between proof-of-work and proof-of-stake?", a: "PoW uses computational work to secure network; PoS uses staked tokens with validator selection." },
+        { q: "How do smart contract audits improve security?", a: "Audits identify vulnerabilities, logic flaws, and risky patterns before deployment to reduce exploit probability." }
+      ],
+      uiux: [
+        { q: "What is the difference between UX and UI design?", a: "UX focuses on end-to-end user journey and usability; UI focuses on visual interface components and interaction details." },
+        { q: "How do you run a usability test?", a: "Define tasks, recruit target users, observe behavior, capture pain points, and convert findings into prioritized improvements." },
+        { q: "What is a design system and why is it valuable?", a: "A design system is reusable components/guidelines ensuring consistency, faster delivery, and scalable collaboration." },
+        { q: "How do you measure design success after release?", a: "Track usability metrics, conversion, task completion rate, retention, and qualitative user feedback." }
+      ],
+      qa: [
+        { q: "What is the difference between smoke, sanity, and regression testing?", a: "Smoke checks core stability, sanity verifies specific fixes, regression ensures old features still work after changes." },
+        { q: "How do you prioritize test cases for release?", a: "Prioritize by business criticality, user impact, change risk, historical defects, and release timeline." },
+        { q: "How do you design effective API test scenarios?", a: "Cover happy paths, validation errors, auth, edge cases, data consistency, and performance-related boundaries." },
+        { q: "What should be included in a high-quality bug report?", a: "Clear title, repro steps, expected vs actual result, environment, logs/screenshots, severity, and impact." }
+      ]
+    };
+
+    function getRoadmapProgressStore() {
+      try {
+        return JSON.parse(localStorage.getItem(ROADMAP_PROGRESS_KEY) || '{}');
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function setRoadmapProgressStore(store) {
+      localStorage.setItem(ROADMAP_PROGRESS_KEY, JSON.stringify(store));
+    }
+
+    function ensureDomainProgress(domainId, totalSteps) {
+      const store = getRoadmapProgressStore();
+      if (!store[domainId]) {
+        store[domainId] = { totalSteps, completed: new Array(totalSteps).fill(false) };
+      } else {
+        store[domainId].totalSteps = totalSteps;
+        if (!Array.isArray(store[domainId].completed)) {
+          store[domainId].completed = new Array(totalSteps).fill(false);
+        }
+        if (store[domainId].completed.length < totalSteps) {
+          store[domainId].completed = store[domainId].completed.concat(new Array(totalSteps - store[domainId].completed.length).fill(false));
+        }
+        if (store[domainId].completed.length > totalSteps) {
+          store[domainId].completed = store[domainId].completed.slice(0, totalSteps);
+        }
+      }
+      setRoadmapProgressStore(store);
+      return store[domainId];
+    }
+
+    function getDomainProgress(domainId, totalSteps) {
+      const roleProgress = ensureDomainProgress(domainId, totalSteps);
+      const completedCount = roleProgress.completed.filter(Boolean).length;
+      const percent = totalSteps > 0 ? Math.round((completedCount / totalSteps) * 100) : 0;
+      return { roleProgress, completedCount, percent };
+    }
+
+    function toggleRoadmapStep(stepIndex) {
+      const roadmap = roadmaps[domain];
+      if (!roadmap) return;
+
+      const totalSteps = roadmap.steps.length;
+      const store = getRoadmapProgressStore();
+      const roleProgress = ensureDomainProgress(domain, totalSteps);
+      roleProgress.completed[stepIndex] = !roleProgress.completed[stepIndex];
+      store[domain] = roleProgress;
+      setRoadmapProgressStore(store);
+      loadRoadmap();
+    }
+
+    window.toggleRoadmapStep = toggleRoadmapStep;
+
+    function toggleProjectGuide(guideId, btnEl) {
+      const guideEl = document.getElementById(guideId);
+      if (!guideEl) return;
+      const isHidden = guideEl.style.display === 'none' || guideEl.style.display === '';
+      guideEl.style.display = isHidden ? 'block' : 'none';
+      if (btnEl) btnEl.textContent = isHidden ? 'Hide Brief Info' : 'Brief Info';
+    }
+
+    window.toggleProjectGuide = toggleProjectGuide;
+
+    function toggleFaqAnswer(answerId, btnEl) {
+      const answerEl = document.getElementById(answerId);
+      if (!answerEl) return;
+      const isHidden = answerEl.style.display === 'none' || answerEl.style.display === '';
+      answerEl.style.display = isHidden ? 'block' : 'none';
+      if (btnEl) btnEl.textContent = isHidden ? 'Hide Answer' : 'Show Answer';
+    }
+
+    window.toggleFaqAnswer = toggleFaqAnswer;
+
     function loadRoadmap() {
       const roadmap = roadmaps[domain];
       if (!roadmap) {
@@ -574,14 +798,80 @@
       }
 
       document.getElementById('pageTitle').innerText = roadmap.title;
+      const totalSteps = roadmap.steps.length;
+      const { roleProgress, completedCount, percent } = getDomainProgress(domain, totalSteps);
 
-      const content = roadmap.steps.map((step, index) => `
+      const stepsContent = roadmap.steps.map((step, index) => `
       <div class="roadmap-step-card">
         <h3>Step ${index + 1}: ${step.title}</h3>
         <p>${step.description}</p>
-        <button class="action-btn" onclick="window.open('${step.youtube}', '_blank')">Watch Tutorial</button>
+        <div class="step-actions">
+          <button class="action-btn" onclick="window.open('${step.youtube}', '_blank')">Watch Tutorial</button>
+          <button class="action-btn complete-btn ${roleProgress.completed[index] ? 'completed' : ''}" onclick="window.toggleRoadmapStep(${index})">
+            ${roleProgress.completed[index] ? 'Completed' : 'Mark as Completed'}
+          </button>
+        </div>
       </div>
     `).join('');
+
+      const projects = ROADMAP_PROJECTS[domain] || [];
+      const faqs = ROADMAP_FAQS[domain] || [];
+      const projectsContent = projects.length > 0 ? `
+        <div class="related-projects-block">
+          <h3>Related Projects for ${roadmap.title}</h3>
+          <p>Build these projects after tutorials to strengthen practical skills for this role.</p>
+          <div class="related-projects-grid">
+            ${projects.map((project, index) => `
+              <div class="related-project-card">
+                <h4>Project ${index + 1}: ${project.title}</h4>
+                <p><strong>Stack:</strong> ${project.stack}</p>
+                <p><strong>Outcome:</strong> ${project.outcome}</p>
+                <button class="project-brief-btn" onclick="window.toggleProjectGuide('project-guide-${domain}-${index}', this)">Brief Info</button>
+                <div class="project-guide" id="project-guide-${domain}-${index}" style="display:none;">
+                  <p><strong>Mini Guide:</strong></p>
+                  <p>1. Setup a starter project with ${project.stack}.</p>
+                  <p>2. Implement core features focused on ${project.outcome.toLowerCase()}.</p>
+                  <p>3. Add validation, testing, and deploy with a short README.</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      const faqContent = faqs.length > 0 ? `
+        <div class="role-faq-block">
+          <h3>Interview FAQs for ${roadmap.title}</h3>
+          <p>Frequently asked role-specific interview questions.</p>
+          <div class="role-faq-list">
+            ${faqs.map((item, i) => `
+              <div class="role-faq-item">
+                <h4>Q${i + 1}. ${item.q}</h4>
+                <button class="project-brief-btn faq-answer-btn" onclick="window.toggleFaqAnswer('faq-answer-${domain}-${i}', this)">Show Answer</button>
+                <div class="faq-answer" id="faq-answer-${domain}-${i}" style="display:none;">
+                  <p><strong>Answer:</strong> ${item.a}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      const content = `
+        <div class="roadmap-progress-block detailed-progress-block">
+          <div class="roadmap-progress-meta">
+            <span>Roadmap Progress</span>
+            <strong>${percent}%</strong>
+          </div>
+          <div class="roadmap-progress-track">
+            <div class="roadmap-progress-fill" style="width: ${percent}%"></div>
+          </div>
+          <p>${completedCount}/${totalSteps} tutorial steps completed</p>
+        </div>
+        ${stepsContent}
+        ${projectsContent}
+        ${faqContent}
+      `;
 
       document.getElementById('roadmapContent').innerHTML = content;
     }

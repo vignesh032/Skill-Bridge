@@ -6,10 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkillBridge - Resume Tracker</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/legacy/build/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.7.2/mammoth.browser.min.js"></script>
 </head>
 
 <body>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const sidebar = document.getElementById('sidebar');
@@ -18,178 +20,199 @@
   </script>
 
   <div class="app">
-
-    <!-- Sidebar: 5 sections (same on all pages) -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2 class="logo">SkillBridge</h2>
-        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        <button class="close-btn" onclick="closeSidebar()">x</button>
       </div>
       <nav>
-        <button onclick="window.location.href='index.html'" title="Dashboard">📊 Dashboard</button>
-        <button onclick="window.location.href='skills-analysis.html'" title="Skill Analysis">🧠 Skill Analysis</button>
-        <button onclick="window.location.href='roadmap.html'" title="Career Roadmap">🛣️ Career Roadmap</button>
-        <button onclick="window.location.href='internships.html'" title="Internships & Projects">🚀 Internships & Projects</button>
-        <button class="active" onclick="window.location.href='resume.html'" title="Resume Tracker">📄 Resume Tracker</button>
+        <button onclick="window.location.href='index.html'" title="Dashboard">Dashboard</button>
+        <button onclick="window.location.href='skills-analysis.html'" title="Skill Analysis">Skill Analysis</button>
+        <button onclick="window.location.href='roadmap.html'" title="Career Roadmap">Career Roadmap</button>
+        <button onclick="window.location.href='internships.html'" title="Internships and Projects">Internships and Projects</button>
+        <button class="active" onclick="window.location.href='resume.html'" title="Resume Tracker">Resume Tracker</button>
       </nav>
     </aside>
 
-    <!-- Main -->
     <div class="main">
       <header class="navbar">
         <div style="display: flex; gap: 10px; align-items: center;">
-          <button class="back-btn" onclick="window.history.back()" title="Go back">← Back</button>
-          <button class="menu-btn" onclick="openSidebar()">☰</button>
+          <button class="back-btn" onclick="window.history.back()" title="Go back">Back</button>
+          <button class="menu-btn" onclick="openSidebar()">Menu</button>
         </div>
         <h1 id="pageTitle">Resume Tracker</h1>
-        <div class="profile" onclick="logout()" style="cursor: pointer;">👤 Student</div>
+        <div class="profile" onclick="logout()" style="cursor: pointer;">Student</div>
       </header>
 
       <main class="content" id="content">
-        <!-- Resume Sections Container -->
-        <div class="resume-sections-container">
-          
-          <!-- 1. Example Resume Section -->
-          <div class="resume-card">
+        <section class="content-section" style="margin-bottom: 24px;">
+          <h2 style="margin-bottom: 8px; border: none; padding: 0;">Resume Studio</h2>
+          <p style="margin-bottom: 0;">Build ATS-friendly resumes, use strong templates, and track applications in one place.</p>
+        </section>
+
+        <section class="resume-theme-wrap">
+          <div class="resume-card modern-resume-card">
             <div class="card-header">
-              <h2>📋 Example Resume</h2>
-              <p>View professional resume templates and samples</p>
+              <h2>Top Company Templates</h2>
+              <p>Use an industry-style structure inspired by hiring patterns at top companies.</p>
             </div>
             <div class="card-body">
-              <div class="examples-grid">
-                <div class="example-item">
-                  <h4>Frontend Developer</h4>
-                  <p>Learn from a professional frontend developer resume with modern CSS, JavaScript skills.</p>
-                  <button class="card-btn" onclick="viewExampleResume('frontend')">View Template</button>
-                </div>
-                <div class="example-item">
-                  <h4>Data Scientist</h4>
-                  <p>See how to structure a data science resume with Python, ML, and analytics expertise.</p>
-                  <button class="card-btn" onclick="viewExampleResume('data')">View Template</button>
-                </div>
-                <div class="example-item">
-                  <h4>Full Stack Engineer</h4>
-                  <p>Explore a comprehensive full stack engineer resume with both frontend and backend skills.</p>
-                  <button class="card-btn" onclick="viewExampleResume('fullstack')">View Template</button>
-                </div>
-              </div>
+              <div class="resume-templates-grid" id="templateGrid"></div>
             </div>
           </div>
 
-          <!-- 2. Generate Resume Section -->
-          <div class="resume-card">
+          <div class="resume-card modern-resume-card">
             <div class="card-header">
-              <h2>✨ Generate Resume</h2>
-              <p>Create your custom resume with AI-powered suggestions</p>
+              <h2>Build Resume</h2>
+              <p>Fill your profile details. Progress and score update in real time.</p>
             </div>
             <div class="card-body">
-              <div class="generate-form-container">
-                <form id="resumeForm">
+              <form id="resumeForm" class="modern-resume-form">
+                <div class="form-row">
                   <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="resumeName" placeholder="Enter your full name" required>
+                    <label>Full Name *</label>
+                    <input type="text" id="resumeName" placeholder="Your full name" required>
                   </div>
-
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label>Email</label>
-                      <input type="email" id="resumeEmail" placeholder="your@email.com" required>
-                    </div>
-                    <div class="form-group">
-                      <label>Phone</label>
-                      <input type="tel" id="resumePhone" placeholder="+91-XXXXXXXXXX" required>
-                    </div>
-                  </div>
-
                   <div class="form-group">
-                    <label>Education</label>
-                    <textarea id="resumeEducation" placeholder="B.Tech in Computer Science, 2020-2024&#10;CGPA: 3.8" rows="3"></textarea>
+                    <label>Email *</label>
+                    <input type="email" id="resumeEmail" placeholder="you@example.com" required>
                   </div>
+                </div>
 
+                <div class="form-row">
                   <div class="form-group">
-                    <label>Professional Skills</label>
-                    <textarea id="resumeSkills" placeholder="HTML, CSS, JavaScript, React, Node.js, MongoDB" rows="3"></textarea>
+                    <label>Phone *</label>
+                    <input type="tel" id="resumePhone" placeholder="+1-555-123-4567" required>
                   </div>
-
                   <div class="form-group">
-                    <label>Work Experience</label>
-                    <textarea id="resumeExperience" placeholder="Frontend Intern at XYZ Corp, June 2023 - Aug 2023&#10;• Developed responsive web applications&#10;• Improved UI performance by 40%" rows="4"></textarea>
+                    <label>LinkedIn / Portfolio</label>
+                    <input type="text" id="resumeLinkedin" placeholder="linkedin.com/in/username">
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label>Projects</label>
-                    <textarea id="resumeProjects" placeholder="Portfolio Website - Personal portfolio built with React and Tailwind CSS" rows="3"></textarea>
-                  </div>
+                <div class="form-group">
+                  <label>Education *</label>
+                  <textarea id="resumeEducation" rows="3" placeholder="B.Tech in Computer Science, 2022-2026 | CGPA: 8.4"></textarea>
+                </div>
 
-                  <button type="button" class="generate-btn" onclick="generateResume()">
-                    🚀 Generate Resume
-                  </button>
-                </form>
+                <div class="form-group">
+                  <label>Technical Skills *</label>
+                  <textarea id="resumeSkills" rows="3" placeholder="JavaScript, React, Node.js, SQL, Git, Docker"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Experience</label>
+                  <textarea id="resumeExperience" rows="4" placeholder="Software Intern, ABC Labs\n- Built ...\n- Improved ..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Projects *</label>
+                  <textarea id="resumeProjects" rows="4" placeholder="Project Name - Impact and stack used"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Certifications / Achievements</label>
+                  <textarea id="resumeCerts" rows="3" placeholder="AWS Cloud Practitioner, Google Data Analytics"></textarea>
+                </div>
+
+                <div class="resume-form-actions">
+                  <button type="button" class="generate-btn" onclick="generateResume()">Generate Resume</button>
+                  <button type="button" class="card-btn" onclick="downloadResume()">Download</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="resume-card modern-resume-card">
+            <div class="card-header">
+              <h2>Resume Health</h2>
+              <p>Track completion and ATS readiness before applying.</p>
+            </div>
+            <div class="card-body">
+              <div class="resume-health-block">
+                <div class="roadmap-progress-meta">
+                  <span>Resume Completion</span>
+                  <strong id="resumeProgressText">0%</strong>
+                </div>
+                <div class="roadmap-progress-track">
+                  <div class="roadmap-progress-fill" id="resumeProgressFill" style="width: 0%"></div>
+                </div>
               </div>
 
-              <div class="upload-section">
-                <h4>Or Upload Existing Resume</h4>
-                <div class="file-upload-area">
-                  <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx" onchange="uploadResume()">
-                  <p>Drop your resume here or click to browse</p>
-                  <span>Supported formats: PDF, DOC, DOCX</span>
+              <div class="resume-health-block">
+                <div class="roadmap-progress-meta">
+                  <span>ATS Score</span>
+                  <strong id="atsScoreText">0%</strong>
+                </div>
+                <div class="roadmap-progress-track">
+                  <div class="roadmap-progress-fill" id="atsScoreFill" style="width: 0%"></div>
+                </div>
+                <p id="atsFeedback" style="margin-top: 10px; color: #dbe7f5;">Fill details to get ATS feedback.</p>
+              </div>
+
+              <div class="upload-section" style="margin-top: 16px;">
+                <h4>Upload Existing Resume</h4>
+                <div class="file-upload-area" onclick="document.getElementById('resumeUpload').click()">
+                  <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx,.txt" onchange="uploadResume()">
+                  <p>Select your resume file for ATS evaluation.</p>
+                  <span>Supported: PDF, DOCX, TXT (DOC may have limited parsing)</span>
                 </div>
                 <div id="uploadStatus"></div>
               </div>
             </div>
           </div>
 
-          <!-- 3. Resume Tracker Section -->
-          <div class="resume-card">
+          <div class="resume-card modern-resume-card">
             <div class="card-header">
-              <h2>📊 Resume Tracker</h2>
-              <p>Track your resume progress and applications</p>
+              <h2>Application Tracker</h2>
+              <p>Track where you applied and your current stage.</p>
             </div>
             <div class="card-body">
-              <div class="tracker-info">
-                <p>🎯 Start building and tracking your resume to land your dream job!</p>
+              <div class="application-tracker-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Company *</label>
+                    <input type="text" id="appCompany" placeholder="Google">
+                  </div>
+                  <div class="form-group">
+                    <label>Role *</label>
+                    <input type="text" id="appRole" placeholder="Software Engineer Intern">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select id="appStatus">
+                      <option value="Applied">Applied</option>
+                      <option value="Shortlisted">Shortlisted</option>
+                      <option value="Interview Scheduled">Interview Scheduled</option>
+                      <option value="Offer">Offer</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="appDate">
+                  </div>
+                </div>
+                <button class="card-btn" type="button" onclick="addApplication()">Add Application</button>
               </div>
-              <div class="tracker-features">
-                <div class="feature">
-                  <span class="feature-icon">✅</span>
-                  <h5>Track Applications</h5>
-                  <p>Monitor which companies you've applied to</p>
-                </div>
-                <div class="feature">
-                  <span class="feature-icon">📈</span>
-                  <h5>Optimize Score</h5>
-                  <p>Improve your resume with AI recommendations</p>
-                </div>
-                <div class="feature">
-                  <span class="feature-icon">🎓</span>
-                  <h5>Build Skills</h5>
-                  <p>Learn what skills to add for better opportunities</p>
-                </div>
-              </div>
-              <button class="tracker-btn" onclick="window.location.href='index.html'">
-                Go to Dashboard & Build Resume
-              </button>
+              <div id="applicationList" class="application-list"></div>
             </div>
           </div>
 
-          <!-- Generated Resume Output -->
-          <div class="resume-card" id="resumeOutput" style="display: none;">
+          <div class="resume-card modern-resume-card" id="resumeOutput" style="display: none;">
             <div class="card-header">
-              <h2>✅ Your Generated Resume</h2>
-              <button class="close-preview" onclick="document.getElementById('resumeOutput').style.display='none'">✕</button>
+              <h2>Generated Resume Preview</h2>
+              <button class="close-preview" onclick="document.getElementById('resumeOutput').style.display='none'">x</button>
             </div>
             <div class="card-body">
               <div id="resumeContent"></div>
-              <div class="resume-actions">
-                <button class="action-btn" onclick="downloadResume()">📥 Download PDF</button>
-                <button class="action-btn" onclick="editResume()">✏️ Edit Resume</button>
-              </div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
     </div>
-
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
@@ -218,21 +241,70 @@
         const userDoc = await db.collection("users").doc(user.uid).get();
         if (userDoc.exists) {
           const userData = userDoc.data();
-          document.querySelector('.profile').textContent = userData.name;
+          document.querySelector('.profile').textContent = userData.name || 'Student';
         }
       } else {
-        window.location.href = 'login.html';
+        document.querySelector('.profile').textContent = 'Guest';
       }
     });
   </script>
   <script>
     const sidebar = document.getElementById("sidebar");
-    // Ensure sidebar is visible on load
-    window.addEventListener('load', () => {
-      if (sidebar) {
-        sidebar.classList.remove('hide');
+    const RESUME_STORAGE_KEY = 'resumeTrackerData';
+
+    const TEMPLATE_RESUMES = {
+      google_swe: {
+        name: "Google SWE Intern Template",
+        company: "Google",
+        role: "Software Engineer Intern",
+        education: "B.Tech in Computer Science, 2022-2026 | CGPA: 8.7",
+        skills: "C++, Java, Python, Data Structures, Algorithms, Git",
+        experience: "Software Engineering Intern, Campus Lab\n- Optimized API response latency by 32%\n- Built internal dashboard used by 120+ students",
+        projects: "Distributed URL Shortener - Built with Node.js, Redis, Docker\nRealtime Interview Platform - WebRTC + React + Firebase",
+        certs: "Google Cloud Digital Leader"
+      },
+      microsoft_pm: {
+        name: "Microsoft Product Intern Template",
+        company: "Microsoft",
+        role: "Product Management Intern",
+        education: "BBA + Minor in Data Analytics, 2022-2026 | GPA: 3.7/4.0",
+        skills: "Product Strategy, SQL, Power BI, User Research, A/B Testing",
+        experience: "Product Intern, StartupX\n- Defined roadmap for student onboarding\n- Increased activation by 18% in 6 weeks",
+        projects: "Campus Product Adoption Study - Surveyed 500 users and shipped recommendations",
+        certs: "Product School Fundamentals"
+      },
+      amazon_backend: {
+        name: "Amazon Backend Template",
+        company: "Amazon",
+        role: "Backend Engineer Intern",
+        education: "B.Tech in IT, 2021-2025 | CGPA: 8.4",
+        skills: "Java, Spring Boot, SQL, AWS, REST APIs, System Design",
+        experience: "Backend Intern, Fintech Labs\n- Built reconciliation APIs processing 50k+ records/day",
+        projects: "Order Management Service - Java + Spring Boot + PostgreSQL",
+        certs: "AWS Cloud Practitioner"
+      },
+      meta_frontend: {
+        name: "Meta Frontend Template",
+        company: "Meta",
+        role: "Frontend Engineer Intern",
+        education: "B.E. Computer Engineering, 2022-2026 | CGPA: 8.5",
+        skills: "JavaScript, React, TypeScript, CSS, Jest, Web Performance",
+        experience: "Frontend Intern, EduPlatform\n- Reduced bundle size by 28%\n- Improved Lighthouse score from 72 to 93",
+        projects: "Realtime Collaboration Board - React + WebSockets",
+        certs: "Frontend Masters React Path"
+      },
+      apple_ios: {
+        name: "Apple iOS Template",
+        company: "Apple",
+        role: "iOS Developer Intern",
+        education: "B.Tech in CSE, 2022-2026 | CGPA: 8.6",
+        skills: "Swift, UIKit, SwiftUI, Core Data, REST APIs",
+        experience: "Mobile Intern, HealthTech Co\n- Released 2 production iOS features with 10k+ MAU",
+        projects: "Habit Tracker iOS App - SwiftUI + Core Data",
+        certs: "iOS Development Nanodegree"
       }
-    });
+    };
+
     function openSidebar() { if (sidebar) sidebar.classList.remove("hide"); }
     function closeSidebar() { if (sidebar) sidebar.classList.add("hide"); }
     function logout() {
@@ -242,83 +314,469 @@
         console.error('Logout error:', error);
       });
     }
+
     window.openSidebar = openSidebar;
     window.closeSidebar = closeSidebar;
     window.logout = logout;
 
-    function generateResume() {
-      const name = document.getElementById("resumeName").value;
-      const email = document.getElementById("resumeEmail").value;
-      const phone = document.getElementById("resumePhone").value;
-      const education = document.getElementById("resumeEducation").value;
-      const skills = document.getElementById("resumeSkills").value;
-      const experience = document.getElementById("resumeExperience").value;
-      const projects = document.getElementById("resumeProjects").value;
-
-      const content = document.getElementById("resumeContent");
-      content.innerHTML = `
-      <div style="text-align: center; margin-bottom: 20px;">
-        <h2>${name}</h2>
-        <p>${email} | ${phone}</p>
-      </div>
-      <div>
-        <h4>Education</h4>
-        <p>${education}</p>
-      </div>
-      <div>
-        <h4>Skills</h4>
-        <p>${skills}</p>
-      </div>
-      <div>
-        <h4>Experience</h4>
-        <p>${experience}</p>
-      </div>
-      <div>
-        <h4>Projects</h4>
-        <p>${projects}</p>
-      </div>
-    `;
-
-      const output = document.getElementById("resumeOutput");
-      output.style.display = "block";
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
-    function uploadResume() {
-      const fileInput = document.getElementById("resumeUpload");
+    function getResumeFormData() {
+      return {
+        name: document.getElementById('resumeName').value.trim(),
+        email: document.getElementById('resumeEmail').value.trim(),
+        phone: document.getElementById('resumePhone').value.trim(),
+        linkedin: document.getElementById('resumeLinkedin').value.trim(),
+        education: document.getElementById('resumeEducation').value.trim(),
+        skills: document.getElementById('resumeSkills').value.trim(),
+        experience: document.getElementById('resumeExperience').value.trim(),
+        projects: document.getElementById('resumeProjects').value.trim(),
+        certs: document.getElementById('resumeCerts').value.trim()
+      };
+    }
+
+    function calculateATSScore(data) {
+      let score = 0;
+      if (data.name) score += 10;
+      if (data.email) score += 10;
+      if (data.phone) score += 10;
+      if (data.education) score += 15;
+      if (data.skills) score += 15;
+      if (data.projects) score += 15;
+      if (data.experience) score += 10;
+      if (data.certs) score += 5;
+
+      const actionWords = ['built', 'improved', 'developed', 'optimized', 'led', 'created', 'implemented'];
+      const lcText = `${data.experience} ${data.projects}`.toLowerCase();
+      if (actionWords.some(w => lcText.includes(w))) score += 5;
+      if (/\d+/.test(lcText)) score += 5;
+
+      return Math.min(100, score);
+    }
+
+    function updateResumeHealth() {
+      const data = getResumeFormData();
+      const fields = [data.name, data.email, data.phone, data.education, data.skills, data.projects, data.experience, data.linkedin, data.certs];
+      const filled = fields.filter(Boolean).length;
+      const completion = Math.round((filled / fields.length) * 100);
+      document.getElementById('resumeProgressFill').style.width = `${completion}%`;
+      document.getElementById('resumeProgressText').textContent = `${completion}%`;
+
+      const ats = calculateATSScore(data);
+      document.getElementById('atsScoreFill').style.width = `${ats}%`;
+      document.getElementById('atsScoreText').textContent = `${ats}%`;
+      document.getElementById('atsFeedback').textContent = ats >= 80
+        ? 'Strong profile. Resume is ready for most ATS checks.'
+        : ats >= 60
+          ? 'Good base. Add quantified impact and keywords for better ranking.'
+          : 'Needs improvement. Complete skills, projects, and measurable outcomes.';
+    }
+
+    function renderTemplateCards() {
+      const grid = document.getElementById('templateGrid');
+      if (!grid) return;
+      grid.innerHTML = Object.entries(TEMPLATE_RESUMES).map(([id, tpl]) => `
+        <div class="example-item template-item">
+          <h4>${tpl.company} Style</h4>
+          <p>${tpl.role}</p>
+          <div class="template-actions">
+            <button class="card-btn" type="button" onclick="applyTemplate('${id}')">Use Template</button>
+            <button class="card-btn" type="button" onclick="downloadTemplatePdf('${id}')">Template PDF</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function applyTemplate(templateId) {
+      const tpl = TEMPLATE_RESUMES[templateId];
+      if (!tpl) return;
+      document.getElementById('resumeEducation').value = tpl.education;
+      document.getElementById('resumeSkills').value = tpl.skills;
+      document.getElementById('resumeExperience').value = tpl.experience;
+      document.getElementById('resumeProjects').value = tpl.projects;
+      document.getElementById('resumeCerts').value = tpl.certs;
+      updateResumeHealth();
+    }
+
+    function addWrappedText(doc, text, x, y, maxWidth, lineHeight = 6) {
+      const lines = doc.splitTextToSize(text || '', maxWidth);
+      doc.text(lines, x, y);
+      return y + (lines.length * lineHeight);
+    }
+
+    function downloadTemplatePdf(templateId) {
+      const tpl = TEMPLATE_RESUMES[templateId];
+      if (!tpl || !window.jspdf) return;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 18;
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.text(tpl.name, 14, y);
+      y += 8;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      y = addWrappedText(doc, `${tpl.company} | ${tpl.role}`, 14, y, 180);
+      y += 4;
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('EDUCATION', 14, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      y = addWrappedText(doc, tpl.education, 14, y, 180);
+      y += 4;
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('SKILLS', 14, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      y = addWrappedText(doc, tpl.skills, 14, y, 180);
+      y += 4;
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('EXPERIENCE', 14, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      y = addWrappedText(doc, tpl.experience, 14, y, 180);
+      y += 4;
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('PROJECTS', 14, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      y = addWrappedText(doc, tpl.projects, 14, y, 180);
+      y += 4;
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('CERTIFICATIONS', 14, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      addWrappedText(doc, tpl.certs, 14, y, 180);
+
+      doc.save(`${tpl.company.toLowerCase()}_template_resume.pdf`);
+    }
+
+    function generateResume() {
+      const data = getResumeFormData();
+      if (!data.name || !data.email || !data.phone) {
+        alert('Please fill Name, Email and Phone before generating the resume.');
+        return;
+      }
+
+      const resumeHtml = `
+        <div class="generated-resume-sheet">
+          <div class="resume-sheet-header">
+            <h2>${escapeHtml(data.name)}</h2>
+            <p>${escapeHtml(data.email)} | ${escapeHtml(data.phone)}${data.linkedin ? ` | ${escapeHtml(data.linkedin)}` : ''}</p>
+          </div>
+          <div class="resume-sheet-section">
+            <h4>EDUCATION</h4>
+            <p>${escapeHtml(data.education).replace(/\n/g, '<br>')}</p>
+          </div>
+          <div class="resume-sheet-section">
+            <h4>SKILLS</h4>
+            <p>${escapeHtml(data.skills).replace(/\n/g, '<br>')}</p>
+          </div>
+          ${data.experience ? `
+            <div class="resume-sheet-section">
+              <h4>EXPERIENCE</h4>
+              <p>${escapeHtml(data.experience).replace(/\n/g, '<br>')}</p>
+            </div>
+          ` : ''}
+          <div class="resume-sheet-section">
+            <h4>PROJECTS</h4>
+            <p>${escapeHtml(data.projects).replace(/\n/g, '<br>')}</p>
+          </div>
+          ${data.certs ? `
+            <div class="resume-sheet-section">
+              <h4>CERTIFICATIONS</h4>
+              <p>${escapeHtml(data.certs).replace(/\n/g, '<br>')}</p>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      document.getElementById('resumeContent').innerHTML = resumeHtml;
+      document.getElementById('resumeOutput').style.display = 'block';
+
+      const existing = loadResumeTrackerData();
+      const updated = { ...existing, resume: data };
+      localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify(updated));
+      updateResumeHealth();
+    }
+
+    function downloadResume() {
+      const data = getResumeFormData();
+      const fileBody = [
+        data.name,
+        `${data.email} | ${data.phone} ${data.linkedin ? `| ${data.linkedin}` : ''}`,
+        '',
+        'EDUCATION',
+        data.education,
+        '',
+        'SKILLS',
+        data.skills,
+        '',
+        'EXPERIENCE',
+        data.experience,
+        '',
+        'PROJECTS',
+        data.projects,
+        '',
+        'CERTIFICATIONS',
+        data.certs
+      ].join('\n');
+
+      const blob = new Blob([fileBody], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${(data.name || 'resume').replace(/\s+/g, '_')}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+    }
+
+    function loadResumeTrackerData() {
+      try {
+        return JSON.parse(localStorage.getItem(RESUME_STORAGE_KEY) || '{}');
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function renderApplications() {
+      const container = document.getElementById('applicationList');
+      const data = loadResumeTrackerData();
+      const applications = Array.isArray(data.applications) ? data.applications : [];
+
+      if (applications.length === 0) {
+        container.innerHTML = '<p style="color:#a8bbcf; margin:0;">No applications tracked yet.</p>';
+        return;
+      }
+
+      container.innerHTML = applications.map((a, idx) => `
+        <div class="application-item">
+          <div>
+            <strong>${escapeHtml(a.company)}</strong>
+            <p>${escapeHtml(a.role)}</p>
+          </div>
+          <div>
+            <span class="app-status">${escapeHtml(a.status)}</span>
+            <p>${escapeHtml(a.date || 'No date')}</p>
+          </div>
+          <button class="btn-small" type="button" onclick="removeApplication(${idx})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    function addApplication() {
+      const company = document.getElementById('appCompany').value.trim();
+      const role = document.getElementById('appRole').value.trim();
+      const status = document.getElementById('appStatus').value;
+      const date = document.getElementById('appDate').value;
+      if (!company || !role) {
+        alert('Enter company and role before adding application.');
+        return;
+      }
+
+      const data = loadResumeTrackerData();
+      const applications = Array.isArray(data.applications) ? data.applications : [];
+      applications.unshift({ company, role, status, date });
+      localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify({ ...data, applications }));
+
+      document.getElementById('appCompany').value = '';
+      document.getElementById('appRole').value = '';
+      document.getElementById('appDate').value = '';
+      renderApplications();
+    }
+
+    function removeApplication(index) {
+      const data = loadResumeTrackerData();
+      const applications = Array.isArray(data.applications) ? data.applications : [];
+      applications.splice(index, 1);
+      localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify({ ...data, applications }));
+      renderApplications();
+    }
+
+    async function extractTextFromPdf(file) {
+      if (!window.pdfjsLib) return '';
+      if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/legacy/build/pdf.worker.min.js';
+      }
+      const buffer = await file.arrayBuffer();
+      const pdf = await window.pdfjsLib.getDocument({ data: buffer }).promise;
+      let fullText = '';
+      for (let page = 1; page <= pdf.numPages; page++) {
+        const pageObj = await pdf.getPage(page);
+        const textContent = await pageObj.getTextContent();
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        fullText += ` ${pageText}`;
+      }
+      return fullText.trim();
+    }
+
+    async function extractTextFromDocx(file) {
+      if (!window.mammoth) return '';
+      const buffer = await file.arrayBuffer();
+      const result = await window.mammoth.extractRawText({ arrayBuffer: buffer });
+      return (result.value || '').trim();
+    }
+
+    async function extractTextFromFile(file) {
+      const name = (file.name || '').toLowerCase();
+      if (name.endsWith('.pdf')) return extractTextFromPdf(file);
+      if (name.endsWith('.docx')) return extractTextFromDocx(file);
+      if (name.endsWith('.txt')) return file.text();
+      return '';
+    }
+
+    function evaluateUploadedResumeText(text) {
+      const raw = String(text || '');
+      const lower = raw.toLowerCase();
+      const parsed = {
+        name: raw.split('\n').map(s => s.trim()).find(Boolean) || '',
+        email: (raw.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/) || [''])[0],
+        phone: (raw.match(/(\+?\d[\d\s\-().]{7,}\d)/) || [''])[0],
+        education: /(education|b\.tech|bachelor|master|university|college)/i.test(raw) ? raw : '',
+        skills: /(skills?|javascript|python|react|node|sql|java|aws|docker)/i.test(raw) ? raw : '',
+        experience: /(experience|intern|worked|developed|built|implemented)/i.test(raw) ? raw : '',
+        projects: /(project|github|portfolio|application|system)/i.test(raw) ? raw : '',
+        certs: /(certification|certificate|aws|coursera|udemy|oracle)/i.test(raw) ? raw : ''
+      };
+      return calculateATSScore(parsed);
+    }
+
+    async function uploadResume() {
+      const fileInput = document.getElementById('resumeUpload');
       const file = fileInput.files[0];
-      const status = document.getElementById("uploadStatus");
+      const status = document.getElementById('uploadStatus');
 
       if (!file) {
-        status.innerHTML = '<p style="color: red;">Please select a file first.</p>';
+        status.innerHTML = '<p style="color: #ff9b9b;">Please select a file.</p>';
         return;
       }
 
-      if (!file.type.includes('pdf') && !file.type.includes('word')) {
-        status.innerHTML = '<p style="color: red;">Please upload a PDF or Word document.</p>';
+      const isPdf = file.type.includes('pdf');
+      const isDoc = file.type.includes('word') || file.name.endsWith('.doc') || file.name.endsWith('.docx');
+      const isTxt = file.name.endsWith('.txt');
+      if (!isPdf && !isDoc && !isTxt) {
+        status.innerHTML = '<p style="color: #ff9b9b;">Upload only PDF, DOC, DOCX, or TXT.</p>';
         return;
       }
 
-      status.innerHTML = '<p>Uploading...</p>';
+      status.innerHTML = '<p style="color: #a8bbcf;">Reading file for ATS evaluation...</p>';
 
-      const storageRef = firebase.storage().ref();
-      const resumeRef = storageRef.child(`resumes/${auth.currentUser.uid}/${file.name}`);
+      try {
+        const extractedText = await extractTextFromFile(file);
+        if (!extractedText || extractedText.trim().length < 30) {
+          status.innerHTML = '<p style="color: #ffd49b;">File selected, but ATS text extraction is limited for this format. Use PDF, DOCX, or TXT for full parsing.</p>';
+          return;
+        }
 
-      resumeRef.put(file).then((snapshot) => {
-        status.innerHTML = '<p style="color: green;">Resume uploaded successfully!</p>';
-        // You can save the download URL to Firestore if needed
-        snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log('File available at', downloadURL);
-          // Save to user's profile in Firestore
-          db.collection("users").doc(auth.currentUser.uid).update({
-            resumeURL: downloadURL,
-            resumeName: file.name
-          });
-        });
-      }).catch((error) => {
-        status.innerHTML = '<p style="color: red;">Upload failed. Please try again.</p>';
-        console.error('Upload failed:', error);
+        const uploadedAts = evaluateUploadedResumeText(extractedText);
+        document.getElementById('atsScoreFill').style.width = `${uploadedAts}%`;
+        document.getElementById('atsScoreText').textContent = `${uploadedAts}%`;
+        document.getElementById('atsFeedback').textContent = uploadedAts >= 80
+          ? 'Uploaded resume ATS is strong.'
+          : uploadedAts >= 60
+            ? 'Uploaded resume ATS is moderate. Add clearer skills/projects/metrics.'
+            : 'Uploaded resume ATS is low. Improve structure, keywords, and quantified outcomes.';
+
+        if (auth.currentUser) {
+          status.innerHTML = '<p style="color: #a8bbcf;">ATS evaluated. Saving file to your cloud profile...</p>';
+          try {
+            const storageRef = firebase.storage().ref();
+            const resumeRef = storageRef.child(`resumes/${auth.currentUser.uid}/${Date.now()}_${file.name}`);
+            const snapshot = await resumeRef.put(file);
+            const downloadURL = await snapshot.ref.getDownloadURL();
+            await db.collection('users').doc(auth.currentUser.uid).update({
+              resumeURL: downloadURL,
+              resumeName: file.name,
+              resumeUploadedAt: new Date().toISOString()
+            });
+            status.innerHTML = '<p style="color: #8af5c5;">Resume evaluated and uploaded successfully.</p>';
+          } catch (cloudError) {
+            console.error('Cloud upload failed:', cloudError);
+            status.innerHTML = '<p style="color: #ffd49b;">ATS evaluation completed, but cloud upload failed.</p>';
+          }
+        } else {
+          status.innerHTML = '<p style="color: #8af5c5;">Resume evaluated successfully. Login to also save it to cloud.</p>';
+        }
+      } catch (parseError) {
+        console.error('ATS extraction error:', parseError);
+        status.innerHTML = '<p style="color: #ff9b9b;">Unable to parse this file for ATS evaluation. Try PDF, DOCX, or TXT.</p>';
+      } finally {
+        fileInput.value = '';
+      }
+    }
+
+    function prefillFromUserProfile() {
+      try {
+        const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+        if (!profile || typeof profile !== 'object') return;
+
+        const defaultSkills = Object.entries(profile.skills || {})
+          .filter(([, level]) => (Number(level) || 0) > 0)
+          .map(([name]) => name)
+          .join(', ');
+
+        if (!document.getElementById('resumeName').value) document.getElementById('resumeName').value = profile.fullName || '';
+        if (!document.getElementById('resumeEmail').value) document.getElementById('resumeEmail').value = profile.email || '';
+        if (!document.getElementById('resumePhone').value) document.getElementById('resumePhone').value = profile.phone || '';
+        if (!document.getElementById('resumeLinkedin').value) document.getElementById('resumeLinkedin').value = profile.linkedin || '';
+        if (!document.getElementById('resumeEducation').value) {
+          document.getElementById('resumeEducation').value = [profile.college, profile.degree, profile.branch].filter(Boolean).join(' - ');
+        }
+        if (!document.getElementById('resumeSkills').value) document.getElementById('resumeSkills').value = defaultSkills;
+      } catch (error) {
+        console.log('No local profile found for prefill.');
+      }
+    }
+
+    function loadSavedResumeData() {
+      const data = loadResumeTrackerData();
+      const resume = data.resume || {};
+      if (resume.name) document.getElementById('resumeName').value = resume.name;
+      if (resume.email) document.getElementById('resumeEmail').value = resume.email;
+      if (resume.phone) document.getElementById('resumePhone').value = resume.phone;
+      if (resume.linkedin) document.getElementById('resumeLinkedin').value = resume.linkedin;
+      if (resume.education) document.getElementById('resumeEducation').value = resume.education;
+      if (resume.skills) document.getElementById('resumeSkills').value = resume.skills;
+      if (resume.experience) document.getElementById('resumeExperience').value = resume.experience;
+      if (resume.projects) document.getElementById('resumeProjects').value = resume.projects;
+      if (resume.certs) document.getElementById('resumeCerts').value = resume.certs;
+    }
+
+    function wireLiveUpdates() {
+      const ids = ['resumeName', 'resumeEmail', 'resumePhone', 'resumeLinkedin', 'resumeEducation', 'resumeSkills', 'resumeExperience', 'resumeProjects', 'resumeCerts'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updateResumeHealth);
       });
     }
+
+    window.generateResume = generateResume;
+    window.downloadResume = downloadResume;
+    window.uploadResume = uploadResume;
+    window.applyTemplate = applyTemplate;
+    window.downloadTemplatePdf = downloadTemplatePdf;
+    window.addApplication = addApplication;
+    window.removeApplication = removeApplication;
+
+    window.addEventListener('load', () => {
+      if (sidebar) sidebar.classList.remove('hide');
+      renderTemplateCards();
+      loadSavedResumeData();
+      prefillFromUserProfile();
+      wireLiveUpdates();
+      renderApplications();
+      updateResumeHealth();
+    });
   </script>
 </body>
 

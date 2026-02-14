@@ -74,12 +74,12 @@ let userProfile = {
 
   // Skills (user-provided)
   skills: {
-    "HTML/CSS": 75,
-    "JavaScript": 85,
-    "React": 80,
-    "Node.js": 60,
-    "MongoDB": 55,
-    "Git": 80
+    "HTML/CSS": 0,
+    "JavaScript": 0,
+    "React": 0,
+    "Node.js": 0,
+    "MongoDB": 0,
+    "Git": 0
   },
 
   // Experience
@@ -113,6 +113,9 @@ function loadUserProfile() {
     if (!Array.isArray(userProfile.interestedRoles) && userProfile.interestedDomains) {
       userProfile.interestedRoles = ["frontend", "fullstack"];
     }
+    if (!userProfile.skills || typeof userProfile.skills !== 'object') {
+      userProfile.skills = {};
+    }
   }
   calculateProfileCompletion();
 }
@@ -128,6 +131,8 @@ function saveUserProfile() {
 function calculateProfileCompletion() {
   let completed = 0;
   let total = 0;
+  const skillLevels = Object.values(userProfile.skills || {}).map(v => Number(v) || 0);
+  const nonZeroSkills = skillLevels.filter(level => level > 0);
 
   // Check each section
   if (userProfile.fullName && userProfile.fullName !== "") completed++;
@@ -137,7 +142,7 @@ function calculateProfileCompletion() {
   if (userProfile.degree && userProfile.degree !== "") completed++;
   if (userProfile.gpa && userProfile.gpa !== "") completed++;
   if (userProfile.interestedDomains && userProfile.interestedDomains.length > 0) completed++;
-  if (userProfile.skills && Object.keys(userProfile.skills).length > 3) completed++;
+  if (nonZeroSkills.length > 0) completed++;
   if (userProfile.projects && userProfile.projects.length > 0) completed++;
   if (userProfile.certifications && userProfile.certifications.length > 0) completed++;
 
@@ -192,11 +197,15 @@ const ALL_EVENTS = [
 // ===== SKILL MATCHING ALGORITHM =====
 function calculateSkillMatch(opportunitySkills) {
   if (!opportunitySkills || opportunitySkills.length === 0) return 0;
+  const userSkillEntries = Object.entries(userProfile.skills || {})
+    .map(([skill, level]) => [skill, Number(level) || 0])
+    .filter(([, level]) => level > 0);
+  if (userSkillEntries.length === 0) return 0;
 
   let matchedSkills = 0;
   opportunitySkills.forEach(skill => {
     // Check if user has the skill
-    for (let [userSkill, level] of Object.entries(userProfile.skills)) {
+    for (let [userSkill, level] of userSkillEntries) {
       if (userSkill.toLowerCase().includes(skill.toLowerCase()) ||
         skill.toLowerCase().includes(userSkill.toLowerCase())) {
         if (level >= 50) matchedSkills++;
@@ -338,7 +347,11 @@ function loadContent(section, btn) {
   /* DASHBOARD */
   if (section === "dashboard") {
     title.innerText = "Dashboard";
-    const avgSkill = Object.values(userProfile.skills).reduce((a, b) => a + b, 0) / Object.keys(userProfile.skills).length || 0;
+    const skillEntries = Object.entries(userProfile.skills || {});
+    const avgSkill = skillEntries.length > 0
+      ? skillEntries.reduce((sum, [, level]) => sum + (Number(level) || 0), 0) / skillEntries.length
+      : 0;
+    const activeSkills = skillEntries.filter(([, level]) => (Number(level) || 0) > 0).length;
 
     content.innerHTML = `
       <div class="dashboard-hero">
@@ -365,7 +378,7 @@ function loadContent(section, btn) {
 
         <div class="dashboard-card card-skill" onclick="window.location.href='skills-analysis.html';">
           <h3>📊 Skill Analysis</h3>
-          <div class="metric">Current Skills: ${Object.keys(userProfile.skills).length}</div>
+          <div class="metric">Current Skills: ${activeSkills}</div>
           <div class="metric highlight">Avg Level: ${avgSkill.toFixed(0)}/100</div>
           <p class="small-text">Analyze gaps and get recommendations</p>
         </div>
@@ -668,7 +681,7 @@ function loadContent(section, btn) {
             <p style="color: #22D3EE; font-weight: 700; margin-bottom: 8px;">📊 Your Profile Summary</p>
             <p style="color: #9CA3AF; margin: 4px 0;">Average Skill Level: <strong>${avgSkill.toFixed(1)}/100</strong></p>
             <p style="color: #9CA3AF; margin: 4px 0;">Skills Tracked: <strong>${Object.keys(userProfile.skills).length}</strong></p>
-            <p style="color: #9CA3AF; margin: 4px 0;">Top Skill: <strong>${Object.entries(userProfile.skills).sort((a, b) => b[1] - a[1])[0][0]} (${Object.entries(userProfile.skills).sort((a, b) => b[1] - a[1])[0][1]}/100)</strong></p>
+            <p style="color: #9CA3AF; margin: 4px 0;">Top Skill: <strong>${Object.entries(userProfile.skills).length ? `${Object.entries(userProfile.skills).sort((a, b) => (Number(b[1]) || 0) - (Number(a[1]) || 0))[0][0]} (${Object.entries(userProfile.skills).sort((a, b) => (Number(b[1]) || 0) - (Number(a[1]) || 0))[0][1]}/100)` : "Add skills in profile"}</strong></p>
           </div>
         </div>
 
@@ -796,7 +809,7 @@ function renderSkillsInput() {
 }
 
 function addSkill() {
-  userProfile.skills["New Skill"] = 50;
+  userProfile.skills["New Skill"] = 0;
   renderSkillsInput();
 }
 

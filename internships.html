@@ -4,12 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SkillBridge - Internships & Projects</title>
+  <title>SkillBridge - Internships and Projects</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const sidebar = document.getElementById('sidebar');
@@ -18,60 +17,75 @@
   </script>
 
   <div class="app">
-
-    <!-- Sidebar: 5 sections (same on all pages) -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2 class="logo">SkillBridge</h2>
-        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        <button class="close-btn" onclick="closeSidebar()">x</button>
       </div>
       <nav>
-        <button onclick="window.location.href='index.html'" title="Dashboard">📊 Dashboard</button>
-        <button onclick="window.location.href='skills-analysis.html'" title="Skill Analysis">🧠 Skill Analysis</button>
-        <button onclick="window.location.href='roadmap.html'" title="Career Roadmap">🛣️ Career Roadmap</button>
-        <button class="active" onclick="window.location.href='internships.html'" title="Internships & Projects">🚀 Internships & Projects</button>
-        <button onclick="window.location.href='resume.html'" title="Resume Tracker">📄 Resume Tracker</button>
+        <button onclick="window.location.href='index.html'" title="Dashboard">Dashboard</button>
+        <button onclick="window.location.href='skills-analysis.html'" title="Skill Analysis">Skill Analysis</button>
+        <button onclick="window.location.href='roadmap.html'" title="Career Roadmap">Career Roadmap</button>
+        <button class="active" onclick="window.location.href='internships.html'" title="Internships and Projects">Internships and Projects</button>
+        <button onclick="window.location.href='resume.html'" title="Resume Tracker">Resume Tracker</button>
       </nav>
     </aside>
 
-    <!-- Main -->
     <div class="main">
       <header class="navbar">
         <div style="display: flex; gap: 10px; align-items: center;">
-          <button class="back-btn" onclick="window.history.back()" title="Go back">← Back</button>
-          <button class="menu-btn" onclick="openSidebar()">☰</button>
+          <button class="back-btn" onclick="window.history.back()" title="Go back">Back</button>
+          <button class="menu-btn" onclick="openSidebar()">Menu</button>
         </div>
-        <h1 id="pageTitle">Internships & Projects</h1>
-        <div class="profile" onclick="logout()" style="cursor: pointer;">👤 Student</div>
+        <h1 id="pageTitle">Internships and Projects</h1>
+        <div class="profile" onclick="logout()" style="cursor: pointer;">Student</div>
       </header>
 
       <main class="content" id="content">
-        <div class="content-section" style="margin-bottom: 24px;">
-          <h2 style="margin-bottom: 8px; border: none; padding: 0;">Internships & Projects</h2>
-          <p style="color: #8b949e; margin-bottom: 0;">Explore opportunities to build experience.</p>
-        </div>
-        <div class="internship-grid">
-          <div class="internship-card"
-            onclick="window.open('https://www.linkedin.com/jobs/search/?keywords=frontend%20internship', '_blank')">
-            <h3>Frontend Internship</h3>
-            <p>UI + APIs + Deployment</p>
+        <section class="content-section" style="margin-bottom: 24px;">
+          <h2 style="margin-bottom: 8px; border: none; padding: 0;">Personalized Opportunities</h2>
+          <p id="opportunityIntro" style="margin-bottom: 0;">We rank opportunities based on your profile, skills, and role interests.</p>
+        </section>
+
+        <section class="opportunity-control-panel">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Show</label>
+              <select id="categoryFilter" onchange="renderOpportunities()">
+                <option value="all">Internships + Projects</option>
+                <option value="internship">Internships only</option>
+                <option value="project">Projects only</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Mode</label>
+              <select id="modeFilter" onchange="renderOpportunities()">
+                <option value="all">All modes</option>
+                <option value="Remote">Remote</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="On-site">On-site</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Minimum Match</label>
+              <select id="minMatchFilter" onchange="renderOpportunities()">
+                <option value="0">0%</option>
+                <option value="30">30%</option>
+                <option value="50">50%</option>
+                <option value="70">70%</option>
+              </select>
+            </div>
           </div>
-          <div class="internship-card"
-            onclick="window.open('https://www.linkedin.com/jobs/search/?keywords=data%20analyst%20internship', '_blank')">
-            <h3>Data Analyst Internship</h3>
-            <p>Real datasets & insights</p>
-          </div>
-          <div class="internship-card"
-            onclick="window.open('https://www.linkedin.com/jobs/search/?keywords=software%20engineer%20internship', '_blank')">
-            <h3>Industry Project</h3>
-            <p>Company-based problem solving</p>
-          </div>
-        </div>
+        </section>
+
+        <section class="opportunity-summary" id="roleProgressSlots"></section>
+        <section class="opportunity-summary" id="opportunitySummary"></section>
+        <section class="internship-grid enhanced-opportunity-grid" id="opportunityGrid"></section>
       </main>
     </div>
-
   </div>
 
+  <script src="roles-config.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
@@ -97,7 +111,7 @@
         const userDoc = await db.collection("users").doc(user.uid).get();
         if (userDoc.exists) {
           const userData = userDoc.data();
-          document.querySelector('.profile').textContent = userData.name;
+          document.querySelector('.profile').textContent = userData.name || 'Student';
         }
       } else {
         window.location.href = 'login.html';
@@ -106,12 +120,7 @@
   </script>
   <script>
     const sidebar = document.getElementById("sidebar");
-    // Ensure sidebar is visible on load
-    window.addEventListener('load', () => {
-      if (sidebar) {
-        sidebar.classList.remove('hide');
-      }
-    });
+
     function openSidebar() { if (sidebar) sidebar.classList.remove("hide"); }
     function closeSidebar() { if (sidebar) sidebar.classList.add("hide"); }
     function logout() {
@@ -121,9 +130,210 @@
         console.error('Logout error:', error);
       });
     }
+
     window.openSidebar = openSidebar;
     window.closeSidebar = closeSidebar;
     window.logout = logout;
+    const ROADMAP_PROGRESS_KEY = 'roadmapProgress';
+
+    const OPPORTUNITIES = [
+      { id: 1, category: 'internship', title: 'Frontend Developer Intern', org: 'PixelForge', roleId: 'frontend', skills: ['HTML', 'CSS', 'JavaScript', 'React'], mode: 'Hybrid', duration: '3 months', reward: '800 USD/month', location: 'Austin', desc: 'Build responsive user-facing products and improve UI performance.', link: 'https://www.linkedin.com/jobs/search/?keywords=frontend%20internship' },
+      { id: 2, category: 'internship', title: 'Backend Engineer Intern', org: 'CloudAxis', roleId: 'backend', skills: ['Node.js', 'SQL', 'REST API'], mode: 'Remote', duration: '4 months', reward: '1000 USD/month', location: 'Remote', desc: 'Design APIs and optimize service reliability.', link: 'https://www.linkedin.com/jobs/search/?keywords=backend%20internship' },
+      { id: 3, category: 'internship', title: 'Full Stack Intern', org: 'ScalePoint', roleId: 'fullstack', skills: ['React', 'Node.js', 'MongoDB'], mode: 'Hybrid', duration: '4 months', reward: '1100 USD/month', location: 'Seattle', desc: 'Work on both web frontend and backend delivery.', link: 'https://www.linkedin.com/jobs/search/?keywords=full%20stack%20internship' },
+      { id: 4, category: 'internship', title: 'Data Analyst Intern', org: 'InsightBridge', roleId: 'data', skills: ['SQL', 'Excel', 'Python', 'Tableau'], mode: 'Remote', duration: '3 months', reward: '900 USD/month', location: 'Remote', desc: 'Build dashboards and deliver actionable insights.', link: 'https://www.linkedin.com/jobs/search/?keywords=data%20analyst%20internship' },
+      { id: 5, category: 'internship', title: 'AI/ML Intern', org: 'Neural Labs', roleId: 'ai', skills: ['Python', 'Machine Learning', 'TensorFlow'], mode: 'On-site', duration: '4 months', reward: '1200 USD/month', location: 'San Francisco', desc: 'Train and evaluate ML models for production use.', link: 'https://www.linkedin.com/jobs/search/?keywords=machine%20learning%20internship' },
+      { id: 6, category: 'internship', title: 'Cybersecurity Intern', org: 'SecureOps', roleId: 'cyber', skills: ['Linux', 'Networking', 'Security'], mode: 'On-site', duration: '3 months', reward: '950 USD/month', location: 'Washington', desc: 'Assist security operations and vulnerability reviews.', link: 'https://www.linkedin.com/jobs/search/?keywords=cybersecurity%20internship' },
+      { id: 7, category: 'internship', title: 'DevOps Intern', org: 'DeployFlow', roleId: 'devops', skills: ['Linux', 'Docker', 'CI/CD'], mode: 'Remote', duration: '3 months', reward: '1000 USD/month', location: 'Remote', desc: 'Automate build and deployment pipelines.', link: 'https://www.linkedin.com/jobs/search/?keywords=devops%20internship' },
+      { id: 8, category: 'internship', title: 'UI/UX Intern', org: 'DesignPulse', roleId: 'uiux', skills: ['Figma', 'UI Design', 'User Research'], mode: 'Hybrid', duration: '3 months', reward: '850 USD/month', location: 'Boston', desc: 'Create and test wireframes and user flows.', link: 'https://www.linkedin.com/jobs/search/?keywords=ui%20ux%20internship' },
+      { id: 9, category: 'project', title: 'Open Source API Gateway', org: 'Community Project', roleId: 'backend', skills: ['Node.js', 'REST API', 'Docker'], mode: 'Remote', duration: '6 weeks', reward: 'Certificate + OSS credit', location: 'Remote', desc: 'Contribute to a production-grade API gateway module.', link: 'https://github.com/topics/api-gateway' },
+      { id: 10, category: 'project', title: 'React Accessibility Sprint', org: 'Open Collective', roleId: 'frontend', skills: ['React', 'JavaScript', 'Accessibility'], mode: 'Remote', duration: '4 weeks', reward: 'Mentor review + portfolio badge', location: 'Remote', desc: 'Improve accessibility for educational web components.', link: 'https://github.com/topics/react' },
+      { id: 11, category: 'project', title: 'Data Pipeline Challenge', org: 'Data Guild', roleId: 'data', skills: ['Python', 'SQL', 'Pandas'], mode: 'Hybrid', duration: '5 weeks', reward: '500 USD prize', location: 'Chicago', desc: 'Build ETL pipelines and analytics dashboards.', link: 'https://www.kaggle.com/competitions' },
+      { id: 12, category: 'project', title: 'Mobile Habit App', org: 'App Builders Club', roleId: 'mobile', skills: ['Flutter', 'Firebase', 'REST API'], mode: 'Remote', duration: '6 weeks', reward: 'Portfolio-ready app', location: 'Remote', desc: 'Ship a complete mobile app with auth and analytics.', link: 'https://github.com/topics/flutter' },
+      { id: 13, category: 'project', title: 'MLOps Deployment Lab', org: 'Cloud AI Hub', roleId: 'ai', skills: ['Python', 'MLOps', 'Docker'], mode: 'On-site', duration: '8 weeks', reward: 'Industry mentor + certificate', location: 'New York', desc: 'Deploy and monitor machine learning models.', link: 'https://github.com/topics/mlops' },
+      { id: 14, category: 'project', title: 'Security Incident Drill', org: 'Cyber Range', roleId: 'cyber', skills: ['Security', 'Linux', 'Incident Response'], mode: 'On-site', duration: '4 weeks', reward: 'Simulation certificate', location: 'Virginia', desc: 'Hands-on incident response and forensics simulation.', link: 'https://www.sans.org/cyber-ranges/' },
+      { id: 15, category: 'project', title: 'Cloud Cost Optimizer', org: 'Infra Challenge', roleId: 'devops', skills: ['AWS', 'Terraform', 'Monitoring'], mode: 'Hybrid', duration: '6 weeks', reward: '800 USD prize', location: 'Denver', desc: 'Design scripts and dashboards to reduce infra costs.', link: 'https://github.com/topics/devops' },
+      { id: 16, category: 'project', title: 'Product Experiment Lab', org: 'PM Fellows', roleId: 'software', skills: ['Analytics', 'A/B Testing', 'SQL'], mode: 'Remote', duration: '5 weeks', reward: 'PM interview prep support', location: 'Remote', desc: 'Run user experiments and make product decisions with data.', link: 'https://www.productschool.com/blog' }
+    ];
+
+    function loadUserProfile() {
+      try {
+        return JSON.parse(localStorage.getItem('userProfile') || '{}');
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function getRoadmapProgressStore() {
+      try {
+        return JSON.parse(localStorage.getItem(ROADMAP_PROGRESS_KEY) || '{}');
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function getRoleRoadmapPercent(roleId) {
+      const store = getRoadmapProgressStore();
+      const roleProgress = store[roleId] || {};
+      const completed = Array.isArray(roleProgress.completed) ? roleProgress.completed.filter(Boolean).length : 0;
+      const total = Number(roleProgress.totalSteps) || 0;
+      if (total <= 0) return 0;
+      return Math.round((completed / total) * 100);
+    }
+
+    function renderRoleProgressSlots(profile) {
+      const container = document.getElementById('roleProgressSlots');
+      if (!container) return;
+      const roles = Array.isArray(profile.interestedRoles) ? profile.interestedRoles : [];
+      if (roles.length === 0) {
+        container.innerHTML = `
+          <div class="roadmap-progress-block" style="margin: 0 0 16px;">
+            <div class="roadmap-progress-meta">
+              <span>Internship Slots by Roadmap</span>
+              <strong>0 roles</strong>
+            </div>
+            <p>Select interested roles in Profile to unlock role-based internship slots.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const roleCards = roles.map((roleId) => {
+        const roleTitle = (typeof ALL_ROLES !== 'undefined'
+          ? (ALL_ROLES.find((r) => r.id === roleId)?.title || roleId)
+          : roleId);
+        const percent = getRoleRoadmapPercent(roleId);
+        return `
+          <div class="roadmap-progress-block" style="margin: 0;">
+            <div class="roadmap-progress-meta">
+              <span>${roleTitle} Slot</span>
+              <strong>${percent}%</strong>
+            </div>
+            <div class="roadmap-progress-track">
+              <div class="roadmap-progress-fill" style="width: ${percent}%"></div>
+            </div>
+            <p>${percent >= 70 ? 'High priority internship suggestions enabled.' : 'Complete roadmap steps to boost this slot.'}</p>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = `<div class="role-slot-grid">${roleCards}</div>`;
+    }
+
+    function normalizeSkill(value) {
+      return String(value || '').toLowerCase().trim();
+    }
+
+    function getUserSkillEntries(profile) {
+      return Object.entries(profile.skills || {})
+        .map(([name, level]) => ({ name: normalizeSkill(name), level: Number(level) || 0 }))
+        .filter(s => s.level > 0);
+    }
+
+    function skillScoreForOpportunity(opportunity, userSkills) {
+      if (!opportunity.skills || opportunity.skills.length === 0 || userSkills.length === 0) return 0;
+      const required = opportunity.skills.map(normalizeSkill);
+      let matched = 0;
+      required.forEach((requiredSkill) => {
+        const hasSkill = userSkills.some((s) => s.level >= 40 && (s.name.includes(requiredSkill) || requiredSkill.includes(s.name)));
+        if (hasSkill) matched += 1;
+      });
+      return Math.round((matched / required.length) * 100);
+    }
+
+    function roleScoreForOpportunity(opportunity, profile) {
+      const roles = Array.isArray(profile.interestedRoles) ? profile.interestedRoles : [];
+      return roles.includes(opportunity.roleId) ? 100 : 35;
+    }
+
+    function comfortScoreForOpportunity(opportunity, profile) {
+      const hasExperience = profile.experience && !String(profile.experience).toLowerCase().includes('no professional');
+      if (!hasExperience && opportunity.category === 'internship') return 90;
+      if (hasExperience && opportunity.category === 'project') return 80;
+      return 60;
+    }
+
+    function computeMatch(opportunity, profile, userSkills) {
+      const skillScore = skillScoreForOpportunity(opportunity, userSkills);
+      const roleScore = roleScoreForOpportunity(opportunity, profile);
+      const comfortScore = comfortScoreForOpportunity(opportunity, profile);
+      const roadmapScore = getRoleRoadmapPercent(opportunity.roleId);
+      const finalScore = Math.round(
+        skillScore * 0.45 +
+        roleScore * 0.2 +
+        comfortScore * 0.1 +
+        roadmapScore * 0.25
+      );
+      return { skillScore, roleScore, comfortScore, roadmapScore, finalScore };
+    }
+
+    function renderOpportunities() {
+      const profile = loadUserProfile();
+      const userSkills = getUserSkillEntries(profile);
+      renderRoleProgressSlots(profile);
+      const categoryFilter = document.getElementById('categoryFilter').value;
+      const modeFilter = document.getElementById('modeFilter').value;
+      const minMatch = Number(document.getElementById('minMatchFilter').value || 0);
+
+      const scored = OPPORTUNITIES.map((opportunity) => {
+        const scoreObj = computeMatch(opportunity, profile, userSkills);
+        return { ...opportunity, ...scoreObj };
+      });
+
+      const filtered = scored
+        .filter(item => categoryFilter === 'all' || item.category === categoryFilter)
+        .filter(item => modeFilter === 'all' || item.mode === modeFilter)
+        .filter(item => item.finalScore >= minMatch)
+        .sort((a, b) => b.finalScore - a.finalScore);
+
+      const summary = document.getElementById('opportunitySummary');
+      summary.innerHTML = `
+        <div class="roadmap-progress-block" style="margin: 0 0 16px;">
+          <div class="roadmap-progress-meta">
+            <span>Recommended for you</span>
+            <strong>${filtered.length} results</strong>
+          </div>
+          <p>Profile roles: ${(profile.interestedRoles || []).length || 0} | Active skills: ${userSkills.length} | Roadmap-linked ranking: enabled</p>
+        </div>
+      `;
+
+      const grid = document.getElementById('opportunityGrid');
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="internship-card"><h3>No results</h3><p>Try lowering match threshold or update your profile skills.</p></div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => `
+        <article class="internship-card enhanced-card">
+          <div class="opportunity-top-row">
+            <h3>${item.title}</h3>
+            <span class="match-badge">${item.finalScore}% Match</span>
+          </div>
+          <p class="company">${item.org} | ${item.location} | ${item.mode}</p>
+          <p class="desc">${item.desc}</p>
+          <div class="details">
+            <p>${item.category === 'internship' ? 'Internship' : 'Project'}</p>
+            <p>${item.duration}</p>
+            <p>${item.reward}</p>
+          </div>
+          <div class="skills-required">
+            <p><strong>Skills:</strong></p>
+            <div class="skill-tags">
+              ${item.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+            </div>
+          </div>
+          <div class="match-breakdown">
+            <small>Skills ${item.skillScore}% | Role ${item.roleScore}% | Roadmap ${item.roadmapScore}% | Comfort ${item.comfortScore}%</small>
+          </div>
+          <button class="btn-apply" onclick="window.open('${item.link}', '_blank')">Open Opportunity</button>
+        </article>
+      `).join('');
+    }
+
+    window.renderOpportunities = renderOpportunities;
+    window.addEventListener('load', () => {
+      if (sidebar) sidebar.classList.remove('hide');
+      renderOpportunities();
+    });
   </script>
 </body>
 

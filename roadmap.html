@@ -110,10 +110,32 @@
     window.closeSidebar = closeSidebar;
     window.logout = logout;
 
+    const ROADMAP_PROGRESS_KEY = 'roadmapProgress';
+
+    function getRoadmapProgressStore() {
+      try {
+        return JSON.parse(localStorage.getItem(ROADMAP_PROGRESS_KEY) || '{}');
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function getRoleProgress(domainId) {
+      const store = getRoadmapProgressStore();
+      const roleProgress = store[domainId] || {};
+      const completed = Array.isArray(roleProgress.completed) ? roleProgress.completed : [];
+      const completedCount = completed.filter(Boolean).length;
+      const totalSteps = Number(roleProgress.totalSteps) || completed.length || 0;
+      const percent = totalSteps > 0 ? Math.round((completedCount / totalSteps) * 100) : 0;
+      return { completedCount, totalSteps, percent };
+    }
+
     (function renderRoadmapCards() {
       const grid = document.getElementById('roadmapGrid');
       if (!grid || typeof ALL_ROLES === 'undefined') return;
-      grid.innerHTML = ALL_ROLES.map(r => `
+      grid.innerHTML = ALL_ROLES.map(r => {
+        const progress = getRoleProgress(r.id);
+        return `
         <div class="roadmap-guide">
           <h3>${r.title}</h3>
           <div class="guide-block"><span>Effective Path</span>${r.path}</div>
@@ -122,10 +144,21 @@
             <p><strong>Guidance:</strong> Follow structured learning paths, practice with real projects, and seek mentorship to excel in this career.</p>
           </div>
           <div class="guide-block"><span>Effective Tips</span>Build portfolios, network actively, and stay updated with industry trends.</div>
+          <div class="roadmap-progress-block">
+            <div class="roadmap-progress-meta">
+              <span>Progress</span>
+              <strong>${progress.percent}%</strong>
+            </div>
+            <div class="roadmap-progress-track">
+              <div class="roadmap-progress-fill" style="width: ${progress.percent}%"></div>
+            </div>
+            <p>${progress.totalSteps > 0 ? `${progress.completedCount}/${progress.totalSteps} tutorial steps completed` : 'Open detailed roadmap to start tracking progress.'}</p>
+          </div>
           <button class="action-btn" onclick="window.location.href='detailed-roadmap.html?domain=${r.id}'">View Detailed Roadmap</button>
           <button class="action-btn" onclick="window.location.href='internships.html'">Find Internships</button>
         </div>
-      `).join('');
+      `;
+      }).join('');
     })();
   </script>
 </body>

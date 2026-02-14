@@ -390,6 +390,32 @@
     let currentRoleId = (typeof ALL_ROLES !== 'undefined' && ALL_ROLES[0]) ? ALL_ROLES[0].id : 'frontend';
     let charts = {};
     let userProfile = { skills: {} };
+    const ROADMAP_PROGRESS_KEY = 'roadmapProgress';
+
+    function getRoadmapProgressStore() {
+      try {
+        return JSON.parse(localStorage.getItem(ROADMAP_PROGRESS_KEY) || '{}');
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function getRoleRoadmapPercent(roleId) {
+      const store = getRoadmapProgressStore();
+      const roleProgress = store[roleId] || {};
+      const completed = Array.isArray(roleProgress.completed) ? roleProgress.completed.filter(Boolean).length : 0;
+      const total = Number(roleProgress.totalSteps) || 0;
+      if (total <= 0) return 0;
+      return Math.round((completed / total) * 100);
+    }
+
+    function getProgressAdjustedLevel(level, roadmapPercent) {
+      const safeLevel = Math.max(0, Math.min(100, Number(level) || 0));
+      const safeProgress = Math.max(0, Math.min(100, Number(roadmapPercent) || 0));
+      const gapToTarget = Math.max(0, 80 - safeLevel);
+      const boost = gapToTarget * (safeProgress / 100) * 0.6;
+      return Math.min(100, Math.round(safeLevel + boost));
+    }
 
     function loadUserProfile() {
       const saved = localStorage.getItem('userProfile');
@@ -405,7 +431,7 @@
       const el = document.getElementById('roleSelector');
       if (!el || typeof ALL_ROLES === 'undefined') return;
       el.innerHTML = ALL_ROLES.map(r =>
-        `<button class="domain-btn ${r.id === currentRoleId ? 'active' : ''}" onclick="selectRole('${r.id}')">${r.title}</button>`
+        `<button class="domain-btn ${r.id === currentRoleId ? 'active' : ''}" onclick="selectRole('${r.id}')">${r.title} (${getRoleRoadmapPercent(r.id)}%)</button>`
       ).join('');
     }
 
@@ -423,18 +449,26 @@
       const role = typeof ALL_ROLES !== 'undefined' && ALL_ROLES.find(r => r.id === currentRoleId);
       const userSkills = userProfile.skills || {};
       const roleSkills = role ? role.requiredSkills : [];
+      const roadmapPercent = getRoleRoadmapPercent(currentRoleId);
       const labels = roleSkills.length ? roleSkills : Object.keys(userSkills).slice(0, 8);
       const userLevels = labels.map(s => typeof getUserLevelForSkill === 'function' ? getUserLevelForSkill(userSkills, s) : (userSkills[s] || 0));
+      const roadmapAdjustedLevels = userLevels.map(level => getProgressAdjustedLevel(level, roadmapPercent));
       const industryLevels = labels.map(() => 80);
 
-      updateRadarChart(labels, userLevels, industryLevels);
-      const matchPercents = typeof ALL_ROLES !== 'undefined' ? ALL_ROLES.map(r => getRoleMatchPercent(r, userSkills)) : [];
+      updateRadarChart(labels, userLevels, roadmapAdjustedLevels, industryLevels, roadmapPercent);
+      const matchPercents = typeof ALL_ROLES !== 'undefined'
+        ? ALL_ROLES.map(r => {
+          const base = getRoleMatchPercent(r, userSkills);
+          const prog = getRoleRoadmapPercent(r.id);
+          return Math.min(100, Math.round(base * 0.75 + prog * 0.25));
+        })
+        : [];
       updateCareerMatchChart(matchPercents);
-      updateSkillGapChart(labels, userLevels, industryLevels);
-      updateDemandChart(labels, userLevels);
+      updateSkillGapChart(labels, userLevels, roadmapAdjustedLevels, industryLevels);
+      updateDemandChart(labels, roadmapAdjustedLevels);
     }
 
-    function updateRadarChart(labels, userLevels, industryLevels) {
+    function updateRadarChart(labels, userLevels, roadmapAdjustedLevels, industryLevels, roadmapPercent) {
       const ctx = document.getElementById('radarChart');
       if (!ctx) return;
       if (charts.radar) charts.radar.destroy();
@@ -454,6 +488,16 @@
             pointBorderColor: '#22D3EE',
             pointRadius: 6,
             pointHoverRadius: 8
+          }, {
+            label: 'Roadmap Projected (' + roadmapPercent + '% complete)',
+            data: roadmapAdjustedLevels,
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88, 166, 255, 0.10)',
+            borderWidth: 2,
+            fill: true,
+            pointBackgroundColor: '#58a6ff',
+            pointBorderColor: '#58a6ff',
+            pointRadius: 4
           }, {
             label: 'Industry Standard',
             data: industryLevels,
@@ -498,7 +542,7 @@
       });
     }
 
-    function updateSkillGapChart(labels, userLevels, industryLevels) {
+    function updateSkillGapChart(labels, userLevels, roadmapAdjustedLevels, industryLevels) {
       const ctx = document.getElementById('skillGapChart');
       if (!ctx) return;
       if (charts.skillGap) charts.skillGap.destroy();
@@ -509,6 +553,7 @@
           labels: labels,
           datasets: [
             { label: 'Your Level', data: userLevels, backgroundColor: 'rgba(255, 0, 110, 0.7)', borderColor: '#22D3EE', borderWidth: 2 },
+            { label: 'Roadmap Projected', data: roadmapAdjustedLevels, backgroundColor: 'rgba(88, 166, 255, 0.7)', borderColor: '#58a6ff', borderWidth: 2 },
             { label: 'Industry Standard', data: industryLevels, backgroundColor: 'rgba(57, 255, 20, 0.7)', borderColor: '#3B82F6', borderWidth: 2 }
           ]
         },
@@ -572,9 +617,10 @@
       const userSkills = userProfile.skills || {};
       const role = typeof ALL_ROLES !== 'undefined' && ALL_ROLES.find(r => r.id === currentRoleId);
       const roleTitle = role ? role.title : 'Selected Role';
+      const roadmapPercent = getRoleRoadmapPercent(currentRoleId);
 
       const titleEl = document.getElementById('selectedRoleTitle');
-      if (titleEl) titleEl.textContent = roleTitle;
+      if (titleEl) titleEl.textContent = roleTitle + ' (Roadmap ' + roadmapPercent + '%)';
 
       const noMsg = document.getElementById('noProfileMsg');
       const metersEl = document.getElementById('userSkillsMeters');
@@ -596,13 +642,16 @@
         const gaps = getSkillGapForRole(role, userSkills, 80);
         gapList.innerHTML = gaps.length ? gaps.map(g =>
           '<div style="margin: 10px 0; padding: 10px; background: rgba(45,212,191,0.1); border-radius: 6px; border-left: 3px solid ' + (g.gap > 40 ? '#ff6b6b' : '#22D3EE') + ';">' +
-          '<strong>' + g.skill + '</strong>: Your level ' + g.userLevel + '/' + g.targetLevel + ' — Gap: ' + g.gap + ' points</div>'
+          '<strong>' + g.skill + '</strong>: Your level ' + g.userLevel + '/' + g.targetLevel + ' | Projected with roadmap: ' + getProgressAdjustedLevel(g.userLevel, roadmapPercent) + ' | Remaining gap: ' + Math.max(0, g.targetLevel - getProgressAdjustedLevel(g.userLevel, roadmapPercent)) + ' points</div>'
         ).join('') : '<p style="color:#9CA3AF;">No required skills defined for this role.</p>';
       } else if (gapList) gapList.innerHTML = '<p style="color:#9CA3AF;">Select a role and add skills in profile.</p>';
 
       const oppEl = document.getElementById('careerOpportunities');
       if (oppEl && typeof ALL_ROLES !== 'undefined' && typeof getRoleMatchPercent === 'function') {
-        const withMatch = ALL_ROLES.map(r => ({ ...r, match: getRoleMatchPercent(r, userSkills) })).sort((a, b) => b.match - a.match);
+        const withMatch = ALL_ROLES.map(r => ({
+          ...r,
+          match: Math.min(100, Math.round(getRoleMatchPercent(r, userSkills) * 0.75 + getRoleRoadmapPercent(r.id) * 0.25))
+        })).sort((a, b) => b.match - a.match);
         oppEl.innerHTML = withMatch.slice(0, 6).map(c =>
           '<div class="opportunity-badge">' + c.title + ' (' + c.match + '% Match)</div>'
         ).join('');
@@ -610,7 +659,10 @@
 
       const pathwaysEl = document.getElementById('careerPathways');
       if (pathwaysEl && typeof ALL_ROLES !== 'undefined' && typeof getRoleMatchPercent === 'function') {
-        const withMatch = ALL_ROLES.map(r => ({ ...r, match: getRoleMatchPercent(r, userSkills) })).sort((a, b) => b.match - a.match);
+        const withMatch = ALL_ROLES.map(r => ({
+          ...r,
+          match: Math.min(100, Math.round(getRoleMatchPercent(r, userSkills) * 0.75 + getRoleRoadmapPercent(r.id) * 0.25))
+        })).sort((a, b) => b.match - a.match);
         pathwaysEl.innerHTML = withMatch.map(r =>
           '<div class="pathway-card">' +
           '<h5>💼 ' + r.title + '</h5>' +
@@ -646,6 +698,12 @@
     // Initialize on page load: use profile from localStorage (same as Dashboard/Profile)
     window.addEventListener('load', () => {
       loadUserProfile();
+      if (Array.isArray(userProfile.interestedRoles) && userProfile.interestedRoles.length > 0) {
+        const preferredRole = userProfile.interestedRoles[0];
+        if (typeof ALL_ROLES !== 'undefined' && ALL_ROLES.some(r => r.id === preferredRole)) {
+          currentRoleId = preferredRole;
+        }
+      }
       renderRoleSelector();
       updateAllCharts();
       updateInsights();
@@ -661,3 +719,4 @@
 </body>
 
 </html>
+
